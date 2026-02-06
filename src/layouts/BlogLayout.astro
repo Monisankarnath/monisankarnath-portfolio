@@ -1,0 +1,200 @@
+---
+import Layout from "./Layout.astro";
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    publishedAt: Date;
+    updatedAt?: Date;
+    tags: string[];
+  };
+}
+
+const { frontmatter } = Astro.props;
+
+// Calculate reading time (rough estimate: 200 words per minute)
+const content = await Astro.slots.render("default");
+const wordCount = content.split(/\s+/).length;
+const readingTime = Math.ceil(wordCount / 200);
+
+// Format date
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+---
+
+<Layout
+  title={`${frontmatter.title} | Monisankar Nath`}
+  description={frontmatter.description}
+>
+  <article class="blog-post container">
+    <header class="post-header">
+      <a href="/blog" class="back-link">← All posts</a>
+
+      <h1 class="title">{frontmatter.title}</h1>
+
+      <div class="meta mono text-muted">
+        <time datetime={frontmatter.publishedAt.toISOString()}>
+          {formatDate(frontmatter.publishedAt)}
+        </time>
+        <span class="separator">·</span>
+        <span>{readingTime} min read</span>
+      </div>
+
+      {
+        frontmatter.tags.length > 0 && (
+          <div class="tags">
+            {frontmatter.tags.map((tag) => (
+              <span class="tag mono">{tag}</span>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    <div class="content">
+      <slot />
+    </div>
+
+    <footer class="post-footer">
+      <a href="/blog" class="back-link">← Back to all posts</a>
+    </footer>
+  </article>
+</Layout>
+
+<style>
+  .blog-post {
+    padding-block: var(--space-12);
+  }
+
+  .post-header {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .title {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-4);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-small);
+  }
+
+  .separator {
+    opacity: 0.5;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .tag {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-surface);
+    padding: var(--space-1) var(--space-3);
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+  }
+
+  /* Content styling - same as case study */
+  .content {
+    max-width: var(--content-width);
+  }
+
+  .content :global(h2) {
+    font-size: var(--text-h2);
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+  }
+
+  .content :global(h3) {
+    font-size: var(--text-h3);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+
+  .content :global(p) {
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+  }
+
+  .content :global(ul),
+  .content :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+  }
+
+  .content :global(li) {
+    margin-bottom: var(--space-2);
+    line-height: 1.65;
+  }
+
+  .content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background-color: var(--color-bg-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+
+  .content :global(pre) {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: var(--space-4);
+    overflow-x: auto;
+    margin-bottom: var(--space-6);
+  }
+
+  .content :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .content :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-4);
+    margin-left: 0;
+    margin-bottom: var(--space-4);
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+
+  .content :global(img) {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    margin-block: var(--space-6);
+  }
+
+  .post-footer {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+</style>

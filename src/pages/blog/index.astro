@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogListItem from '../../components/BlogListItem.astro';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+// Sort by date, newest first
+const sortedPosts = posts.sort((a, b) => 
+  b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+
+
+---
+
+<Layout 
+  title="Blog — Monisankar Nath"
+  description="Technical blogs on engineering, performance, and architecture."
+>
+  <div class="container">
+    <header class="page-header section">
+      <a href="/" class="back-link">← Home</a>
+      <h1>Writing</h1>
+      <p class="lead text-secondary">
+        Technical blogs on engineering, performance, and architecture.
+      </p>
+    </header>
+    
+    {sortedPosts.length === 0 ? (
+      <div class="empty-state">
+        <p class="text-muted">No posts yet. Check back soon.</p>
+      </div>
+    ) : (
+      <ul class="posts-list">
+        {sortedPosts.map((post) => {
+          const wordCount = post.body.split(/\s+/).length;
+          const readTime = Math.ceil(wordCount / 200) + ' min read';
+          
+          return (
+            <BlogListItem 
+              title={post.data.title}
+              description={post.data.description}
+              slug={post.slug}
+              publishedAt={post.data.publishedAt}
+              readTime={readTime}
+            />
+          );
+        })}
+      </ul>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+    transition: color var(--transition-fast);
+  }
+  
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+  
+  .page-header h1 {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-2);
+  }
+  
+  .lead {
+    font-size: var(--text-body);
+    margin: 0;
+  }
+  
+  .empty-state {
+    padding: var(--space-16) 0;
+    text-align: center;
+  }
+  
+  .posts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  @media (max-width: 640px) {
+    /* Responsive tweaks passed to components via global styles or managed internally */
+  }
+</style>

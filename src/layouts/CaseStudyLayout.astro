@@ -1,0 +1,439 @@
+---
+import Layout from "./Layout.astro";
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    company: string;
+    role: string;
+    timeline: string;
+    teamSize?: string;
+    metrics: string;
+    tags: string[];
+  };
+  headings: MarkdownHeading[];
+}
+
+const { frontmatter, headings = [] } = Astro.props;
+const tocHeadings = headings.filter((h) => h.depth <= 3);
+---
+
+<Layout
+  title={`${frontmatter.title} Case Study | ${frontmatter.tags[0] || "Technical"} | Monisankar Nath`}
+  description={frontmatter.description.length > 50
+    ? frontmatter.description
+    : `A detailed case study by Monisankar Nath, Software Engineer, on building ${frontmatter.title}.`}
+>
+  <article class="case-study container wide">
+    <div class="case-study-grid">
+      <div class="main-content">
+        <header class="case-study-header">
+          <a href="/case-studies" class="back-link">← Case Studies</a>
+
+          <h1 class="title">{frontmatter.title}</h1>
+          <p class="description text-secondary">{frontmatter.description}</p>
+
+          <div class="header-meta">
+            <div class="meta-item">
+              <span class="meta-label">Role</span>
+              <span class="meta-value">{frontmatter.role}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Timeline</span>
+              <span class="meta-value">{frontmatter.timeline}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Impact</span>
+              <span class="meta-value highlight">{frontmatter.metrics}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Company</span>
+              <span class="meta-value">{frontmatter.company}</span>
+            </div>
+          </div>
+        </header>
+
+        <slot />
+      </div>
+
+      <aside class="sidebar">
+        <div class="sticky-content">
+          <!-- Top Zone: Tech Stack (20%) -->
+          <div class="sidebar-top">
+            <div class="sidebar-section">
+              <h3 class="sidebar-title mono">Tech Stack</h3>
+              <div class="tech-stack">
+                {
+                  frontmatter.tags.map((tag) => (
+                    <span class="tech-badge mono">{tag}</span>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Middle Zone: TOC (60%) -->
+          <div class="sidebar-middle">
+            <div class="sidebar-section">
+              <h3 class="sidebar-title mono">On this page</h3>
+              <nav class="toc">
+                <ul>
+                  {
+                    tocHeadings.map((heading) => (
+                      <li>
+                        <a
+                          href={`#${heading.slug}`}
+                          class={`toc-link depth-${heading.depth} mono`}
+                        >
+                          {heading.text}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Bottom Zone: Empty (20%) -->
+          <div class="sidebar-bottom"></div>
+        </div>
+      </aside>
+    </div>
+  </article>
+</Layout>
+
+<script>
+  // Simple active state observer for TOC
+  const tocLinks = document.querySelectorAll(".toc-link");
+  const headings = document.querySelectorAll(
+    ".main-content h2, .main-content h3",
+  );
+  const tocContainer = document.querySelector(".sidebar-middle");
+
+  const setActive = (id: string) => {
+    tocLinks.forEach((link) => {
+      link.classList.remove("active");
+      link.classList.add("text-muted");
+    });
+
+    const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+    if (activeLink) {
+      activeLink.classList.remove("text-muted");
+      activeLink.classList.add("active");
+
+      // Auto-scroll TOC container
+      if (tocContainer) {
+        const linkRect = activeLink.getBoundingClientRect();
+        const containerRect = tocContainer.getBoundingClientRect();
+
+        // Check if link is out of view (or close to edge)
+        if (
+          linkRect.top < containerRect.top + 20 ||
+          linkRect.bottom > containerRect.bottom - 20
+        ) {
+          activeLink.scrollIntoView({ block: "center", behavior: "smooth" });
+        }
+      }
+    }
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.getAttribute("id") || "");
+        }
+      });
+    },
+    {
+      rootMargin: "-10% 0px -70% 0px",
+    },
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+
+  // Handle bottom of page case
+  window.addEventListener("scroll", () => {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 50
+    ) {
+      if (headings.length > 0) {
+        const lastHeading = headings[headings.length - 1];
+        setActive(lastHeading.id);
+      }
+    }
+  });
+</script>
+
+<style>
+  .case-study {
+    padding-block: var(--space-12);
+  }
+
+  .container.wide {
+    max-width: 1280px; /* Wider container as requested */
+  }
+
+  .case-study-header {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    max-width: var(--content-width); /* Header stays focused */
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .title {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-2);
+  }
+
+  .description {
+    font-size: var(--text-h3);
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    padding-top: var(--space-4);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .meta-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .meta-value {
+    font-size: var(--text-small);
+  }
+
+  .meta-value.highlight {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  /* Grid Layout */
+  .case-study-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .sidebar {
+    display: none; /* Hidden on mobile */
+  }
+
+  @media (min-width: 1280px) {
+    .case-study-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: var(--space-32);
+      /* align-items: stretch; is default, which is what we want for sticky sidebar track */
+    }
+
+    .sidebar {
+      display: block;
+      height: 100%; /* track height */
+    }
+
+    .sticky-content {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* Remove padding-block so zones take full height */
+      padding-block: 0;
+      overflow: hidden; /* Prevent main sidebar scroll */
+    }
+
+    /* Top Zone: 20% Height, Aligned Bottom */
+    .sidebar-top {
+      height: 20%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 20px;
+    }
+
+    /* Middle Zone: 60% Height, Scrollable */
+    .sidebar-middle {
+      height: 60%;
+      overflow-y: auto;
+      padding-block: 20px;
+
+      /* Hide scrollbar */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .sidebar-middle::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Bottom Zone: 20% Height, Empty */
+    .sidebar-bottom {
+      height: 20%;
+    }
+  }
+
+  /* Sidebar Styling */
+  .sidebar-title {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+    letter-spacing: 0.05em;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .toc-link {
+    font-size: var(--text-xs);
+    text-decoration: none;
+    color: var(--color-text-muted);
+    display: block;
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease;
+    border-left: 1px solid transparent; /* Placeholder for active indicator option */
+    padding-left: 0;
+  }
+
+  .toc-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .toc-link.active {
+    color: var(--color-text-primary);
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  .toc-link.depth-3 {
+    padding-left: var(--space-4);
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tech-badge {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    background: var(--color-bg-surface);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 4px;
+  }
+
+  /* Content Styling */
+  .main-content {
+    min-width: 0; /* Prevents flex/grid overflow */
+  }
+
+  .main-content :global(h2) {
+    font-size: var(--text-h2);
+    margin-top: var(--space-16);
+    margin-bottom: var(--space-4);
+    scroll-margin-top: var(--space-8); /* For direct linking */
+  }
+
+  .main-content :global(h3) {
+    font-size: var(--text-h3);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-3);
+    scroll-margin-top: var(--space-8);
+  }
+
+  .main-content :global(p) {
+    margin-bottom: var(--space-4);
+    line-height: 1.75;
+    font-size: var(--text-body);
+  }
+
+  .main-content :global(ul),
+  .main-content :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+  }
+
+  .main-content :global(li) {
+    margin-bottom: var(--space-2);
+    line-height: 1.65;
+  }
+
+  .main-content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background-color: var(--color-bg-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    color: var(--color-text-primary);
+  }
+
+  .main-content :global(pre) {
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: var(--space-4);
+    overflow-x: auto;
+    margin-bottom: var(--space-6);
+    font-size: 0.9em;
+  }
+
+  .main-content :global(pre code) {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  .main-content :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-4);
+    margin-left: 0;
+    margin-bottom: var(--space-4);
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+
+  .main-content :global(img) {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    margin-block: var(--space-6);
+  }
+</style>

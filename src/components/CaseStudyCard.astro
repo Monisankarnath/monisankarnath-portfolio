@@ -1,0 +1,77 @@
+---
+/**
+ * CaseStudyCard Component
+ * - Reusable card for case studies
+ * - Props: title, description, slug, featured
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  metrics?: string;
+  featured?: boolean;
+}
+
+const { title, description, slug, metrics, featured = false } = Astro.props;
+---
+
+<a href={`/case-studies/${slug}`} class:list={['case-study-card', 'card', { featured }]}>
+  <h3 class="card-title">{title}</h3>
+  {metrics && <p class="card-metrics mono text-muted">{metrics}</p>}
+  <p class="card-desc text-secondary">{description}</p>
+  <span class="card-arrow">→</span>
+</a>
+
+<style>
+  .case-study-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    text-decoration: none;
+    position: relative;
+    min-height: 160px;
+  }
+  
+  .case-study-card.featured {
+    background: linear-gradient(
+      135deg,
+      var(--color-bg-surface) 0%,
+      rgba(96, 165, 250, 0.05) 100%
+    );
+  }
+  
+  .card-title {
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  
+  .card-metrics {
+    font-size: var(--text-small);
+    margin: 0;
+  }
+  
+  .card-desc {
+    font-size: var(--text-small);
+    line-height: 1.5;
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .card-arrow {
+    position: absolute;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    font-size: var(--text-body);
+    color: var(--color-text-muted);
+    transition: transform 150ms ease-out, color 150ms ease-out;
+  }
+  
+  .case-study-card:hover .card-arrow {
+    transform: translateX(3px);
+    color: var(--color-accent);
+  }
+</style>

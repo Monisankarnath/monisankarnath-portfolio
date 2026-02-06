@@ -1,0 +1,262 @@
+---
+/**
+ * Command Palette (⌘K)
+ * - Native <dialog> element
+ * - Keyboard navigation
+ * - Search through pages
+ */
+
+interface SearchItem {
+  title: string;
+  description: string;
+  href: string;
+  type: 'page' | 'case-study' | 'blog';
+}
+
+// Static pages - these are always available
+const staticPages: SearchItem[] = [
+  { title: 'Home', description: 'Go to homepage', href: '/', type: 'page' },
+  { title: 'About', description: 'Learn about me', href: '/about', type: 'page' },
+  { title: 'Blog', description: 'Technical writing', href: '/blog', type: 'page' },
+  { title: 'Contact', description: 'Get in touch', href: '/contact', type: 'page' },
+  { title: 'Support', description: 'Support open source', href: '/support', type: 'page' },
+];
+---
+
+<dialog id="command-palette" class="palette">
+  <div class="palette-content">
+    <div class="search-wrapper">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input 
+        type="text" 
+        id="command-input"
+        class="search-input mono"
+        placeholder="Search pages..."
+        autocomplete="off"
+      />
+      <kbd class="escape-hint">ESC</kbd>
+    </div>
+    
+    <ul id="command-results" class="results">
+      {staticPages.map((item, index) => (
+        <li>
+          <a 
+            href={item.href} 
+            class="result-item" 
+            data-index={index}
+            data-title={item.title.toLowerCase()}
+            data-description={item.description.toLowerCase()}
+          >
+            <span class="result-title">{item.title}</span>
+            <span class="result-desc text-muted">{item.description}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    
+    <div id="no-results" class="no-results text-muted" style="display: none;">
+      No results found
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('command-palette') as HTMLDialogElement;
+  const input = document.getElementById('command-input') as HTMLInputElement;
+  const results = document.getElementById('command-results') as HTMLUListElement;
+  const noResults = document.getElementById('no-results') as HTMLDivElement;
+  const items = results.querySelectorAll('.result-item');
+  
+  let currentIndex = 0;
+  
+  // Open palette with Cmd+K or Ctrl+K
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      dialog.showModal();
+      input.focus();
+      input.value = '';
+      filterResults('');
+      updateSelection(0);
+    }
+  });
+  
+  // Close on escape or click outside
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) {
+      dialog.close();
+    }
+  });
+  
+  dialog.addEventListener('close', () => {
+    input.value = '';
+    filterResults('');
+  });
+  
+  // Filter results as user types
+  input.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    filterResults(query);
+    updateSelection(0);
+  });
+  
+  // Keyboard navigation
+  input.addEventListener('keydown', (e) => {
+    const visibleItems = getVisibleItems();
+    
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      currentIndex = Math.min(currentIndex + 1, visibleItems.length - 1);
+      updateSelection(currentIndex);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentIndex = Math.max(currentIndex - 1, 0);
+      updateSelection(currentIndex);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const selected = visibleItems[currentIndex];
+      if (selected) {
+        window.location.href = selected.getAttribute('href') || '/';
+      }
+    }
+  });
+  
+  function filterResults(query: string) {
+    let hasVisible = false;
+    
+    items.forEach((item) => {
+      const title = item.getAttribute('data-title') || '';
+      const desc = item.getAttribute('data-description') || '';
+      const matches = title.includes(query) || desc.includes(query);
+      
+      const li = item.parentElement as HTMLLIElement;
+      li.style.display = matches ? '' : 'none';
+      
+      if (matches) hasVisible = true;
+    });
+    
+    noResults.style.display = hasVisible ? 'none' : 'block';
+  }
+  
+  function getVisibleItems() {
+    return Array.from(items).filter((item) => {
+      const li = item.parentElement as HTMLLIElement;
+      return li.style.display !== 'none';
+    });
+  }
+  
+  function updateSelection(index: number) {
+    const visibleItems = getVisibleItems();
+    currentIndex = index;
+    
+    items.forEach((item) => item.classList.remove('selected'));
+    
+    if (visibleItems[index]) {
+      visibleItems[index].classList.add('selected');
+      visibleItems[index].scrollIntoView({ block: 'nearest' });
+    }
+  }
+</script>
+
+<style>
+  .palette {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 560px;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background-color: var(--color-bg-surface);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+  
+  .palette::backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+  }
+  
+  .palette-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+  }
+  
+  .search-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .search-icon {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+  }
+  
+  .search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--color-text-primary);
+    font-size: var(--text-body);
+    outline: none;
+  }
+  
+  .search-input::placeholder {
+    color: var(--color-text-muted);
+  }
+  
+  .escape-hint {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-primary);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+  }
+  
+  .results {
+    list-style: none;
+    padding: var(--space-2);
+    margin: 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+  
+  .result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .result-item:hover,
+  .result-item.selected {
+    background-color: var(--color-bg-elevated);
+  }
+  
+  .result-title {
+    font-size: var(--text-body);
+    color: var(--color-text-primary);
+  }
+  
+  .result-desc {
+    font-size: var(--text-small);
+  }
+  
+  .no-results {
+    padding: var(--space-8);
+    text-align: center;
+    font-size: var(--text-small);
+  }
+</style>

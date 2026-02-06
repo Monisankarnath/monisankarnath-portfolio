@@ -1,0 +1,166 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Support | Monisankar Nath – Software Engineer"
+  description="Support Monisankar Nath, Software Engineer, in creating open source software and technical content for the development community."
+>
+  <div class="container">
+    <article class="support section">
+      <a href="/" class="back-link">← Home</a>
+
+      <h1>Support</h1>
+
+      <div class="content">
+        <p class="intro text-secondary">
+          If my open source work or writing has been helpful to you, you can
+          support continued development through a voluntary contribution.
+        </p>
+
+        <h2>What Your Support Enables</h2>
+        <ul>
+          <li>
+            Maintenance and improvements to <strong>expo-video-cache</strong> and
+            other libraries
+          </li>
+          <li>In-depth technical articles and case studies</li>
+          <li>Documentation and example projects</li>
+          <li>Responding to issues and feature requests</li>
+        </ul>
+
+        <h2>Contribute via UPI</h2>
+        <div class="upi-section">
+          <div class="upi-info card">
+            <p class="upi-id mono">monisankarnath@upi</p>
+            <p class="upi-note text-muted">
+              Scan the QR code or use the UPI ID above
+            </p>
+          </div>
+
+          <div class="qr-placeholder card">
+            <p class="text-muted">QR code will be added here</p>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          <p class="text-muted">
+            <strong>Note:</strong> Contributions are voluntary support for open source
+            development and writing. They are not payments for services, and do not
+            create any obligation or expectation of specific work.
+          </p>
+        </div>
+
+        <h2>Other Ways to Support</h2>
+        <ul>
+          <li>
+            Star repositories on <a
+              href="https://github.com/moni-synt"
+              target="_blank"
+              rel="noopener">GitHub</a>
+          </li>
+          <li>Share articles that you find useful</li>
+          <li>Report bugs and contribute fixes</li>
+          <li>Provide feedback on documentation</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .support {
+    padding-block: var(--space-12);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-8);
+  }
+
+  .content {
+    max-width: var(--content-width);
+  }
+
+  .intro {
+    font-size: var(--text-body);
+    margin-bottom: var(--space-8);
+  }
+
+  .content h2 {
+    font-size: var(--text-h2);
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+  }
+
+  .content ul {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+
+  .content li {
+    margin-bottom: var(--space-2);
+    line-height: 1.65;
+  }
+
+  .upi-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .upi-info {
+    padding: var(--space-6);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .upi-id {
+    font-size: var(--text-body);
+    color: var(--color-accent);
+    margin: 0 0 var(--space-2);
+  }
+
+  .upi-note {
+    font-size: var(--text-small);
+    margin: 0;
+  }
+
+  .qr-placeholder {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-4);
+    font-size: var(--text-small);
+  }
+
+  .disclaimer {
+    margin-top: var(--space-8);
+    padding: var(--space-4);
+    background-color: var(--color-bg-surface);
+    border-left: 3px solid var(--color-text-muted);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .disclaimer p {
+    font-size: var(--text-small);
+    line-height: 1.6;
+    margin: 0;
+  }
+</style>

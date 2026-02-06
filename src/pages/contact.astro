@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const contactLinks = [
+  {
+    name: "Email",
+    value: "monisankarnath@gmail.com",
+    href: "mailto:monisankarnath@gmail.com",
+    description: "Best for direct inquiries",
+  },
+  {
+    name: "LinkedIn",
+    value: "/in/monisankarnath",
+    href: "https://linkedin.com/in/monisankarnath",
+    description: "Professional network",
+  },
+  {
+    name: "GitHub",
+    value: "@moni-synt",
+    href: "https://github.com/moni-synt",
+    description: "Code and contributions",
+  },
+];
+---
+
+<Layout
+  title="Contact | Monisankar Nath – Software Engineer"
+  description="Get in touch with Monisankar Nath for collaboration, consulting, or engineering opportunities."
+>
+  <div class="container">
+    <article class="contact section">
+      <a href="/" class="back-link">← Home</a>
+
+      <h1>Contact</h1>
+
+      <p class="intro text-secondary">
+        Open to senior frontend and mobile engineering roles where engineering
+        quality and long-term thinking matter.
+      </p>
+
+      <div class="contact-list">
+        {
+          contactLinks.map((link) => (
+            <a
+              href={link.href}
+              class="contact-item card"
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                link.href.startsWith("http") ? "noopener noreferrer" : undefined
+              }
+            >
+              <div class="contact-info">
+                <span class="contact-name">{link.name}</span>
+                <span class="contact-value mono">{link.value}</span>
+              </div>
+              <span class="contact-desc text-muted">{link.description}</span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="availability">
+        <h2>Availability</h2>
+        <p class="text-secondary">
+          I typically respond within 24–48 hours. For time-sensitive matters,
+          email is the fastest way to reach me.
+        </p>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .contact {
+    padding-block: var(--space-12);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-4);
+  }
+
+  .intro {
+    font-size: var(--text-body);
+    max-width: var(--content-width);
+    margin-bottom: var(--space-8);
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: 480px;
+  }
+
+  .contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    text-decoration: none;
+  }
+
+  .contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .contact-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .contact-value {
+    font-size: var(--text-small);
+    color: var(--color-accent);
+  }
+
+  .contact-desc {
+    font-size: var(--text-small);
+  }
+
+  .availability {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    max-width: var(--content-width);
+  }
+
+  .availability h2 {
+    font-size: var(--text-h2);
+    margin-bottom: var(--space-4);
+  }
+
+  .availability p {
+    line-height: 1.65;
+  }
+</style>

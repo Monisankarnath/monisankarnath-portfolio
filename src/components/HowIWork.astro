@@ -1,0 +1,105 @@
+---
+/**
+ * How I Work Section
+ * - Engineering beliefs/principles
+ * - Hover reveals explanation (CSS-only)
+ */
+
+interface Belief {
+  statement: string;
+  explanation: string;
+}
+
+const beliefs: Belief[] = [
+  {
+    statement: 'I prefer duplication over the wrong abstraction.',
+    explanation: 'Premature abstraction creates coupling. I wait until patterns emerge before extracting shared code.',
+  },
+  {
+    statement: 'Types are documentation.',
+    explanation: 'Well-typed code explains intent. I invest in types to reduce cognitive load and catch errors early.',
+  },
+  {
+    statement: 'Performance is a feature.',
+    explanation: 'Fast software respects user time. I measure, profile, and optimize as part of the development cycle.',
+  },
+  {
+    statement: 'Ship incrementally, validate continuously.',
+    explanation: 'Small changes are easier to review, test, and roll back. I favor iteration over big-bang releases.',
+  },
+];
+---
+
+<section class="how-i-work section">
+  <h2 class="section-title">How I Work</h2>
+  
+  <ul class="beliefs">
+    {beliefs.map((belief) => (
+      <li class="belief">
+        <span class="belief-statement">{belief.statement}</span>
+        <span class="belief-explanation text-muted">{belief.explanation}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .how-i-work {
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .section-title {
+    font-size: var(--text-h2);
+    margin-bottom: var(--space-8);
+  }
+  
+  .beliefs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .belief {
+    padding: var(--space-4);
+    border-radius: 0.5rem;
+    transition: background-color var(--transition-fast);
+    cursor: default;
+  }
+  
+  .belief:hover {
+    background-color: var(--color-bg-surface);
+  }
+  
+  .belief-statement {
+    display: block;
+    font-size: var(--text-body);
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  
+  .belief-explanation {
+    display: block;
+    font-size: var(--text-small);
+    line-height: 1.5;
+    margin-top: var(--space-2);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height var(--transition-base), opacity var(--transition-base), margin-top var(--transition-base);
+  }
+  
+  .belief:hover .belief-explanation {
+    max-height: 100px;
+    opacity: 1;
+    margin-top: var(--space-2);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .belief-explanation {
+      transition: none;
+    }
+  }
+</style>

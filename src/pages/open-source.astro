@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+import OpenSourceCard from "../components/OpenSourceCard.astro";
+---
+
+<Layout
+  title="Open Source | Monisankar Nath – Software Engineer"
+  description="Monisankar Nath, Software Engineer, maintains open source libraries for React Native and JavaScript ecosystems to help developers build better apps."
+>
+  <div class="container">
+    <article class="open-source section">
+      <a href="/" class="back-link">← Home</a>
+
+      <h1>Open Source</h1>
+
+      <p class="intro text-secondary">
+        Libraries and tools I maintain for the community.
+      </p>
+
+      <div class="projects">
+        <OpenSourceCard
+          name="expo-video-cache"
+          description="A performant HLS video caching layer for React Native and Expo. Reduces buffering, bandwidth usage, and startup latency by caching video segments locally with intelligent eviction."
+          npmUrl="https://www.npmjs.com/package/expo-video-cache"
+          githubUrl="https://github.com/moni-synt/expo-video-cache"
+          stats={{
+            downloads: "12k/month",
+            stars: "340+",
+            lastUpdated: "Jan 2025",
+          }}
+        />
+      </div>
+
+      <div class="contribute">
+        <h2>Contributing</h2>
+        <p class="text-secondary">
+          Found a bug or have a feature idea? Open an issue on GitHub. Pull
+          requests are welcome for bug fixes and improvements.
+        </p>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .open-source {
+    padding-block: var(--space-12);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-4);
+  }
+
+  .intro {
+    font-size: var(--text-body);
+    margin-bottom: var(--space-8);
+  }
+
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .contribute {
+    margin-top: var(--space-16);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contribute h2 {
+    font-size: var(--text-h2);
+    margin-bottom: var(--space-4);
+  }
+
+  .contribute p {
+    max-width: var(--content-width);
+    line-height: 1.6;
+  }
+</style>

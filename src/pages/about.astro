@@ -1,0 +1,131 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="About Monisankar Nath | Software Engineer"
+  description="Hi, I'm Monisankar Nath. I'm a Software Engineer specializing in React Native, iOS, and high-performance web systems. Read about my journey and experience."
+>
+  <div class="container">
+    <article class="about section">
+      <a href="/" class="back-link">← Home</a>
+
+      <h1>About</h1>
+
+      <div class="content">
+        <p class="intro">
+          I'm a software engineer focused on building systems that work reliably
+          at scale. My work spans mobile apps, web platforms, and the
+          infrastructure that connects them.
+        </p>
+
+        <h2>What I Build</h2>
+        <p>
+          Most of my recent work has been in React Native and iOS development,
+          with a focus on performance-critical features like video streaming,
+          offline-first architectures, and real-time synchronization.
+        </p>
+        <p>
+          I enjoy problems where the solution requires understanding systems
+          deeply — not just the code, but how it interacts with networks,
+          devices, and user behavior.
+        </p>
+
+        <h2>How I Think</h2>
+        <p>
+          I believe good engineering is about making thoughtful trade-offs, not
+          chasing perfection. I prefer shipping early, measuring outcomes, and
+          iterating based on real-world feedback.
+        </p>
+        <p>
+          I'm biased toward simplicity. Complex systems fail in complex ways.
+          When possible, I choose boring technology and straightforward
+          solutions.
+        </p>
+
+        <h2>Open Source</h2>
+        <p>
+          I maintain <a
+            href="https://github.com/moni-synt/expo-video-cache"
+            target="_blank"
+            rel="noopener">expo-video-cache</a
+          >, a library for HLS video caching in React Native. It's used in
+          production apps serving millions of streams.
+        </p>
+        <p>
+          I contribute to open source because I've benefited enormously from it.
+          Good libraries save thousands of hours of duplicated effort across the
+          industry.
+        </p>
+
+        <h2>Currently</h2>
+        <p>
+          I'm working on improving video streaming performance in mobile
+          applications, specifically around adaptive bitrate streaming and
+          intelligent caching strategies.
+        </p>
+
+        <div class="cta-section">
+          <a
+            href="/Monisankar-Nath-Software-Engineer.pdf"
+            class="btn btn-ghost"
+            download
+          >
+            Download Resume →
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .about {
+    padding-block: var(--space-12);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-8);
+  }
+
+  .content {
+    max-width: var(--content-width);
+  }
+
+  .intro {
+    font-size: var(--text-h3);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+  }
+
+  .content h2 {
+    font-size: var(--text-h2);
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-4);
+  }
+
+  .content p {
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  .cta-section {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+</style>

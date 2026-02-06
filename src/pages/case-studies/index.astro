@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+
+const caseStudies = await getCollection('case-studies');
+
+// Sort: featured first, then by date
+const sortedStudies = caseStudies.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return b.data.publishedAt.getTime() - a.data.publishedAt.getTime();
+});
+---
+
+<Layout 
+  title="Case Studies — Monisankar Nath"
+  description="Deep dives into systems I've built — problems, decisions, and outcomes."
+>
+  <div class="container">
+    <header class="page-header section">
+      <a href="/" class="back-link">← Home</a>
+      <h1>Case Studies</h1>
+      <p class="lead text-secondary">
+        Deep dives into systems I've built — problems, decisions, and outcomes.
+      </p>
+    </header>
+    
+    {sortedStudies.length === 0 ? (
+      <div class="empty-state">
+        <p class="text-muted">Case studies coming soon.</p>
+      </div>
+    ) : (
+      <div class="case-studies-grid">
+        {sortedStudies.map((study, index) => (
+          <CaseStudyCard 
+            title={study.data.title}
+            description={study.data.description}
+            slug={study.slug}
+            metrics={study.data.metrics}
+            featured={index === 0}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .back-link {
+    display: inline-block;
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+    transition: color var(--transition-fast);
+  }
+  
+  .back-link:hover {
+    color: var(--color-text-primary);
+  }
+  
+  .page-header h1 {
+    font-size: var(--text-h1);
+    margin-bottom: var(--space-2);
+  }
+  
+  .lead {
+    font-size: var(--text-body);
+    margin: 0;
+  }
+  
+  .empty-state {
+    padding: var(--space-16) 0;
+    text-align: center;
+  }
+  
+  .case-studies-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding-block: var(--space-8);
+  }
+  
+  @media (min-width: 640px) {
+    .case-studies-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Featured card spans full width */
+    .case-studies-grid :global(.case-study-card.featured) {
+      grid-column: span 2;
+    }
+  }
+</style>

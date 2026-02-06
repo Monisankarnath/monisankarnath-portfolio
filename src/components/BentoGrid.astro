@@ -1,0 +1,120 @@
+---
+/**
+ * Bento Grid Navigation
+ * - 3 cards: Case Studies (larger), Open Source, Writing
+ * - Subtle hover effects
+ * - Links to respective sections
+ */
+
+interface GridItem {
+  title: string;
+  description: string;
+  href: string;
+  featured?: boolean;
+}
+
+const items: GridItem[] = [
+  {
+    title: 'Case Studies',
+    description: 'Deep dives into systems I\'ve built — problems, decisions, and outcomes.',
+    href: '/case-studies',
+    featured: true,
+  },
+  {
+    title: 'Open Source',
+    description: 'Libraries and tools I maintain for the community.',
+    href: '/open-source',
+  },
+  {
+    title: 'Writing',
+    description: 'Technical blogs on engineering, performance, and architecture.',
+    href: '/blog',
+  },
+];
+---
+
+<section class="bento section">
+  <div class="bento-grid">
+    {items.map((item) => (
+      <a 
+        href={item.href} 
+        class:list={['bento-card', 'card', { featured: item.featured }]}
+        target={item.href.startsWith('http') ? '_blank' : undefined}
+        rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+      >
+        <h3 class="card-title">{item.title}</h3>
+        <p class="card-desc text-secondary">{item.description}</p>
+        <span class="card-arrow">→</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .bento {
+    padding-block: var(--space-12);
+  }
+  
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  
+  @media (min-width: 640px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bento-card.featured {
+      grid-column: span 2;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .bento-grid {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+    
+    .bento-card.featured {
+      grid-column: span 1;
+    }
+  }
+  
+  .bento-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    text-decoration: none;
+    min-height: 140px;
+    position: relative;
+  }
+  
+  .card-title {
+    font-size: var(--text-h3);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+    color: var(--color-text-primary);
+  }
+  
+  .card-desc {
+    font-size: var(--text-small);
+    line-height: 1.5;
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  .card-arrow {
+    position: absolute;
+    bottom: var(--space-6);
+    right: var(--space-6);
+    font-size: var(--text-body);
+    color: var(--color-text-muted);
+    transition: transform var(--transition-fast), color var(--transition-fast);
+  }
+  
+  .bento-card:hover .card-arrow {
+    transform: translateX(4px);
+    color: var(--color-accent);
+  }
+</style>
