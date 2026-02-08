@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import BlogListItem from '../../components/BlogListItem.astro';
+import { SITE } from '../../config/site';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 
@@ -9,12 +10,10 @@ const posts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = posts.sort((a, b) => 
   b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
 );
-
-
 ---
 
 <Layout 
-  title="Blog — Monisankar Nath"
+  title={`Blog — ${SITE.name}`}
   description="Technical blogs on engineering, performance, and architecture."
 >
   <div class="container">

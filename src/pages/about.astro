@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import { SITE, RESUME, PROJECTS } from "../config/site";
 ---
 
 <Layout
-  title="About Monisankar Nath | Software Engineer"
-  description="Hi, I'm Monisankar Nath. I'm a Software Engineer specializing in React Native, iOS, and high-performance web systems. Read about my journey and experience."
+  title={`About | ${SITE.name}`}
+  description={`${SITE.title} building high-performance mobile and web systems. Background in React Native, backend systems, and open source.`}
 >
   <div class="container">
     <article class="about section">
@@ -14,68 +16,85 @@ import Layout from "../layouts/Layout.astro";
 
       <div class="content">
         <p class="intro">
-          I'm a software engineer focused on building systems that work reliably
-          at scale. My work spans mobile apps, web platforms, and the
-          infrastructure that connects them.
+          I'm {SITE.name} — a software engineer who has been writing code
+          since 2014. I work across the full stack, from mobile apps to backend
+          services to the infrastructure that connects them.
         </p>
 
-        <h2>What I Build</h2>
+        <h2>What I Work On</h2>
         <p>
-          Most of my recent work has been in React Native and iOS development,
-          with a focus on performance-critical features like video streaming,
-          offline-first architectures, and real-time synchronization.
+          Most of my recent work has been in React Native and mobile
+          development — building performance-critical features like real-time
+          GPS tracking, video streaming, offline-first architectures, and
+          systems that need to stay reliable at scale.
         </p>
         <p>
-          I enjoy problems where the solution requires understanding systems
-          deeply — not just the code, but how it interacts with networks,
-          devices, and user behavior.
+          On the backend, I design APIs, data pipelines, and system
+          architectures. I care about how services communicate, how data flows
+          through a system, and how everything holds up under real-world
+          conditions.
         </p>
 
-        <h2>How I Think</h2>
+        <h2>How I Approach Work</h2>
         <p>
-          I believe good engineering is about making thoughtful trade-offs, not
-          chasing perfection. I prefer shipping early, measuring outcomes, and
-          iterating based on real-world feedback.
+          I plan before I build. Before writing any code, I think through the
+          system design — data flow, architecture, edge cases, automation. This
+          habit has consistently saved weeks of rework on every project I've led.
         </p>
         <p>
-          I'm biased toward simplicity. Complex systems fail in complex ways.
-          When possible, I choose boring technology and straightforward
-          solutions.
+          I work incrementally. One module, one feature, one step at a time.
+          Each piece is tested, reviewed, and committed before moving to the
+          next. I read every line of every diff, including my own.
+        </p>
+        <p>
+          I care about performance from the start, not as a cleanup task. And I
+          keep code structured and minimal — because the next person to work on
+          it should be able to understand it quickly.
+        </p>
+
+        <h2>On AI</h2>
+        <p>
+          I've been building software long before AI assistants existed.
+          Today, I use AI as a tool — for code reviews, iteration, and
+          simple tasks. But the logic, the architecture decisions, and the
+          accountability are always mine. I review every line before it
+          enters a codebase.
         </p>
 
         <h2>Open Source</h2>
         <p>
           I maintain <a
-            href="https://github.com/moni-synt/expo-video-cache"
+            href={PROJECTS.expoVideoCache.github}
             target="_blank"
-            rel="noopener">expo-video-cache</a
+            rel="noopener">{PROJECTS.expoVideoCache.name}</a
           >, a library for HLS video caching in React Native. It's used in
-          production apps serving millions of streams.
+          production apps handling large-scale video delivery.
         </p>
         <p>
-          I contribute to open source because I've benefited enormously from it.
-          Good libraries save thousands of hours of duplicated effort across the
-          industry.
+          I contribute to open source because I've benefited from it. A
+          well-maintained library saves thousands of hours of duplicated work
+          across teams and companies.
         </p>
 
         <h2>Currently</h2>
         <p>
-          I'm working on improving video streaming performance in mobile
-          applications, specifically around adaptive bitrate streaming and
-          intelligent caching strategies.
+          I'm focused on improving video caching and delivery performance in
+          mobile applications — working on adaptive bitrate strategies,
+          intelligent prefetching, and reducing startup latency at scale.
         </p>
 
         <div class="cta-section">
           <a
-            href="/Monisankar-Nath-Software-Engineer.pdf"
+            href={RESUME.path}
             class="btn btn-ghost"
             download
           >
-            Download Resume →
+            Download resume (PDF)
           </a>
         </div>
       </div>
     </article>
+    <Footer />
   </div>
 </Layout>
 

@@ -5,24 +5,32 @@
  * - Supporting line + context
  * - Status pill with pulse animation
  */
+import { HERO } from "../config/site";
 ---
 
 <section class="hero">
   <div class="hero-glow" aria-hidden="true"></div>
-  <h1 class="headline">Software Engineer.</h1>
+  <h1 class="headline">{HERO.headline}</h1>
   
   <p class="lead">
-    Building high-performance mobile and web systems.
+    {HERO.lead}
   </p>
   
   <p class="context text-muted">
-    Currently solving video caching and delivery at scale.
+    {HERO.context}
   </p>
   
-  <div class="status-pill">
-    <span class="status-dot"></span>
-    <span class="mono">Shipping expo-video-cache v2.0</span>
-  </div>
+  {HERO.statusUrl ? (
+    <a href={HERO.statusUrl} target="_blank" rel="noopener noreferrer" class="status-pill">
+      <span class="status-dot"></span>
+      <span class="mono">{HERO.status}</span>
+    </a>
+  ) : (
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      <span class="mono">{HERO.status}</span>
+    </div>
+  )}
 </section>
 
 <style>
@@ -83,6 +91,13 @@
     color: var(--color-text-secondary);
     width: fit-content;
     margin-top: var(--space-4);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), color var(--transition-fast);
+  }
+  
+  a.status-pill:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text-primary);
   }
   
   .status-dot {

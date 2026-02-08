@@ -5,6 +5,7 @@
  * - Company, Role, Impact lines
  * - Scannable, not verbose
  */
+import { RESUME } from "../config/site";
 
 interface Experience {
   company: string;
@@ -15,47 +16,44 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
-    company: 'Syntizen Technologies',
-    role: 'Senior Software Engineer',
-    period: '2021 – Present',
+    company: "GeekyAnts",
+    role: "Senior Software Engineer",
+    period: "2021 – Present",
     impact: [
-      'Led mobile architecture for fleet tracking apps used by 50k+ drivers',
-      'Built video caching layer handling 10M+ streams monthly',
+      "Led mobile architecture for fleet tracking apps used by 50k+ drivers",
+      "Built video caching layer handling HLS streams monthly",
     ],
-  },
-  {
-    company: 'Previous Company',
-    role: 'Software Engineer',
-    period: '2019 – 2021',
-    impact: [
-      'Developed cross-platform mobile apps with React Native',
-      'Reduced app bundle size by 40% through code splitting',
-    ],
-  },
+  }
 ];
 ---
 
 <section class="experience section">
   <h2 class="section-title">Experience</h2>
-  
+
   <div class="experience-list">
-    {experiences.map((exp) => (
-      <div class="experience-item">
-        <div class="experience-header">
-          <h3 class="company">{exp.company}</h3>
-          <span class="period mono text-muted">{exp.period}</span>
+    {
+      experiences.map((exp) => (
+        <div class="experience-item">
+          <div class="experience-header">
+            <h3 class="company">{exp.company}</h3>
+            <span class="period mono text-muted">{exp.period}</span>
+          </div>
+          <p class="role text-secondary">{exp.role}</p>
+          <ul class="impact-list">
+            {exp.impact.map((item) => (
+              <li class="impact-item text-muted">{item}</li>
+            ))}
+          </ul>
         </div>
-        <p class="role text-secondary">{exp.role}</p>
-        <ul class="impact-list">
-          {exp.impact.map((item) => (
-            <li class="impact-item text-muted">{item}</li>
-          ))}
-        </ul>
-      </div>
-    ))}
+      ))
+    }
   </div>
-  
-  <a href="/resume/resume.pdf" class="btn btn-ghost resume-link" download>
+
+  <a
+    href={RESUME.path}
+    class="btn btn-ghost resume-link"
+    download
+  >
     Download resume (PDF)
   </a>
 </section>
@@ -64,28 +62,28 @@ const experiences: Experience[] = [
   .experience {
     border-top: 1px solid var(--color-border);
   }
-  
+
   .section-title {
     font-size: var(--text-h2);
     margin-bottom: var(--space-8);
   }
-  
+
   .experience-list {
     display: flex;
     flex-direction: column;
     gap: var(--space-8);
   }
-  
+
   .experience-item {
     padding-bottom: var(--space-6);
     border-bottom: 1px solid var(--color-border);
   }
-  
+
   .experience-item:last-child {
     border-bottom: none;
     padding-bottom: 0;
   }
-  
+
   .experience-header {
     display: flex;
     flex-wrap: wrap;
@@ -94,21 +92,21 @@ const experiences: Experience[] = [
     gap: var(--space-2);
     margin-bottom: var(--space-1);
   }
-  
+
   .company {
     font-size: var(--text-h3);
     font-weight: 600;
   }
-  
+
   .period {
     font-size: var(--text-small);
   }
-  
+
   .role {
     font-size: var(--text-body);
     margin: 0 0 var(--space-3);
   }
-  
+
   .impact-list {
     list-style: none;
     padding: 0;
@@ -117,21 +115,21 @@ const experiences: Experience[] = [
     flex-direction: column;
     gap: var(--space-1);
   }
-  
+
   .impact-item {
     font-size: var(--text-small);
     line-height: 1.5;
     padding-left: var(--space-4);
     position: relative;
   }
-  
+
   .impact-item::before {
-    content: '–';
+    content: "–";
     position: absolute;
     left: 0;
     color: var(--color-text-muted);
   }
-  
+
   .resume-link {
     margin-top: var(--space-6);
   }

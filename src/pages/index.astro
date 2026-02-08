@@ -5,11 +5,12 @@ import BentoGrid from "../components/BentoGrid.astro";
 import HowIWork from "../components/HowIWork.astro";
 import Experience from "../components/Experience.astro";
 import Footer from "../components/Footer.astro";
+import { SEO } from "../config/site";
 ---
 
 <Layout
-  title="Monisankar Nath | Software Engineer"
-  description="Monisankar Nath is a Software Engineer building scalable mobile and web applications using React Native and modern web technologies."
+  title={SEO.defaultTitle}
+  description={SEO.defaultDescription}
 >
   <div class="container">
     <Hero />

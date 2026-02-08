@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { SITE, CONTACT, SUPPORT, PROJECTS } from "../config/site";
 ---
 
 <Layout
-  title="Support | Monisankar Nath – Software Engineer"
-  description="Support Monisankar Nath, Software Engineer, in creating open source software and technical content for the development community."
+  title={`Support | ${SITE.name} – ${SITE.title}`}
+  description={`Support ${SITE.name}, ${SITE.title}, in creating open source software and technical content for the development community.`}
 >
   <div class="container">
     <article class="support section">
@@ -21,7 +22,7 @@ import Layout from "../layouts/Layout.astro";
         <h2>What Your Support Enables</h2>
         <ul>
           <li>
-            Maintenance and improvements to <strong>expo-video-cache</strong> and
+            Maintenance and improvements to <strong>{PROJECTS.expoVideoCache.name}</strong> and
             other libraries
           </li>
           <li>In-depth technical articles and case studies</li>
@@ -32,7 +33,7 @@ import Layout from "../layouts/Layout.astro";
         <h2>Contribute via UPI</h2>
         <div class="upi-section">
           <div class="upi-info card">
-            <p class="upi-id mono">monisankarnath@upi</p>
+            <p class="upi-id mono">{SUPPORT.upiId}</p>
             <p class="upi-note text-muted">
               Scan the QR code or use the UPI ID above
             </p>
@@ -55,7 +56,7 @@ import Layout from "../layouts/Layout.astro";
         <ul>
           <li>
             Star repositories on <a
-              href="https://github.com/moni-synt"
+              href={CONTACT.github.url}
               target="_blank"
               rel="noopener">GitHub</a>
           </li>

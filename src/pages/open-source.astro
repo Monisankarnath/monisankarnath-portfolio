@@ -1,11 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import OpenSourceCard from "../components/OpenSourceCard.astro";
+import { SITE, PROJECTS } from "../config/site";
 ---
 
 <Layout
-  title="Open Source | Monisankar Nath – Software Engineer"
-  description="Monisankar Nath, Software Engineer, maintains open source libraries for React Native and JavaScript ecosystems to help developers build better apps."
+  title={`Open Source | ${SITE.name} – ${SITE.title}`}
+  description={`${SITE.name}, ${SITE.title}, maintains open source libraries for React Native and JavaScript ecosystems to help developers build better apps.`}
 >
   <div class="container">
     <article class="open-source section">
@@ -19,14 +20,14 @@ import OpenSourceCard from "../components/OpenSourceCard.astro";
 
       <div class="projects">
         <OpenSourceCard
-          name="expo-video-cache"
-          description="A performant HLS video caching layer for React Native and Expo. Reduces buffering, bandwidth usage, and startup latency by caching video segments locally with intelligent eviction."
-          npmUrl="https://www.npmjs.com/package/expo-video-cache"
-          githubUrl="https://github.com/moni-synt/expo-video-cache"
+          name={PROJECTS.expoVideoCache.name}
+          description={PROJECTS.expoVideoCache.description}
+          npmUrl={PROJECTS.expoVideoCache.npm}
+          githubUrl={PROJECTS.expoVideoCache.github}
           stats={{
-            downloads: "12k/month",
-            stars: "340+",
-            lastUpdated: "Jan 2025",
+            downloads: "500/month",
+            stars: "3",
+            lastUpdated: "Feb 2026",
           }}
         />
       </div>

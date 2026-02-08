@@ -1,5 +1,8 @@
 ---
 import Layout from "./Layout.astro";
+import ContentNavigation from "../components/ContentNavigation.astro";
+import { getCollection } from "astro:content";
+import { SITE } from "../config/site";
 
 interface Props {
   frontmatter: {
@@ -26,10 +29,66 @@ const formatDate = (date: Date) => {
     day: "numeric",
   });
 };
+
+// Get current blog slug from URL
+const currentSlug = Astro.url.pathname.split("/").pop();
+
+// Fetch all blogs and case studies
+const allBlogs = await getCollection("blog");
+const allCaseStudies = await getCollection("case-studies");
+
+// Sort blogs by date (newest first)
+const sortedBlogs = allBlogs.sort(
+  (a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
+);
+
+// Find current blog index
+const currentIndex = sortedBlogs.findIndex((blog) => blog.slug === currentSlug);
+
+// Determine next item
+let nextItem: { title: string; href: string; type: "Case Study" | "Blog" } | undefined;
+
+if (currentIndex !== -1) {
+  if (currentIndex < sortedBlogs.length - 1) {
+    // Next blog exists
+    const next = sortedBlogs[currentIndex + 1];
+    nextItem = {
+      title: next.data.title,
+      href: `/blog/${next.slug}`,
+      type: "Blog",
+    };
+  } else {
+    // Last blog → find most related case study
+    const currentTags = frontmatter.tags;
+    const relatedCaseStudy = allCaseStudies
+      .map((caseStudy) => ({
+        caseStudy,
+        matches: caseStudy.data.tags.filter((tag: string) => currentTags.includes(tag)).length,
+      }))
+      .filter(({ matches }) => matches > 0)
+      .sort((a, b) => b.matches - a.matches)[0]?.caseStudy;
+
+    if (relatedCaseStudy) {
+      nextItem = {
+        title: relatedCaseStudy.data.title,
+        href: `/case-studies/${relatedCaseStudy.slug}`,
+        type: "Case Study",
+      };
+    } else if (allCaseStudies.length > 0) {
+      // No related case study → show first case study
+      const firstCaseStudy = allCaseStudies[0];
+      nextItem = {
+        title: firstCaseStudy.data.title,
+        href: `/case-studies/${firstCaseStudy.slug}`,
+        type: "Case Study",
+      };
+    }
+  }
+}
 ---
 
 <Layout
-  title={`${frontmatter.title} | Monisankar Nath`}
+  title={`${frontmatter.title} | ${SITE.name}`}
   description={frontmatter.description}
 >
   <article class="blog-post container">
@@ -61,9 +120,12 @@ const formatDate = (date: Date) => {
       <slot />
     </div>
 
-    <footer class="post-footer">
-      <a href="/blog" class="back-link">← Back to all posts</a>
-    </footer>
+    <!-- Bottom Navigation -->
+    <ContentNavigation
+      backLabel="All posts"
+      backHref="/blog"
+      nextItem={nextItem}
+    />
   </article>
 </Layout>
 
@@ -192,9 +254,42 @@ const formatDate = (date: Date) => {
     margin-block: var(--space-6);
   }
 
-  .post-footer {
-    margin-top: var(--space-16);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-border);
+  /* Table Styling - Consistent with CaseStudyLayout */
+  .content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space-8);
+    font-size: var(--text-small);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .content :global(th),
+  .content :global(td) {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .content :global(th) {
+    background-color: var(--color-bg-surface);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+
+  .content :global(td) {
+    color: var(--color-text-secondary);
+  }
+
+  .content :global(tr:last-child td) {
+    border-bottom: none;
+  }
+
+  .content :global(tr:hover td) {
+    background-color: var(--color-bg-surface);
+    transition: background-color 0.2s ease;
   }
 </style>

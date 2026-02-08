@@ -1,31 +1,32 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { SITE, CONTACT, MAILTO } from "../config/site";
 
 const contactLinks = [
   {
     name: "Email",
-    value: "monisankarnath@gmail.com",
-    href: "mailto:monisankarnath@gmail.com",
+    value: CONTACT.email,
+    href: MAILTO,
     description: "Best for direct inquiries",
   },
   {
     name: "LinkedIn",
-    value: "/in/monisankarnath",
-    href: "https://linkedin.com/in/monisankarnath",
+    value: CONTACT.linkedin.handle,
+    href: CONTACT.linkedin.url,
     description: "Professional network",
   },
   {
     name: "GitHub",
-    value: "@moni-synt",
-    href: "https://github.com/moni-synt",
+    value: CONTACT.github.handle,
+    href: CONTACT.github.url,
     description: "Code and contributions",
   },
 ];
 ---
 
 <Layout
-  title="Contact | Monisankar Nath – Software Engineer"
-  description="Get in touch with Monisankar Nath for collaboration, consulting, or engineering opportunities."
+  title={`Contact | ${SITE.name} – ${SITE.title}`}
+  description={`Get in touch with ${SITE.name} for collaboration, consulting, or engineering opportunities.`}
 >
   <div class="container">
     <article class="contact section">
@@ -34,7 +35,7 @@ const contactLinks = [
       <h1>Contact</h1>
 
       <p class="intro text-secondary">
-        Open to senior frontend and mobile engineering roles where engineering
+        Open to senior fullstack and mobile engineering roles where engineering
         quality and long-term thinking matter.
       </p>
 

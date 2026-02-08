@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import CommandPalette from "../components/CommandPalette.astro";
+import { SEO } from "../config/site";
 
 interface Props {
   title?: string;
@@ -8,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = "Monisankar Nath | Software Engineer",
-  description = "Monisankar Nath is a Software Engineer building scalable mobile and web applications using React Native and modern web technologies.",
+  title = SEO.defaultTitle,
+  description = SEO.defaultDescription,
 } = Astro.props;
 
 const canonicalURL = Astro.site

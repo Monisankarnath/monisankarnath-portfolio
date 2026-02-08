@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { SITE } from '../../config/site';
 
 const caseStudies = await getCollection('case-studies');
 
@@ -14,7 +15,7 @@ const sortedStudies = caseStudies.sort((a, b) => {
 ---
 
 <Layout 
-  title="Case Studies — Monisankar Nath"
+  title={`Case Studies — ${SITE.name}`}
   description="Deep dives into systems I've built — problems, decisions, and outcomes."
 >
   <div class="container">

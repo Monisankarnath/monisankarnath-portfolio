@@ -1,0 +1,114 @@
+---
+/**
+ * Content Navigation Component
+ * Bottom navigation for case studies and blog posts
+ * Shows back link + next item (or related content)
+ */
+
+interface Props {
+  backLabel: string;
+  backHref: string;
+  nextItem?: {
+    title: string;
+    href: string;
+    type: "Case Study" | "Blog";
+  };
+}
+
+const { backLabel, backHref, nextItem } = Astro.props;
+---
+
+<nav class="content-navigation">
+  <a href={backHref} class="nav-back">
+    ← {backLabel}
+  </a>
+
+  {
+    nextItem && (
+      <a href={nextItem.href} class="nav-next">
+        <span class="nav-next-label">Next:</span>
+        <span class="nav-next-title">{nextItem.title}</span>
+        <span class="nav-next-type mono">{nextItem.type}</span>
+      </a>
+    )
+  }
+</nav>
+
+<style>
+  .content-navigation {
+    margin-top: var(--space-24);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  @media (max-width: 767px) {
+    .content-navigation {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+  }
+
+  .nav-back {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-back:hover {
+    color: var(--color-text-primary);
+  }
+
+  .nav-next {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-1);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+    text-align: right;
+  }
+
+  @media (max-width: 767px) {
+    .nav-next {
+      align-items: flex-start;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  .nav-next:hover {
+    opacity: 0.8;
+  }
+
+  .nav-next-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-next-title {
+    font-size: var(--text-body);
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 767px) {
+    .nav-next-title {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .nav-next-type {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+</style>

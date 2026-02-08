@@ -27,7 +27,6 @@ const caseStudies = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    company: z.string(),
     role: z.string(),
     timeline: z.string(),
     teamSize: z.string().optional(),

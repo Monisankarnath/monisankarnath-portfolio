@@ -12,20 +12,28 @@ interface Belief {
 
 const beliefs: Belief[] = [
   {
-    statement: 'I prefer duplication over the wrong abstraction.',
-    explanation: 'Premature abstraction creates coupling. I wait until patterns emerge before extracting shared code.',
+    statement: 'Think first, code second.',
+    explanation: 'I design the system — data flow, architecture, automation — before writing a single line. Good planning makes implementation feel inevitable, not improvised.',
   },
   {
-    statement: 'Types are documentation.',
-    explanation: 'Well-typed code explains intent. I invest in types to reduce cognitive load and catch errors early.',
+    statement: 'Performance is a design decision.',
+    explanation: 'Speed, memory, and efficiency are considered from the first commit, not patched in the last sprint. Fast software is built, not fixed.',
   },
   {
-    statement: 'Performance is a feature.',
-    explanation: 'Fast software respects user time. I measure, profile, and optimize as part of the development cycle.',
+    statement: 'One module, one feature, one step.',
+    explanation: 'Small, testable changes that compound into reliable systems. No big-bang releases. Every step is reviewable, reversible, and shippable.',
   },
   {
-    statement: 'Ship incrementally, validate continuously.',
-    explanation: 'Small changes are easier to review, test, and roll back. I favor iteration over big-bang releases.',
+    statement: 'Structure is a form of respect.',
+    explanation: 'Clean types, modular files, minimal code per file. The next engineer who opens this should understand it in minutes, not hours.',
+  },
+  {
+    statement: 'Every diff gets reviewed — especially my own.',
+    explanation: 'I test rigorously and read every line before committing. Bugs caught locally are exponentially cheaper than bugs in production.',
+  },
+  {
+    statement: 'I use AI. I don\'t outsource judgment to it.',
+    explanation: 'I\'ve been writing code since before AI assistants existed. I use them for reviews and iteration, but the logic, the decisions, and the ownership are mine.',
   },
 ];
 ---
