@@ -15,9 +15,7 @@ export default defineConfig({
     },
     rehypePlugins: [
       [rehypeMermaid, { 
-        strategy: 'img-svg', 
-        dark: true,
-        fontFamily: 'Geist Mono, monospace',
+        strategy: 'pre-mermaid',
       }]
     ],
   },

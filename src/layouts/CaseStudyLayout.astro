@@ -1,6 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import ContentNavigation from "../components/ContentNavigation.astro";
+import MermaidInit from "../components/MermaidInit.astro";
 import type { MarkdownHeading } from "astro";
 import { getCollection } from "astro:content";
 import { SITE } from "../config/site";
@@ -9,16 +10,16 @@ interface Props {
   frontmatter: {
     title: string;
     description: string;
-    role: string;
-    timeline: string;
+    publishedAt: Date;
     teamSize?: string;
-    metrics: string;
+    metrics: string[];
     tags: string[];
   };
   headings: MarkdownHeading[];
 }
 
 const { frontmatter, headings = [] } = Astro.props;
+const formattedDate = frontmatter.publishedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 const tocHeadings = headings.filter((h) => h.depth <= 3);
 
 // Get current case study slug from URL
@@ -91,20 +92,15 @@ if (currentIndex !== -1) {
           <a href="/case-studies" class="back-link">← Case Studies</a>
 
           <h1 class="title">{frontmatter.title}</h1>
-          <p class="description text-secondary">{frontmatter.description}</p>
 
           <div class="header-meta">
             <div class="meta-item">
-              <span class="meta-label">Role</span>
-              <span class="meta-value">{frontmatter.role}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Timeline</span>
-              <span class="meta-value">{frontmatter.timeline}</span>
+              <span class="meta-label">Published</span>
+              <time class="meta-value" datetime={frontmatter.publishedAt.toISOString()}>{formattedDate}</time>
             </div>
             <div class="meta-item">
               <span class="meta-label">Impact</span>
-              <span class="meta-value highlight">{frontmatter.metrics}</span>
+              <span class="meta-value highlight">{frontmatter.metrics.join(' · ')}</span>
             </div>
           </div>
         </header>
@@ -164,6 +160,7 @@ if (currentIndex !== -1) {
       </aside>
     </div>
   </article>
+  <MermaidInit />
 </Layout>
 
 <script>

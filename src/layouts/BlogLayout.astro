@@ -1,6 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import ContentNavigation from "../components/ContentNavigation.astro";
+import MermaidInit from "../components/MermaidInit.astro";
 import { getCollection } from "astro:content";
 import { SITE } from "../config/site";
 
@@ -12,13 +13,13 @@ interface Props {
     updatedAt?: Date;
     tags: string[];
   };
+  rawContent: string;
 }
 
-const { frontmatter } = Astro.props;
+const { frontmatter, rawContent } = Astro.props;
 
-// Calculate reading time (rough estimate: 200 words per minute)
-const content = await Astro.slots.render("default");
-const wordCount = content.split(/\s+/).length;
+// Calculate reading time from raw markdown (same source as blog list page)
+const wordCount = rawContent.split(/\s+/).length;
 const readingTime = Math.ceil(wordCount / 200);
 
 // Format date
@@ -127,6 +128,7 @@ if (currentIndex !== -1) {
       nextItem={nextItem}
     />
   </article>
+  <MermaidInit />
 </Layout>
 
 <style>

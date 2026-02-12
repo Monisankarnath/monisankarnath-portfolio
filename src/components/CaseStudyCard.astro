@@ -1,77 +1,167 @@
 ---
 /**
  * CaseStudyCard Component
- * - Reusable card for case studies
- * - Props: title, description, slug, featured
+ * - Full-width row for case studies listing
+ * - Shows title, timeline, metric pills, tech tags
  */
 
 interface Props {
   title: string;
-  description: string;
   slug: string;
-  metrics?: string;
-  featured?: boolean;
+  publishedAt: Date;
+  metrics: string[];
+  tags: string[];
 }
 
-const { title, description, slug, metrics, featured = false } = Astro.props;
+const { title, slug, publishedAt, metrics, tags } = Astro.props;
+
+const displayTags = tags.slice(0, 6);
+const formattedDate = publishedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 ---
 
-<a href={`/case-studies/${slug}`} class:list={['case-study-card', 'card', { featured }]}>
-  <h3 class="card-title">{title}</h3>
-  {metrics && <p class="card-metrics mono text-muted">{metrics}</p>}
-  <p class="card-desc text-secondary">{description}</p>
-  <span class="card-arrow">→</span>
-</a>
+<li class="case-study-item">
+  <a href={`/case-studies/${slug}`} class="case-study-link">
+    <div class="case-study-content">
+      <div class="title-row">
+        <h3 class="case-study-title">{title}</h3>
+        <time class="case-study-date mono text-muted" datetime={publishedAt.toISOString()}>
+          {formattedDate}
+        </time>
+      </div>
+
+      {metrics.length > 0 && (
+        <div class="metrics-row">
+          {metrics.map((metric) => (
+            <span class="metric-pill">{metric}</span>
+          ))}
+        </div>
+      )}
+
+      {displayTags.length > 0 && (
+        <div class="tags-row">
+          {displayTags.map((tag) => (
+            <span class="tag-pill">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <span class="case-study-arrow" aria-hidden="true">→</span>
+  </a>
+</li>
 
 <style>
-  .case-study-card {
+  .case-study-item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .case-study-link {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-4);
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .case-study-link:hover {
+    background-color: var(--color-bg-surface);
+  }
+
+  .case-study-content {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding: var(--space-6);
-    text-decoration: none;
-    position: relative;
-    min-height: 160px;
   }
-  
-  .case-study-card.featured {
-    background: linear-gradient(
-      135deg,
-      var(--color-bg-surface) 0%,
-      rgba(96, 165, 250, 0.05) 100%
-    );
+
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
   }
-  
-  .card-title {
+
+  .case-study-title {
     font-size: var(--text-h3);
     font-weight: 600;
     color: var(--color-text-primary);
     margin: 0;
+    line-height: 1.4;
   }
-  
-  .card-metrics {
-    font-size: var(--text-small);
-    margin: 0;
+
+  .case-study-date {
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  
-  .card-desc {
-    font-size: var(--text-small);
-    line-height: 1.5;
-    margin: 0;
-    flex-grow: 1;
+
+  .metrics-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-1);
   }
-  
-  .card-arrow {
-    position: absolute;
-    bottom: var(--space-6);
-    right: var(--space-6);
+
+  .metric-pill {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    padding: var(--space-1) var(--space-3);
+    background-color: rgba(96, 165, 250, 0.08);
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    border-radius: 9999px;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+  }
+
+  .tag-pill {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .tag-pill:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-1);
+  }
+
+  .case-study-arrow {
+    flex-shrink: 0;
     font-size: var(--text-body);
     color: var(--color-text-muted);
-    transition: transform 150ms ease-out, color 150ms ease-out;
+    margin-top: var(--space-1);
+    transition: transform var(--transition-fast), color var(--transition-fast);
   }
-  
-  .case-study-card:hover .card-arrow {
+
+  .case-study-link:hover .case-study-arrow {
     transform: translateX(3px);
     color: var(--color-accent);
+  }
+
+  @media (max-width: 640px) {
+    .case-study-link {
+      padding: var(--space-6) var(--space-2);
+    }
+
+    .case-study-title {
+      font-size: var(--text-body);
+    }
+
+    .metrics-row {
+      gap: var(--space-1);
+    }
+
+    .metric-pill {
+      font-size: 0.6875rem;
+      padding: 2px var(--space-2);
+    }
   }
 </style>

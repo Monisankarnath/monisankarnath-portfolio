@@ -38,9 +38,9 @@ const sortedPosts = posts.sort((a, b) =>
           return (
             <BlogListItem 
               title={post.data.title}
-              description={post.data.description}
               slug={post.slug}
               publishedAt={post.data.publishedAt}
+              hook={post.data.hook}
               readTime={readTime}
             />
           );

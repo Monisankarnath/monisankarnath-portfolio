@@ -29,6 +29,10 @@ export const CONTACT = {
     url: "https://github.com/Monisankarnath",
     handle: "@Monisankarnath",
   },
+  youtube: {
+    url: "https://www.youtube.com/@monisankarnath",
+    handle: "@monisankarnath",
+  },
 } as const;
 
 // ============================================
@@ -55,10 +59,12 @@ export const SUPPORT = {
 export const PROJECTS = {
   expoVideoCache: {
     name: "expo-video-cache",
+    tagline: "HLS video caching for React Native and Expo.",
     description:
       "A performant HLS video caching layer for React Native and Expo. Reduces buffering, bandwidth usage, and startup latency by caching video segments locally with intelligent eviction.",
     github: "https://github.com/Monisankarnath/expo-video-cache",
     npm: "https://www.npmjs.com/package/expo-video-cache",
+    tech: ["Swift", "React Native", "Expo", "iOS", "TypeScript"],
   },
 } as const;
 

@@ -21,23 +21,16 @@ import { SITE, PROJECTS } from "../config/site";
       <div class="projects">
         <OpenSourceCard
           name={PROJECTS.expoVideoCache.name}
-          description={PROJECTS.expoVideoCache.description}
+          tagline={PROJECTS.expoVideoCache.tagline}
           npmUrl={PROJECTS.expoVideoCache.npm}
           githubUrl={PROJECTS.expoVideoCache.github}
+          tech={PROJECTS.expoVideoCache.tech}
           stats={{
-            downloads: "500/month",
+            downloads: "500+",
             stars: "3",
             lastUpdated: "Feb 2026",
           }}
         />
-      </div>
-
-      <div class="contribute">
-        <h2>Contributing</h2>
-        <p class="text-secondary">
-          Found a bug or have a feature idea? Open an issue on GitHub. Pull
-          requests are welcome for bug fixes and improvements.
-        </p>
       </div>
     </article>
   </div>
@@ -68,27 +61,13 @@ import { SITE, PROJECTS } from "../config/site";
   .intro {
     font-size: var(--text-body);
     margin-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-8);
   }
 
   .projects {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .contribute {
-    margin-top: var(--space-16);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .contribute h2 {
-    font-size: var(--text-h2);
-    margin-bottom: var(--space-4);
-  }
-
-  .contribute p {
-    max-width: var(--content-width);
-    line-height: 1.6;
+    gap: var(--space-8);
   }
 </style>

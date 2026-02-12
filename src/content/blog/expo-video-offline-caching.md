@@ -1,6 +1,7 @@
 ---
 title: "From Buffering to Bliss: The Journey to Instant, Offline HLS Video in React Native with expo-video-cache"
-description: "Discover the architectural journey of expo-video-cache, a unique solution I built to conquer the critical iOS HLS video caching gap in React Native. Learn how three iterations of a local proxy server transformed stuttering feeds into seamless, instant, and offline-ready video experiences for your Expo apps."
+description: "Discover a new expo-module expo-video-cache, a local proxy server transformed stuttering feeds into seamless, instant, and offline-ready video experiences for your Expo apps."
+hook: "How a local proxy server changed everything."
 publishedAt: 2026-02-11
 draft: false
 tags:
@@ -47,14 +48,14 @@ graph TD
     B --> G["🎞️ Segment 3<br/>(2-6 seconds)"]
     B --> H["🎞️ ... hundreds more"]
 
-    style A fill:#4A90D9,color:#fff
-    style B fill:#7B68EE,color:#fff
-    style C fill:#7B68EE,color:#fff
-    style D fill:#7B68EE,color:#fff
-    style E fill:#50C878,color:#fff
-    style F fill:#50C878,color:#fff
-    style G fill:#50C878,color:#fff
-    style H fill:#50C878,color:#fff
+    style A fill:#1e3a5f,color:#93c5fd
+    style B fill:#2a2040,color:#c4b5fd
+    style C fill:#2a2040,color:#c4b5fd
+    style D fill:#2a2040,color:#c4b5fd
+    style E fill:#1a2e25,color:#6ee7b7
+    style F fill:#1a2e25,color:#6ee7b7
+    style G fill:#1a2e25,color:#6ee7b7
+    style H fill:#1a2e25,color:#6ee7b7
 ```
 
 A 5-minute video might have a master manifest, 3 quality playlists, and **150+ tiny segment files**. To cache HLS, you have to download and store _every single one_ of those segments -- not just the `.m3u8` link.
@@ -133,15 +134,15 @@ For the first version, I used a lightweight Swift HTTP server library called Swi
 
 ```mermaid
 flowchart LR
-    A["📱 Player requests\na segment"] --> B["🔄 Proxy receives\nrequest"]
+    A["📱 Player requests<br/>a segment"] --> B["🔄 Proxy receives<br/>request"]
     B --> C{"💾 In cache?"}
-    C -->|Yes| D["✅ Serve from\nphone storage"]
-    C -->|No| E["⬇️ Download\nthe whole segment"]
-    E --> F["💾 Save to\nphone storage"]
-    F --> G["✅ THEN serve\nto player"]
+    C -->|Yes| D["✅ Serve from<br/>phone storage"]
+    C -->|No| E["⬇️ Download<br/>the whole segment"]
+    E --> F["💾 Save to<br/>phone storage"]
+    F --> G["✅ THEN serve<br/>to player"]
 
-    style E fill:#FF6B6B,color:#fff
-    style F fill:#FF6B6B,color:#fff
+    style E fill:#2d1b1b,color:#fca5a5
+    style F fill:#2d1b1b,color:#fca5a5
 ```
 
 **Download the whole thing, save it, then serve it.** For every single segment. The player had to wait for the complete download-and-save cycle before it could see a single frame.
@@ -162,17 +163,17 @@ The second iteration flipped the approach: **let the player stream directly from
 
 ```mermaid
 flowchart LR
-    A["📱 Player requests\na segment"] --> B["🔄 Proxy checks\nthe playlist"]
+    A["📱 Player requests<br/>a segment"] --> B["🔄 Proxy checks<br/>the playlist"]
     B --> C{"💾 In cache?"}
-    C -->|Yes| D["✅ Rewrite URL\nto proxy"]
-    D --> E["📱 Serve from\nphone storage"]
-    C -->|No| F["🌐 Keep original\nCDN URL"]
-    F --> G["📱 Player streams\ndirectly from internet"]
-    F --> H["⬇️ Background:\ndownload & cache\nfor next time"]
+    C -->|Yes| D["✅ Rewrite URL<br/>to proxy"]
+    D --> E["📱 Serve from<br/>phone storage"]
+    C -->|No| F["🌐 Keep original<br/>CDN URL"]
+    F --> G["📱 Player streams<br/>directly from internet"]
+    F --> H["⬇️ Background:<br/>download & cache<br/>for next time"]
 
-    style D fill:#50C878,color:#fff
-    style F fill:#4A90D9,color:#fff
-    style H fill:#4A90D9,color:#fff
+    style D fill:#1a2e25,color:#6ee7b7
+    style F fill:#1e3a5f,color:#93c5fd
+    style H fill:#1e3a5f,color:#93c5fd
 ```
 
 The key was in how the proxy rewrote the manifest:
@@ -264,10 +265,10 @@ flowchart TD
     Wait --> Active
 
     Active --> Complete["Download Complete ✅"]
-    Complete --> FreeSlot["Free up slot for\nnext in line"]
+    Complete --> FreeSlot["Free up slot for<br/>next in line"]
 
-    style Fast fill:#50C878,color:#fff
-    style Slow fill:#4A90D9,color:#fff
+    style Fast fill:#1a2e25,color:#6ee7b7
+    style Slow fill:#1e3a5f,color:#93c5fd
 ```
 
 Think of it like a highway with an express lane:

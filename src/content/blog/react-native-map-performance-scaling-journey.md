@@ -1,6 +1,7 @@
 ---
 title: "From Crash to Cluster: The Journey to Scaling Our React Native Map to 1,000+ Live Devices"
 description: "Discover the journey of transforming a lagging React Native map into a high-performance, real-time fleet tracking solution. This blog shares the architectural shifts, strategic optimizations, and hard-earned lessons learned in scaling to over 1,000 live devices with intelligent clustering and smart polling."
+hook: "From 50 devices crashing to 1,000+ at 60 FPS."
 publishedAt: 2025-07-20
 draft: false
 tags: ["React Native", "Performance", "Maps", "Clustering", "Real-Time", "Mobile Development"]

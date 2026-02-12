@@ -3,7 +3,10 @@ title: "expo-video-cache: Building a Zero-Dependency iOS HLS Caching Expo Module
 description: "A deep technical case study on building expo-video-cache -- an open-source Expo Module that solves iOS HLS video caching for React Native with zero third-party dependencies."
 role: "Senior Software Engineer"
 timeline: "2026"
-metrics: "More than 100 weekly downloads on npm, an app going live to production with expo-video-cache."
+metrics:
+  - "100+ npm downloads/week"
+  - "Shipped to production"
+  - "Zero dependencies"
 tags:
   [
     "React Native",
@@ -20,28 +23,28 @@ featured: true
 
 ```mermaid
 flowchart LR
-    subgraph before ["❌ Before expo-video-cache"]
+    subgraph before ["❌ Before"]
         B1["HLS Video on iOS"] --> B2["No offline playback"]
         B1 --> B3["Buffering in poor network"]
         B1 --> B4["No ecosystem solution"]
     end
 
-    subgraph after ["✅ After expo-video-cache"]
+    subgraph after ["✅ After"]
         A1["HLS Video on iOS"] --> A2["Full offline playback"]
         A1 --> A3["Instant cached replay"]
         A1 --> A4["Drop-in Expo Module"]
     end
 
     subgraph how ["🔧 How It Works"]
-        H1["📱 Video Player"] -->|"Requests video"| H2["🔄 Local Proxy\n(on device)"]
+        H1["📱 Video Player"] -->|"Requests video"| H2["🔄 Local Proxy<br/>(on device)"]
         H2 -->|"Checks"| H3["💾 Disk Cache"]
         H2 -->|"Fetches if needed"| H4["🌐 CDN"]
         H3 -->|"Serves instantly"| H1
     end
 
-    style before fill:#FFE5E5
-    style after fill:#E5FFE5
-    style how fill:#E5F0FF
+    style before fill:#3B1C1C,color:#FCA5A5
+    style after fill:#1A3329,color:#6EE7B7
+    style how fill:#1E2D3D,color:#93C5FD
 ```
 
 ---
@@ -51,7 +54,6 @@ flowchart LR
 |                |                                                                                                  |
 | -------------- | ------------------------------------------------------------------------------------------------ |
 | **What**       | An open-source Expo Module that enables offline HLS video caching on iOS for React Native apps   |
-| **Author**     | Monisankar Nath                                                                                  |
 | **Tech Stack** | Swift, Kotlin, TypeScript, Expo Modules API                                                      |
 | **Platforms**  | iOS (active proxy), Android (passthrough), Web (shim)                                            |
 | **Iterations** | 3 complete architectural rewrites over the course of development                                 |
@@ -79,26 +81,26 @@ Most production video feeds don't use plain MP4 files. They use **HLS** -- Apple
 
 ```mermaid
 graph TD
-    A["🎬 Master Manifest\n(master.m3u8)\n~2KB text file"] --> B["📋 1080p Playlist\n(stream_1080.m3u8)"]
-    A --> C["📋 720p Playlist\n(stream_720.m3u8)"]
-    A --> D["📋 480p Playlist\n(stream_480.m3u8)"]
+    A["🎬 Master Manifest<br/>(master.m3u8)<br/>~2KB text file"] --> B["📋 1080p Playlist<br/>(stream_1080.m3u8)"]
+    A --> C["📋 720p Playlist<br/>(stream_720.m3u8)"]
+    A --> D["📋 480p Playlist<br/>(stream_480.m3u8)"]
 
-    B --> E["🎞️ segment-001.ts\n2-6 seconds, ~2MB"]
-    B --> F["🎞️ segment-002.ts\n2-6 seconds, ~2MB"]
-    B --> G["🎞️ segment-003.ts\n2-6 seconds, ~2MB"]
-    B --> H["🎞️ ...\n(50-200+ segments)"]
+    B --> E["🎞️ segment-001.ts<br/>2-6 seconds, ~2MB"]
+    B --> F["🎞️ segment-002.ts<br/>2-6 seconds, ~2MB"]
+    B --> G["🎞️ segment-003.ts<br/>2-6 seconds, ~2MB"]
+    B --> H["🎞️ ...<br/>(50-200+ segments)"]
 
-    I["📝 What you get when\nyou 'download' the .m3u8"] -.->|"Just this\ntiny text file"| A
+    I["📝 What you get when<br/>you 'download' the .m3u8"] -.->|"Just this<br/>tiny text file"| A
 
-    style A fill:#4A90D9,color:#fff
-    style B fill:#7B68EE,color:#fff
-    style C fill:#7B68EE,color:#fff
-    style D fill:#7B68EE,color:#fff
-    style E fill:#50C878,color:#fff
-    style F fill:#50C878,color:#fff
-    style G fill:#50C878,color:#fff
-    style H fill:#50C878,color:#fff
-    style I fill:#FF6B6B,color:#fff
+    style A fill:#1e3a5f,color:#93c5fd
+    style B fill:#2a2040,color:#c4b5fd
+    style C fill:#2a2040,color:#c4b5fd
+    style D fill:#2a2040,color:#c4b5fd
+    style E fill:#1a2e25,color:#6ee7b7
+    style F fill:#1a2e25,color:#6ee7b7
+    style G fill:#1a2e25,color:#6ee7b7
+    style H fill:#1a2e25,color:#6ee7b7
+    style I fill:#2d1b1b,color:#fca5a5
 ```
 
 A single 5-minute video at 1080p might have: 1 master manifest, 3 quality-level playlists, and **150+ segment files**. To cache that video for offline playback, you need to download and store every single one of those files, and you need the manifests to point to the local copies instead of the remote URLs.
@@ -165,20 +167,20 @@ I designed the module with platform-aware behavior from the start:
 
 ```mermaid
 flowchart TD
-    Call["Developer calls:\nVideoCache.convertUrl(url)"] --> Platform{Which platform?}
+    Call["Developer calls:<br/>VideoCache.convertUrl(url)"] --> Platform{Which platform?}
 
-    Platform -->|iOS| ProxyURL["Returns:\nhttp://127.0.0.1:9000/proxy?url=..."]
-    ProxyURL --> AVPlayer["AVPlayer plays through proxy\n→ All segments cached to disk"]
+    Platform -->|iOS| ProxyURL["Returns:<br/>http://127.0.0.1:9000/proxy?url=..."]
+    ProxyURL --> AVPlayer["AVPlayer plays through proxy<br/>→ All segments cached to disk"]
 
-    Platform -->|Android| OriginalURL["Returns:\nOriginal CDN URL (unchanged)"]
-    OriginalURL --> ExoPlayer["ExoPlayer plays natively\n→ Built-in HLS caching"]
+    Platform -->|Android| OriginalURL["Returns:<br/>Original CDN URL (unchanged)"]
+    OriginalURL --> ExoPlayer["ExoPlayer plays natively<br/>→ Built-in HLS caching"]
 
-    Platform -->|Web| WebURL["Returns:\nOriginal CDN URL (unchanged)"]
-    WebURL --> Browser["Browser handles caching\n→ HTTP cache headers"]
+    Platform -->|Web| WebURL["Returns:<br/>Original CDN URL (unchanged)"]
+    WebURL --> Browser["Browser handles caching<br/>→ HTTP cache headers"]
 
-    style ProxyURL fill:#4A90D9,color:#fff
-    style OriginalURL fill:#50C878,color:#fff
-    style WebURL fill:#50C878,color:#fff
+    style ProxyURL fill:#1e3a5f,color:#93c5fd
+    style OriginalURL fill:#1a2e25,color:#6ee7b7
+    style WebURL fill:#1a2e25,color:#6ee7b7
 ```
 
 The public API is three functions, identical across platforms:
@@ -217,21 +219,21 @@ The architecture was straightforward -- a single `/proxy` route that handled eve
 
 ```mermaid
 flowchart TD
-    Player["📱 AVPlayer requests\n/proxy?url=segment-003.ts"] --> Route["🔄 Single /proxy route handler"]
+    Player["📱 AVPlayer requests<br/>/proxy?url=segment-003.ts"] --> Route["🔄 Single /proxy route handler"]
     Route --> CacheCheck{"💾 File in cache?"}
 
-    CacheCheck -->|"Yes (Cache Hit)"| Touch["Update access timestamp\n(LRU tracking)"]
-    Touch --> ServeCached["Read full file into memory\nServe to player"]
+    CacheCheck -->|"Yes (Cache Hit)"| Touch["Update access timestamp<br/>(LRU tracking)"]
+    Touch --> ServeCached["Read full file into memory<br/>Serve to player"]
 
-    CacheCheck -->|"No (Cache Miss)"| Download["⬇️ Download entire segment\nusing Data(contentsOf: url)\n⏳ BLOCKING -- player waits"]
-    Download --> SaveDisk["💾 Save to disk\n(atomic write)"]
+    CacheCheck -->|"No (Cache Miss)"| Download["⬇️ Download entire segment<br/>using Data(contentsOf: url)<br/>⏳ BLOCKING -- player waits"]
+    Download --> SaveDisk["💾 Save to disk<br/>(atomic write)"]
     SaveDisk --> Serve["Serve to player"]
 
-    Route --> IsManifest{"Is this a .m3u8\nmanifest file?"}
-    IsManifest -->|Yes| Rewrite["Parse line-by-line\nRewrite ALL URLs to\nhttp://127.0.0.1:9000/proxy?url=..."]
+    Route --> IsManifest{"Is this a .m3u8<br/>manifest file?"}
+    IsManifest -->|Yes| Rewrite["Parse line-by-line<br/>Rewrite ALL URLs to<br/>http://127.0.0.1:9000/proxy?url=..."]
     IsManifest -->|No| SkipRewrite["Serve as-is"]
 
-    style Download fill:#FF6B6B,color:#fff
+    style Download fill:#2d1b1b,color:#fca5a5
 ```
 
 **The data flow was simple:** For every request, check the cache. If the file exists, serve it. If not, download the entire thing, save it to disk, then serve it. For `.m3u8` manifests, parse line-by-line and rewrite all internal URLs to route through the proxy.
@@ -351,20 +353,20 @@ The breakthrough was simple: **don't route uncached content through the proxy.**
 
 ```mermaid
 flowchart TD
-    Manifest["🔄 Proxy downloads and parses\nthe HLS manifest"] --> ForEachLine["For each segment URL\nin the manifest..."]
+    Manifest["🔄 Proxy downloads and parses<br/>the HLS manifest"] --> ForEachLine["For each segment URL<br/>in the manifest..."]
 
-    ForEachLine --> Check{"💾 Is this segment\nalready cached?"}
+    ForEachLine --> Check{"💾 Is this segment<br/>already cached?"}
 
-    Check -->|"Yes ✅"| RewriteProxy["Rewrite URL to proxy\nhttp://127.0.0.1:9000/proxy?url=..."]
-    RewriteProxy --> ServedFromDisk["📱 Player requests from proxy\n→ Served instantly from disk"]
+    Check -->|"Yes ✅"| RewriteProxy["Rewrite URL to proxy<br/>http://127.0.0.1:9000/proxy?url=..."]
+    RewriteProxy --> ServedFromDisk["📱 Player requests from proxy<br/>→ Served instantly from disk"]
 
-    Check -->|"No ❌"| KeepOriginal["Keep original CDN URL\nhttps://cdn.example.com/segment.ts"]
-    KeepOriginal --> DirectStream["📱 Player streams directly\nfrom CDN (zero proxy overhead)"]
-    KeepOriginal --> BackgroundDownload["⬇️ Background: download\nand cache for next time"]
+    Check -->|"No ❌"| KeepOriginal["Keep original CDN URL<br/>https://cdn.example.com/segment.ts"]
+    KeepOriginal --> DirectStream["📱 Player streams directly<br/>from CDN (zero proxy overhead)"]
+    KeepOriginal --> BackgroundDownload["⬇️ Background: download<br/>and cache for next time"]
 
-    style RewriteProxy fill:#50C878,color:#fff
-    style KeepOriginal fill:#4A90D9,color:#fff
-    style BackgroundDownload fill:#4A90D9,color:#fff
+    style RewriteProxy fill:#1a2e25,color:#6ee7b7
+    style KeepOriginal fill:#1e3a5f,color:#93c5fd
+    style BackgroundDownload fill:#1e3a5f,color:#93c5fd
 ```
 
 This was the **Hybrid Strategy**: CDN-first streaming with background caching. The manifest rewriting became conditional:
@@ -468,23 +470,23 @@ Error: Socket Error 61 -- Connection Refused
 
 ```mermaid
 flowchart TD
-    Feed["📱 Vertical Feed\n5 videos prefetching"] --> V1["Video 1\n~50 segments"]
-    Feed --> V2["Video 2\n~50 segments"]
-    Feed --> V3["Video 3\n~50 segments"]
-    Feed --> V4["Video 4\n~50 segments"]
-    Feed --> V5["Video 5\n~50 segments"]
+    Feed["📱 Vertical Feed<br/>5 videos prefetching"] --> V1["Video 1<br/>~50 segments"]
+    Feed --> V2["Video 2<br/>~50 segments"]
+    Feed --> V3["Video 3<br/>~50 segments"]
+    Feed --> V4["Video 4<br/>~50 segments"]
+    Feed --> V5["Video 5<br/>~50 segments"]
 
-    V1 --> Total["~250 concurrent\ndownload requests"]
+    V1 --> Total["~250 concurrent<br/>download requests"]
     V2 --> Total
     V3 --> Total
     V4 --> Total
     V5 --> Total
 
     Total --> OS["iOS Network Stack"]
-    OS -->|"Overwhelmed"| Error["💥 Socket Error 61\nConnection Refused\nALL playback stops"]
+    OS -->|"Overwhelmed"| Error["💥 Socket Error 61<br/>Connection Refused<br/>ALL playback stops"]
 
-    style Error fill:#FF6B6B,color:#fff
-    style Total fill:#FF6B6B,color:#fff
+    style Error fill:#2d1b1b,color:#fca5a5
+    style Total fill:#2d1b1b,color:#fca5a5
 ```
 
 There was also **disk bloat**. Users scrolled past videos in 2 seconds, but the background cacher was downloading _entire_ streams for each one -- 50+ segments per video, megabytes of content the user would never watch. The cache filled with unwatched content, triggering aggressive LRU pruning that evicted videos the user actually cared about.
@@ -526,27 +528,27 @@ flowchart TD
     end
 
     subgraph Bridge ["Expo Module Bridge"]
-        Module["ExpoVideoCacheModule.swift\n→ Maps JS calls to native Swift"]
+        Module["ExpoVideoCacheModule.swift<br/>→ Maps JS calls to native Swift"]
     end
 
     subgraph Server ["TCP Server"]
-        Listener["VideoProxyServer.swift\n→ NWListener on port 9000\n→ Connection registry (NSLock)\n→ Lifecycle management"]
+        Listener["VideoProxyServer.swift<br/>→ NWListener on port 9000<br/>→ Connection registry (NSLock)<br/>→ Lifecycle management"]
     end
 
     subgraph Connection ["Per-Connection Handler"]
-        Handler["ClientConnectionHandler.swift\n→ Raw TCP read/write\n→ HTTP request parsing\n→ Response serialization"]
+        Handler["ClientConnectionHandler.swift<br/>→ Raw TCP read/write<br/>→ HTTP request parsing<br/>→ Response serialization"]
     end
 
     subgraph Logic ["Business Logic"]
-        DS["DataSource.swift\n→ Cache hit/miss routing\n→ Manifest rewriting\n→ Stream-while-download"]
+        DS["DataSource.swift<br/>→ Cache hit/miss routing<br/>→ Manifest rewriting<br/>→ Stream-while-download"]
     end
 
     subgraph Network ["Download Manager"]
-        DL["NetworkDownloader.swift\n→ Semaphore (32 slots)\n→ Priority detection\n→ URLSession delegation"]
+        DL["NetworkDownloader.swift<br/>→ Semaphore (32 slots)<br/>→ Priority detection<br/>→ URLSession delegation"]
     end
 
     subgraph Storage ["Disk Persistence"]
-        Cache["VideoCacheStorage.swift\n→ SHA256 filename hashing\n→ Streaming file writes\n→ LRU pruning"]
+        Cache["VideoCacheStorage.swift<br/>→ SHA256 filename hashing<br/>→ Streaming file writes<br/>→ LRU pruning"]
     end
 
     API --> Module
@@ -558,11 +560,11 @@ flowchart TD
     DL -->|"Data chunks"| DS
     DS -->|"Forward chunks"| Handler
 
-    style Server fill:#4A90D9,color:#fff
-    style Connection fill:#7B68EE,color:#fff
-    style Logic fill:#50C878,color:#fff
-    style Network fill:#FF8C00,color:#fff
-    style Storage fill:#708090,color:#fff
+    style Server fill:#1e3a5f,color:#93c5fd
+    style Connection fill:#2a2040,color:#c4b5fd
+    style Logic fill:#1a2e25,color:#6ee7b7
+    style Network fill:#2d2418,color:#fdba74
+    style Storage fill:#1c2128,color:#94a3b8
 ```
 
 | File                            | Lines | Responsibility                                                                              |
@@ -588,7 +590,7 @@ sequenceDiagram
     participant Disk as 💾 Disk Cache
 
     Player->>Handler: TCP: GET /proxy?url=segment-005.ts
-    Handler->>Handler: Buffer bytes until \r\n\r\n
+    Handler->>Handler: Buffer bytes until CRLF CRLF
     Handler->>Handler: Parse HTTP request + Range header
     Handler->>DS: Create DataSource(url, range)
     DS->>Disk: storage.exists(storageKey)?
@@ -677,26 +679,26 @@ private let queue = DispatchQueue(label: "com.videocache.downloader") // Serial!
 flowchart TD
     Request["New Download Request"] --> Classify{"What type of content?"}
 
-    Classify -->|".m3u8 manifest"| Fast["🏎️ EXPRESS LANE\nBypasses semaphore entirely\nStarts downloading immediately"]
+    Classify -->|".m3u8 manifest"| Fast["🏎️ EXPRESS LANE<br/>Bypasses semaphore entirely<br/>Starts downloading immediately"]
     Classify -->|"init.mp4 (initialization)"| Fast
     Classify -->|"Byte range < 1KB (probe)"| Fast
-    Classify -->|"All other segments"| Slow["🚗 REGULAR LANE\nQueues on serial dispatch queue\nWaits for semaphore slot"]
+    Classify -->|"All other segments"| Slow["🚗 REGULAR LANE<br/>Queues on serial dispatch queue<br/>Waits for semaphore slot"]
 
-    Slow --> SerialQueue["Serial Queue\n(one thread waits at a time)"]
+    Slow --> SerialQueue["Serial Queue<br/>(one thread waits at a time)"]
     SerialQueue --> Wait["semaphore.wait()"]
-    Wait --> Available{"Slot available?\n(< 32 active)"}
+    Wait --> Available{"Slot available?<br/>(< 32 active)"}
     Available -->|"Yes"| Start["Start download"]
-    Available -->|"No"| Block["Block until a slot opens\n(another download finishes)"]
+    Available -->|"No"| Block["Block until a slot opens<br/>(another download finishes)"]
     Block --> Start
 
     Fast --> StartFast["Start download"]
 
     Start --> Complete["Download completes"]
-    Complete --> Signal["semaphore.signal()\n(frees slot for next in queue)"]
+    Complete --> Signal["semaphore.signal()<br/>(frees slot for next in queue)"]
     StartFast --> CompleteFast["Download completes"]
 
-    style Fast fill:#50C878,color:#fff
-    style Slow fill:#4A90D9,color:#fff
+    style Fast fill:#1a2e25,color:#6ee7b7
+    style Slow fill:#1e3a5f,color:#93c5fd
 ```
 
 **Why the express lane matters:** Manifests and initialization segments are tiny but _essential_. Without the manifest, the player can't even begin. Without the init segment, no media data can decode. If these were stuck behind 32 queued segment downloads, playback startup would stall. The express lane ensures they execute immediately, no matter how saturated the download queue is.
@@ -761,31 +763,31 @@ Every request that hits the proxy follows this decision tree:
 
 ```mermaid
 flowchart TD
-    Request["Incoming Request"] --> Parse["Parse URL from query param\nParse Range header (if any)"]
-    Parse --> GenKey["Generate storage key\n(URL + byte range for fMP4)"]
-    GenKey --> IsManifest{"Is it a .m3u8\nmanifest?"}
+    Request["Incoming Request"] --> Parse["Parse URL from query param<br/>Parse Range header (if any)"]
+    Parse --> GenKey["Generate storage key<br/>(URL + byte range for fMP4)"]
+    GenKey --> IsManifest{"Is it a .m3u8<br/>manifest?"}
 
     IsManifest -->|"Yes"| ManCached{"Cached?"}
     ManCached -->|"Yes"| ReadMan["Read manifest from disk"]
-    ManCached -->|"No"| DownloadMan["Download manifest from CDN\n(simple URLSession.shared.dataTask)"]
+    ManCached -->|"No"| DownloadMan["Download manifest from CDN<br/>(simple URLSession.shared.dataTask)"]
     DownloadMan --> SaveMan["Save raw manifest to cache"]
-    ReadMan --> RewriteMan["Rewrite ALL URLs to proxy\n(line-by-line parsing)"]
+    ReadMan --> RewriteMan["Rewrite ALL URLs to proxy<br/>(line-by-line parsing)"]
     SaveMan --> RewriteMan
-    RewriteMan --> ServeMan["Serve rewritten manifest to player\nContent-Type: application/vnd.apple.mpegurl"]
+    RewriteMan --> ServeMan["Serve rewritten manifest to player<br/>Content-Type: application/vnd.apple.mpegurl"]
 
     IsManifest -->|"No"| SegCached{"Cached?"}
     SegCached -->|"Yes"| OpenHandle["Open FileHandle for reading"]
     OpenHandle --> StreamDisk["Stream in 64KB chunks to player"]
 
-    SegCached -->|"No"| StartStream["🔥 Stream-While-Download\nvia NetworkDownloader"]
-    StartStream --> Priority{"Priority\nrequest?"}
-    Priority -->|"Express"| Immediate["Start immediately\n(bypass semaphore)"]
-    Priority -->|"Regular"| Queue["Wait for semaphore slot\n(max 32 active)"]
-    Immediate --> Pipe["Pipe: CDN → Player + Disk\nsimultaneously"]
+    SegCached -->|"No"| StartStream["🔥 Stream-While-Download<br/>via NetworkDownloader"]
+    StartStream --> Priority{"Priority<br/>request?"}
+    Priority -->|"Express"| Immediate["Start immediately<br/>(bypass semaphore)"]
+    Priority -->|"Regular"| Queue["Wait for semaphore slot<br/>(max 32 active)"]
+    Immediate --> Pipe["Pipe: CDN → Player + Disk<br/>simultaneously"]
     Queue --> Pipe
 
-    style StartStream fill:#50C878,color:#fff
-    style StreamDisk fill:#4A90D9,color:#fff
+    style StartStream fill:#1a2e25,color:#6ee7b7
+    style StreamDisk fill:#1e3a5f,color:#93c5fd
 ```
 
 ### Thread Safety
@@ -1128,14 +1130,14 @@ flowchart TD
     Parse["Proxy parses manifest"] --> ForEach["For each segment URL..."]
     ForEach --> Index{"Segment index?"}
 
-    Index -->|"≤ 5 (first ~15 seconds)"| ProxyURL["Rewrite to proxy URL\n→ Cache to disk + serve"]
-    ProxyURL --> Offline["✅ Available offline\n✅ Instant replay"]
+    Index -->|"≤ 5 (first ~15 seconds)"| ProxyURL["Rewrite to proxy URL<br/>→ Cache to disk + serve"]
+    ProxyURL --> Offline["✅ Available offline<br/>✅ Instant replay"]
 
-    Index -->|"> 5 (rest of video)"| CDNURL["Keep original CDN URL\n→ Stream directly"]
-    CDNURL --> NoCache["✅ Zero disk space used\n✅ Stream on demand"]
+    Index -->|"> 5 (rest of video)"| CDNURL["Keep original CDN URL<br/>→ Stream directly"]
+    CDNURL --> NoCache["✅ Zero disk space used<br/>✅ Stream on demand"]
 
-    style ProxyURL fill:#50C878,color:#fff
-    style CDNURL fill:#4A90D9,color:#fff
+    style ProxyURL fill:#1a2e25,color:#6ee7b7
+    style CDNURL fill:#1e3a5f,color:#93c5fd
 ```
 
 The opening always plays instantly from cache. Users who watch the full video stream the rest seamlessly from the CDN. Users who swipe away don't waste storage on content they'll never replay. This could dramatically reduce disk usage without sacrificing the instant-play experience.

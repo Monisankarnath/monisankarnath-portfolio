@@ -3,7 +3,10 @@ title: "Scaling a Real-Time GPS Map to 1,000+ Live Devices in React Native"
 description: "A deep technical case study on building a production fleet tracking map — from crashing at 50 devices to rendering 1,000+ at 60 FPS using C++ clustering, cross-platform marker fixes, and a custom position coordinator singleton."
 role: "Lead Software Engineer"
 timeline: "2025"
-metrics: "1,000+ live devices at 60 FPS · 0 crash rate · 50,000+ users in production"
+metrics:
+  - "1,000+ devices at 60 FPS"
+  - "0 crash rate"
+  - "50K+ users in production"
 tags: [React Native, Google Maps, Performance, Clustering, Geospatial, Real-Time, Expo, Zustand, React Query, Cross-Platform]
 publishedAt: 2025-07-20
 featured: false

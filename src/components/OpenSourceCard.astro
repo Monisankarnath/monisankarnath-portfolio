@@ -1,15 +1,16 @@
 ---
 /**
  * OpenSourceCard Component
- * - Reusable card for OSS projects
- * - Props: name, description, npm, github, stats
+ * - Modern "project hero" layout for OSS projects
+ * - Name + links, tagline, tech stack pills, metric counters
  */
 
 interface Props {
   name: string;
-  description: string;
+  tagline: string;
   npmUrl?: string;
   githubUrl: string;
+  tech: readonly string[];
   stats?: {
     downloads?: string;
     stars?: string;
@@ -17,81 +18,189 @@ interface Props {
   };
 }
 
-const { name, description, npmUrl, githubUrl, stats } = Astro.props;
+const { name, tagline, npmUrl, githubUrl, tech, stats } = Astro.props;
 ---
 
-<div class="oss-card card">
-  <h3 class="card-name">{name}</h3>
-  <p class="card-desc text-secondary">{description}</p>
-  
-  <div class="card-links">
-    {npmUrl && (
-      <a href={npmUrl} class="card-link" target="_blank" rel="noopener noreferrer">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M0 7.334v8h6.666v1.332H12v-1.332h12v-8H0zm6.666 6.664H5.334v-4H3.999v4H1.335V8.667h5.331v5.331zm4 0v1.336H8.001V8.667h5.334v5.332h-2.669v-.001zm12.001 0h-1.33v-4h-1.336v4h-1.335v-4h-1.33v4h-2.671V8.667h8.002v5.331zM10.665 10H12v2.667h-1.335V10z"/>
+<div class="oss-project">
+  <div class="project-header">
+    <h2 class="project-name">{name}</h2>
+    <div class="project-links">
+      {npmUrl && (
+        <a href={npmUrl} class="project-link" target="_blank" rel="noopener noreferrer">
+          npm
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7" /><path d="M7 7h10v10" />
+          </svg>
+        </a>
+      )}
+      <a href={githubUrl} class="project-link" target="_blank" rel="noopener noreferrer">
+        GitHub
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7" /><path d="M7 7h10v10" />
         </svg>
-        npm
       </a>
-    )}
-    <a href={githubUrl} class="card-link" target="_blank" rel="noopener noreferrer">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-      </svg>
-      GitHub
-    </a>
+    </div>
   </div>
-  
+
+  <p class="project-tagline text-muted">{tagline}</p>
+
+  {tech.length > 0 && (
+    <div class="tech-row">
+      {tech.map((t) => (
+        <span class="tech-pill">{t}</span>
+      ))}
+    </div>
+  )}
+
   {stats && (
-    <div class="card-stats mono text-muted">
-      {stats.downloads && <span>📦 {stats.downloads} downloads</span>}
-      {stats.stars && <span>⭐ {stats.stars} stars</span>}
-      {stats.lastUpdated && <span>🔄 {stats.lastUpdated}</span>}
+    <div class="stats-grid">
+      {stats.downloads && (
+        <div class="stat-item">
+          <span class="stat-value">{stats.downloads}</span>
+          <span class="stat-label">downloads / month</span>
+        </div>
+      )}
+      {stats.stars && (
+        <div class="stat-item">
+          <span class="stat-value">{stats.stars}</span>
+          <span class="stat-label">stars</span>
+        </div>
+      )}
+      {stats.lastUpdated && (
+        <div class="stat-item">
+          <span class="stat-value">{stats.lastUpdated}</span>
+          <span class="stat-label">last update</span>
+        </div>
+      )}
     </div>
   )}
 </div>
 
 <style>
-  .oss-card {
-    padding: var(--space-8);
+  .oss-project {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: var(--space-8) 0;
   }
-  
-  .card-name {
-    font-size: var(--text-h2);
-    font-weight: 600;
-    margin: 0 0 var(--space-3);
+
+  .project-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
   }
-  
-  .card-desc {
-    font-size: var(--text-body);
-    line-height: 1.6;
-    margin: 0 0 var(--space-6);
-    max-width: 50ch;
+
+  .project-name {
+    font-size: var(--text-h1);
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
   }
-  
-  .card-links {
+
+  .project-links {
     display: flex;
     gap: var(--space-4);
-    margin-bottom: var(--space-6);
+    flex-shrink: 0;
   }
-  
-  .card-link {
+
+  .project-link {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-1);
     font-size: var(--text-small);
+    font-family: var(--font-mono);
     color: var(--color-accent);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 9999px;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
   }
-  
-  .card-link:hover {
-    color: var(--color-accent-hover);
+
+  .project-link:hover {
+    background-color: rgba(96, 165, 250, 0.08);
+    border-color: rgba(96, 165, 250, 0.4);
   }
-  
-  .card-stats {
+
+  .project-tagline {
+    font-size: var(--text-body);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .tech-row {
     display: flex;
     flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tech-pill {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    padding: var(--space-1) var(--space-3);
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 9999px;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-4);
-    font-size: var(--text-small);
+    margin-top: var(--space-2);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-6);
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .project-header {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .project-name {
+      font-size: var(--text-h2);
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      padding: var(--space-4) var(--space-6);
+    }
   }
 </style>

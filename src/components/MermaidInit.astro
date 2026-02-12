@@ -1,0 +1,85 @@
+---
+/**
+ * Mermaid Initializer
+ * Loads Mermaid from CDN and renders <pre class="mermaid"> blocks.
+ * Include this component on any page that may contain Mermaid diagrams.
+ * Waits for fonts to load before rendering so text measurement is accurate.
+ * Only runs client-side — zero cost if no diagrams exist on the page.
+ *
+ * Theme: Fully custom base theme tuned to match the site's dark design system.
+ */
+---
+
+<script>
+  const mermaidBlocks = document.querySelectorAll('pre.mermaid');
+
+  if (mermaidBlocks.length > 0) {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.textContent = `
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+      await document.fonts.ready;
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        fontFamily: 'Geist Mono, monospace',
+        flowchart: {
+          htmlLabels: true,
+          useMaxWidth: true,
+        },
+        themeVariables: {
+          /* Page background */
+          background: '#0E1116',
+
+          /* Node styling — muted surface with soft border */
+          primaryColor: '#161b22',
+          primaryTextColor: '#c9d1d9',
+          primaryBorderColor: '#30363d',
+
+          /* Secondary nodes */
+          secondaryColor: '#1c2128',
+          secondaryTextColor: '#c9d1d9',
+          secondaryBorderColor: '#30363d',
+
+          /* Tertiary nodes */
+          tertiaryColor: '#1c2128',
+          tertiaryTextColor: '#8b949e',
+          tertiaryBorderColor: '#30363d',
+
+          /* Lines and edges */
+          lineColor: '#484f58',
+          textColor: '#c9d1d9',
+
+          /* Notes (sequence diagrams) */
+          noteBkgColor: '#1c2128',
+          noteTextColor: '#c9d1d9',
+          noteBorderColor: '#30363d',
+
+          /* Cluster / subgraph backgrounds */
+          clusterBkg: '#161b22',
+          clusterBorder: '#30363d',
+
+          /* Labels on edges */
+          edgeLabelBackground: '#0E1116',
+
+          /* Sequence diagram specifics */
+          actorBkg: '#161b22',
+          actorBorder: '#30363d',
+          actorTextColor: '#c9d1d9',
+          activationBorderColor: '#484f58',
+          activationBkgColor: '#1c2128',
+          signalColor: '#c9d1d9',
+          labelBoxBkgColor: '#161b22',
+          labelBoxBorderColor: '#30363d',
+          labelTextColor: '#c9d1d9',
+          loopTextColor: '#8b949e',
+        },
+      });
+
+      await mermaid.run();
+    `;
+    document.head.appendChild(script);
+  }
+</script>

@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from "astro:content";
 
 /**
  * Blog Collection
@@ -6,10 +6,11 @@ import { defineCollection, z } from 'astro:content';
  * - SEO-optimized with proper frontmatter
  */
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    hook: z.string().optional(),
     publishedAt: z.coerce.date(),
     updatedAt: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
@@ -23,14 +24,14 @@ const blog = defineCollection({
  * - Problem, decisions, outcomes
  */
 const caseStudies = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
     role: z.string(),
     timeline: z.string(),
     teamSize: z.string().optional(),
-    metrics: z.string(), // e.g., "Reduced sync latency by 40%"
+    metrics: z.array(z.string()),
     tags: z.array(z.string()).default([]),
     publishedAt: z.coerce.date(),
     featured: z.boolean().default(false),
@@ -39,5 +40,5 @@ const caseStudies = defineCollection({
 
 export const collections = {
   blog,
-  'case-studies': caseStudies,
+  "case-studies": caseStudies,
 };
