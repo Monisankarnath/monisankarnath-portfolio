@@ -12,10 +12,9 @@ publishedAt: 2025-07-20
 featured: false
 ---
 
-<!-- HERO IMAGE PLACEHOLDER -->
 
 > ![Hero: Map view showing 1000+ devices clustered in real-time](images/hero-cluster-map.png)
-<!-- > _Production screenshot: 1000+ live GPS devices rendered at 60 FPS with intelligent clustering, real-time trails, and geofence overlays._ -->
+
 
 ## 1. Executive Summary
 
@@ -831,10 +830,9 @@ This is critical for map performance. If the selected device changes, the cluste
 
 Beyond real-time tracking, fleet managers need to review historical routes—where a vehicle went, how fast it moved, where it stopped, and for how long.
 
-<!-- IMAGE PLACEHOLDER -->
 
 > ![Screenshot: History playback with animated marker on route](images/history-playback.png)
-<!-- > _Route playback: animated vehicle marker scrubbing through historical coordinates with speed graph and event timeline._ -->
+
 
 ### 9.1 The Playback Engine: Scrubbing Through Time
 
@@ -980,10 +978,9 @@ The entire history system supports **multi-language** formatting (English, Spani
 
 ### 10.1 Geofence Rendering: Circles & Polygons
 
-<!-- IMAGE PLACEHOLDER -->
 
 > ![Screenshot: Geofence overlay on map](images/geofence-overlay.png)
-<!-- > _Geofence visualization: circle and polygon zones with configurable colors and transparency._ -->
+
 
 Geofences are rendered as native map overlays supporting two geometry types:
 
@@ -1204,10 +1201,9 @@ The animated marker → lightweight marker evolution taught me that animation fi
 
 ---
 
-<!-- IMAGE PLACEHOLDER -->
 
 > ![Screenshot: Full map view with trails, geofences, and POIs](images/full-map-features.png)
-<!-- > _The final product: real-time vehicle tracking with trails, geofence overlays, POI markers, and interactive bottom sheet—serving 50,000+ users in production._ -->
+
 
 ---
 

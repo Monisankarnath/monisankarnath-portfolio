@@ -69,6 +69,53 @@ export const PROJECTS = {
 } as const;
 
 // ============================================
+// PERSONAL PROJECTS
+// ============================================
+
+export const PERSONAL_PROJECTS = [
+  {
+    name: "US Restaurant Chain",
+    description:
+      "Multi-brand platform powering 10 restaurant brands in a single Nx monorepo — web, mobile, and native apps.",
+    brands: [
+      { name: "Olive Garden", url: "https://www.olivegarden.com" },
+      { name: "LongHorn Steakhouse", url: "https://www.longhornsteakhouse.com" },
+      { name: "Cheddar's", url: "https://www.cheddars.com" },
+      { name: "Ruth's Chris", url: "https://www.ruthschris.com" },
+      { name: "The Capital Grille", url: "https://www.thecapitalgrille.com" },
+      { name: "The Capital Burger", url: "https://www.thecapitalburger.com" },
+      { name: "Seasons 52", url: "https://www.seasons52.com" },
+      { name: "Eddie V's", url: "https://www.eddiev.com" },
+      { name: "Yard House", url: "https://www.yardhouse.com" },
+      { name: "Bahama Breeze", url: "https://www.bahamabreeze.com" },
+    ],
+    tech: ["Next.js", "React Native", "React", "Nx", "TypeScript"],
+    role: "Led modules, cross-platform features, production stability, and UX across all devices.",
+  },
+  {
+    name: "iOS IAP Store",
+    description:
+      "Swift package for in-app purchases using StoreKit2 — supports buy, upgrade, downgrade, cancel, and refund flows.",
+    brands: [] as { name: string; url: string }[],
+    tech: ["Swift", "StoreKit2", "iOS"],
+    role: "Built and published to Swift Package Index.",
+    links: {
+      github: "https://github.com/nathMonisankar/IOS-IAP-store",
+      spi: "https://swiftpackageindex.com/nathMonisankar/IOS-IAP-store",
+    },
+  },
+] as const;
+
+// ============================================
+// BIO — Hero paragraph
+// ============================================
+
+export const BIO = {
+  location: "Bangalore, India",
+  html: `Based in <strong>Bangalore, India</strong>. Building high-performance mobile and web systems at <strong>GeekyAnts</strong>.`,
+} as const;
+
+// ============================================
 // HERO — What you're currently working on
 // Update these when your focus changes.
 // ============================================

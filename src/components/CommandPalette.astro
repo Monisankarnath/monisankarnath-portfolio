@@ -1,25 +1,60 @@
 ---
-/**
- * Command Palette (⌘K)
- * - Native <dialog> element
- * - Keyboard navigation
- * - Search through pages
- */
+import { getCollection } from "astro:content";
+import { CONTACT, MAILTO, RESUME, PROJECTS } from "../config/site";
 
 interface SearchItem {
   title: string;
   description: string;
   href: string;
-  type: 'page' | 'case-study' | 'blog';
+  type: "page" | "blog" | "case-study" | "external";
+  tags?: string[];
+  isDefault?: boolean;
 }
 
-// Static pages - these are always available
-const staticPages: SearchItem[] = [
-  { title: 'Home', description: 'Go to homepage', href: '/', type: 'page' },
-  { title: 'About', description: 'Learn about me', href: '/about', type: 'page' },
-  { title: 'Blog', description: 'Technical writing', href: '/blog', type: 'page' },
-  { title: 'Contact', description: 'Get in touch', href: '/contact', type: 'page' },
-  { title: 'Support', description: 'Support open source', href: '/support', type: 'page' },
+const defaultPages: SearchItem[] = [
+  { title: "Home", description: "Go to homepage", href: "/", type: "page", isDefault: true },
+  { title: "Blog", description: "Technical writing", href: "/blog", type: "page", isDefault: true },
+  { title: "Case Studies", description: "Deep dives into systems", href: "/case-studies", type: "page", isDefault: true },
+  { title: "Open Source", description: "Libraries and tools", href: "/open-source", type: "page", isDefault: true },
+];
+
+const hiddenPages: SearchItem[] = [
+  { title: "Support", description: "Support open source", href: "/support", type: "page" },
+];
+
+const externalLinks: SearchItem[] = [
+  { title: "GitHub", description: CONTACT.github.handle, href: CONTACT.github.url, type: "external" },
+  { title: "YouTube", description: CONTACT.youtube.handle, href: CONTACT.youtube.url, type: "external" },
+  { title: "LinkedIn", description: CONTACT.linkedin.handle, href: CONTACT.linkedin.url, type: "external" },
+  { title: "Email", description: CONTACT.email, href: MAILTO, type: "external" },
+  { title: "Resume", description: "View resume PDF", href: RESUME.path, type: "external" },
+  { title: "expo-video-cache", description: "npm package", href: PROJECTS.expoVideoCache.npm, type: "external", tags: ["npm", "open source", "expo", "video", "cache"] },
+];
+
+const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const blogItems: SearchItem[] = blogPosts.map((post) => ({
+  title: post.data.title,
+  description: "Blog",
+  href: `/blog/${post.slug}`,
+  type: "blog" as const,
+  tags: post.data.tags,
+}));
+
+const caseStudies = await getCollection("case-studies");
+const caseStudyItems: SearchItem[] = caseStudies.map((study) => ({
+  title: study.data.title,
+  description: "Case Study",
+  href: `/case-studies/${study.slug}`,
+  type: "case-study" as const,
+  tags: study.data.tags,
+}));
+
+const allItems: SearchItem[] = [
+  ...defaultPages,
+  ...hiddenPages,
+  ...blogItems,
+  ...caseStudyItems,
+  ...externalLinks,
 ];
 ---
 
@@ -30,135 +65,174 @@ const staticPages: SearchItem[] = [
         <circle cx="11" cy="11" r="8"/>
         <path d="m21 21-4.3-4.3"/>
       </svg>
-      <input 
-        type="text" 
+      <input
+        type="text"
         id="command-input"
         class="search-input mono"
-        placeholder="Search pages..."
+        placeholder="Search..."
         autocomplete="off"
       />
       <kbd class="escape-hint">ESC</kbd>
     </div>
-    
-    <ul id="command-results" class="results">
-      {staticPages.map((item, index) => (
-        <li>
-          <a 
-            href={item.href} 
-            class="result-item" 
-            data-index={index}
-            data-title={item.title.toLowerCase()}
-            data-description={item.description.toLowerCase()}
-          >
-            <span class="result-title">{item.title}</span>
-            <span class="result-desc text-muted">{item.description}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-    
+
+    <ul id="command-results" class="results"></ul>
+
     <div id="no-results" class="no-results text-muted" style="display: none;">
       No results found
     </div>
   </div>
 </dialog>
 
+<script is:inline define:vars={{ allItems, defaultPages }}>
+  window.__cmdAllItems = allItems;
+  window.__cmdDefaults = defaultPages;
+</script>
+
 <script>
-  const dialog = document.getElementById('command-palette') as HTMLDialogElement;
-  const input = document.getElementById('command-input') as HTMLInputElement;
-  const results = document.getElementById('command-results') as HTMLUListElement;
-  const noResults = document.getElementById('no-results') as HTMLDivElement;
-  const items = results.querySelectorAll('.result-item');
-  
+  const dialog = document.getElementById("command-palette") as HTMLDialogElement;
+  const input = document.getElementById("command-input") as HTMLInputElement;
+  const resultsList = document.getElementById("command-results") as HTMLUListElement;
+  const noResults = document.getElementById("no-results") as HTMLDivElement;
+
+  const allItems = (window as any).__cmdAllItems as any[];
+  const defaultPages = (window as any).__cmdDefaults as any[];
+
   let currentIndex = 0;
-  
-  // Open palette with Cmd+K or Ctrl+K
-  document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+
+  function matchesQuery(item: any, words: string[]): boolean {
+    const searchable = [
+      item.title,
+      item.description,
+      item.type,
+      ...(item.tags || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return words.every((w) => searchable.includes(w));
+  }
+
+  function getResults(query: string): any[] {
+    if (!query.trim()) return defaultPages;
+
+    const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    return allItems.filter((item) => matchesQuery(item, words));
+  }
+
+  function renderResults(items: any[]) {
+    resultsList.innerHTML = "";
+
+    if (items.length === 0) {
+      noResults.style.display = "block";
+      return;
+    }
+
+    noResults.style.display = "none";
+
+    items.forEach((item, i) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = item.href;
+      a.className = "result-item" + (i === 0 ? " selected" : "");
+      a.setAttribute("data-index", String(i));
+
+      if (item.type === "external") {
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener noreferrer");
+      }
+
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "result-title";
+      titleSpan.textContent = item.title;
+
+      const descSpan = document.createElement("span");
+      descSpan.className = "result-desc text-muted";
+      descSpan.textContent = item.type === "external" ? item.description + " ↗" : item.description;
+
+      a.appendChild(titleSpan);
+      a.appendChild(descSpan);
+      li.appendChild(a);
+      resultsList.appendChild(li);
+    });
+
+    currentIndex = 0;
+  }
+
+  function updateSelection(index: number) {
+    const items = resultsList.querySelectorAll(".result-item");
+    items.forEach((el) => el.classList.remove("selected"));
+    currentIndex = Math.max(0, Math.min(index, items.length - 1));
+    if (items[currentIndex]) {
+      items[currentIndex].classList.add("selected");
+      items[currentIndex].scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  function handleNavigate() {
+    const items = resultsList.querySelectorAll(".result-item");
+    const selected = items[currentIndex] as HTMLAnchorElement;
+    if (!selected) return;
+
+    dialog.close();
+
+    if (selected.getAttribute("target") === "_blank") {
+      window.open(selected.href, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.href = selected.href;
+    }
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
       dialog.showModal();
       input.focus();
-      input.value = '';
-      filterResults('');
-      updateSelection(0);
+      input.value = "";
+      renderResults(defaultPages);
     }
   });
-  
-  // Close on escape or click outside
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) {
-      dialog.close();
-    }
+
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
   });
-  
-  dialog.addEventListener('close', () => {
-    input.value = '';
-    filterResults('');
+
+  dialog.addEventListener("close", () => {
+    input.value = "";
   });
-  
-  // Filter results as user types
-  input.addEventListener('input', (e) => {
-    const query = (e.target as HTMLInputElement).value.toLowerCase();
-    filterResults(query);
-    updateSelection(0);
+
+  input.addEventListener("input", () => {
+    const results = getResults(input.value);
+    renderResults(results);
   });
-  
-  // Keyboard navigation
-  input.addEventListener('keydown', (e) => {
-    const visibleItems = getVisibleItems();
-    
-    if (e.key === 'ArrowDown') {
+
+  input.addEventListener("keydown", (e) => {
+    const count = resultsList.querySelectorAll(".result-item").length;
+
+    if (e.key === "ArrowDown") {
       e.preventDefault();
-      currentIndex = Math.min(currentIndex + 1, visibleItems.length - 1);
-      updateSelection(currentIndex);
-    } else if (e.key === 'ArrowUp') {
+      updateSelection(Math.min(currentIndex + 1, count - 1));
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      currentIndex = Math.max(currentIndex - 1, 0);
-      updateSelection(currentIndex);
-    } else if (e.key === 'Enter') {
+      updateSelection(Math.max(currentIndex - 1, 0));
+    } else if (e.key === "Enter") {
       e.preventDefault();
-      const selected = visibleItems[currentIndex];
-      if (selected) {
-        window.location.href = selected.getAttribute('href') || '/';
-      }
+      handleNavigate();
     }
   });
-  
-  function filterResults(query: string) {
-    let hasVisible = false;
-    
-    items.forEach((item) => {
-      const title = item.getAttribute('data-title') || '';
-      const desc = item.getAttribute('data-description') || '';
-      const matches = title.includes(query) || desc.includes(query);
-      
-      const li = item.parentElement as HTMLLIElement;
-      li.style.display = matches ? '' : 'none';
-      
-      if (matches) hasVisible = true;
-    });
-    
-    noResults.style.display = hasVisible ? 'none' : 'block';
-  }
-  
-  function getVisibleItems() {
-    return Array.from(items).filter((item) => {
-      const li = item.parentElement as HTMLLIElement;
-      return li.style.display !== 'none';
-    });
-  }
-  
-  function updateSelection(index: number) {
-    const visibleItems = getVisibleItems();
-    currentIndex = index;
-    
-    items.forEach((item) => item.classList.remove('selected'));
-    
-    if (visibleItems[index]) {
-      visibleItems[index].classList.add('selected');
-      visibleItems[index].scrollIntoView({ block: 'nearest' });
+
+  resultsList.addEventListener("click", (e) => {
+    const item = (e.target as HTMLElement).closest(".result-item") as HTMLAnchorElement;
+    if (!item) return;
+
+    e.preventDefault();
+    dialog.close();
+
+    if (item.getAttribute("target") === "_blank") {
+      window.open(item.href, "_blank", "noopener,noreferrer");
+    } else {
+      window.location.href = item.href;
     }
-  }
+  });
 </script>
 
 <style>
@@ -175,18 +249,18 @@ const staticPages: SearchItem[] = [
     background-color: var(--color-bg-surface);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   }
-  
+
   .palette::backdrop {
     background-color: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
   }
-  
+
   .palette-content {
     display: flex;
     flex-direction: column;
     max-height: 400px;
   }
-  
+
   .search-wrapper {
     display: flex;
     align-items: center;
@@ -194,12 +268,12 @@ const staticPages: SearchItem[] = [
     padding: var(--space-4);
     border-bottom: 1px solid var(--color-border);
   }
-  
+
   .search-icon {
     color: var(--color-text-muted);
     flex-shrink: 0;
   }
-  
+
   .search-input {
     flex: 1;
     background: none;
@@ -208,11 +282,11 @@ const staticPages: SearchItem[] = [
     font-size: var(--text-body);
     outline: none;
   }
-  
+
   .search-input::placeholder {
     color: var(--color-text-muted);
   }
-  
+
   .escape-hint {
     font-size: var(--text-xs);
     color: var(--color-text-muted);
@@ -221,42 +295,49 @@ const staticPages: SearchItem[] = [
     border-radius: 4px;
     border: 1px solid var(--color-border);
   }
-  
-  .results {
+
+  .no-results {
+    padding: var(--space-8);
+    text-align: center;
+    font-size: var(--text-small);
+  }
+</style>
+
+<style is:global>
+  #command-results {
     list-style: none;
     padding: var(--space-2);
     margin: 0;
     overflow-y: auto;
     flex: 1;
   }
-  
-  .result-item {
+
+  #command-results .result-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: var(--space-6);
     padding: var(--space-3) var(--space-4);
     border-radius: 0.5rem;
     text-decoration: none;
     transition: background-color var(--transition-fast);
   }
-  
-  .result-item:hover,
-  .result-item.selected {
+
+  #command-results .result-item:hover,
+  #command-results .result-item.selected {
     background-color: var(--color-bg-elevated);
   }
-  
-  .result-title {
+
+  #command-results .result-title {
     font-size: var(--text-body);
     color: var(--color-text-primary);
+    min-width: 0;
   }
-  
-  .result-desc {
+
+  #command-results .result-desc {
     font-size: var(--text-small);
-  }
-  
-  .no-results {
-    padding: var(--space-8);
-    text-align: center;
-    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 </style>

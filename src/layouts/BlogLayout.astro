@@ -18,11 +18,9 @@ interface Props {
 
 const { frontmatter, rawContent } = Astro.props;
 
-// Calculate reading time from raw markdown (same source as blog list page)
 const wordCount = rawContent.split(/\s+/).length;
 const readingTime = Math.ceil(wordCount / 200);
 
-// Format date
 const formatDate = (date: Date) => {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -31,27 +29,21 @@ const formatDate = (date: Date) => {
   });
 };
 
-// Get current blog slug from URL
 const currentSlug = Astro.url.pathname.split("/").pop();
 
-// Fetch all blogs and case studies
 const allBlogs = await getCollection("blog");
 const allCaseStudies = await getCollection("case-studies");
 
-// Sort blogs by date (newest first)
 const sortedBlogs = allBlogs.sort(
   (a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime()
 );
 
-// Find current blog index
 const currentIndex = sortedBlogs.findIndex((blog) => blog.slug === currentSlug);
 
-// Determine next item
 let nextItem: { title: string; href: string; type: "Case Study" | "Blog" } | undefined;
 
 if (currentIndex !== -1) {
   if (currentIndex < sortedBlogs.length - 1) {
-    // Next blog exists
     const next = sortedBlogs[currentIndex + 1];
     nextItem = {
       title: next.data.title,
@@ -59,7 +51,6 @@ if (currentIndex !== -1) {
       type: "Blog",
     };
   } else {
-    // Last blog → find most related case study
     const currentTags = frontmatter.tags;
     const relatedCaseStudy = allCaseStudies
       .map((caseStudy) => ({
@@ -76,7 +67,6 @@ if (currentIndex !== -1) {
         type: "Case Study",
       };
     } else if (allCaseStudies.length > 0) {
-      // No related case study → show first case study
       const firstCaseStudy = allCaseStudies[0];
       nextItem = {
         title: firstCaseStudy.data.title,
@@ -121,7 +111,7 @@ if (currentIndex !== -1) {
       <slot />
     </div>
 
-    <!-- Bottom Navigation -->
+
     <ContentNavigation
       backLabel="All posts"
       backHref="/blog"
@@ -139,7 +129,6 @@ if (currentIndex !== -1) {
   .post-header {
     margin-bottom: var(--space-12);
     padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--color-border);
   }
 
   .back-link {
@@ -186,7 +175,6 @@ if (currentIndex !== -1) {
     border: 1px solid var(--color-border);
   }
 
-  /* Content styling - same as case study */
   .content {
     max-width: var(--content-width);
   }
@@ -256,7 +244,6 @@ if (currentIndex !== -1) {
     margin-block: var(--space-6);
   }
 
-  /* Table Styling - Consistent with CaseStudyLayout */
   .content :global(table) {
     width: 100%;
     border-collapse: collapse;

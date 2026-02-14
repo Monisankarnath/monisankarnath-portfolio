@@ -1,13 +1,4 @@
 ---
-/**
- * Mermaid Initializer
- * Loads Mermaid from CDN and renders <pre class="mermaid"> blocks.
- * Include this component on any page that may contain Mermaid diagrams.
- * Waits for fonts to load before rendering so text measurement is accurate.
- * Only runs client-side — zero cost if no diagrams exist on the page.
- *
- * Theme: Fully custom base theme tuned to match the site's dark design system.
- */
 ---
 
 <script>
@@ -30,41 +21,32 @@
           useMaxWidth: true,
         },
         themeVariables: {
-          /* Page background */
           background: '#0E1116',
 
-          /* Node styling — muted surface with soft border */
           primaryColor: '#161b22',
           primaryTextColor: '#c9d1d9',
           primaryBorderColor: '#30363d',
 
-          /* Secondary nodes */
           secondaryColor: '#1c2128',
           secondaryTextColor: '#c9d1d9',
           secondaryBorderColor: '#30363d',
 
-          /* Tertiary nodes */
           tertiaryColor: '#1c2128',
           tertiaryTextColor: '#8b949e',
           tertiaryBorderColor: '#30363d',
 
-          /* Lines and edges */
           lineColor: '#484f58',
           textColor: '#c9d1d9',
 
-          /* Notes (sequence diagrams) */
           noteBkgColor: '#1c2128',
           noteTextColor: '#c9d1d9',
           noteBorderColor: '#30363d',
 
-          /* Cluster / subgraph backgrounds */
           clusterBkg: '#161b22',
           clusterBorder: '#30363d',
 
-          /* Labels on edges */
           edgeLabelBackground: '#0E1116',
 
-          /* Sequence diagram specifics */
           actorBkg: '#161b22',
           actorBorder: '#30363d',
           actorTextColor: '#c9d1d9',

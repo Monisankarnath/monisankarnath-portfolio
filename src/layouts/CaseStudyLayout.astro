@@ -19,30 +19,33 @@ interface Props {
 }
 
 const { frontmatter, headings = [] } = Astro.props;
-const formattedDate = frontmatter.publishedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+const formattedDate = frontmatter.publishedAt.toLocaleDateString("en-US", {
+  month: "short",
+  year: "numeric",
+});
 const tocHeadings = headings.filter((h) => h.depth <= 3);
 
-// Get current case study slug from URL
 const currentSlug = Astro.url.pathname.split("/").pop();
 
-// Fetch all case studies and blogs
 const allCaseStudies = await getCollection("case-studies");
 const allBlogs = await getCollection("blog");
 
-// Sort case studies by date (newest first) - adjust if you have a different order
 const sortedCaseStudies = allCaseStudies.sort(
-  (a, b) => new Date(b.data.publishedAt || 0).getTime() - new Date(a.data.publishedAt || 0).getTime()
+  (a, b) =>
+    new Date(b.data.publishedAt || 0).getTime() -
+    new Date(a.data.publishedAt || 0).getTime(),
 );
 
-// Find current case study index
-const currentIndex = sortedCaseStudies.findIndex((cs) => cs.slug === currentSlug);
+const currentIndex = sortedCaseStudies.findIndex(
+  (cs) => cs.slug === currentSlug,
+);
 
-// Determine next item
-let nextItem: { title: string; href: string; type: "Case Study" | "Blog" } | undefined;
+let nextItem:
+  | { title: string; href: string; type: "Case Study" | "Blog" }
+  | undefined;
 
 if (currentIndex !== -1) {
   if (currentIndex < sortedCaseStudies.length - 1) {
-    // Next case study exists
     const next = sortedCaseStudies[currentIndex + 1];
     nextItem = {
       title: next.data.title,
@@ -50,12 +53,13 @@ if (currentIndex !== -1) {
       type: "Case Study",
     };
   } else {
-    // Last case study → find most related blog
     const currentTags = frontmatter.tags;
     const relatedBlog = allBlogs
       .map((blog) => ({
         blog,
-        matches: blog.data.tags.filter((tag: string) => currentTags.includes(tag)).length,
+        matches: blog.data.tags.filter((tag: string) =>
+          currentTags.includes(tag),
+        ).length,
       }))
       .filter(({ matches }) => matches > 0)
       .sort((a, b) => b.matches - a.matches)[0]?.blog;
@@ -67,7 +71,6 @@ if (currentIndex !== -1) {
         type: "Blog",
       };
     } else if (allBlogs.length > 0) {
-      // No related blog → show first blog
       const firstBlog = allBlogs[0];
       nextItem = {
         title: firstBlog.data.title,
@@ -96,18 +99,24 @@ if (currentIndex !== -1) {
           <div class="header-meta">
             <div class="meta-item">
               <span class="meta-label">Published</span>
-              <time class="meta-value" datetime={frontmatter.publishedAt.toISOString()}>{formattedDate}</time>
+              <time
+                class="meta-value"
+                datetime={frontmatter.publishedAt.toISOString()}
+                >{formattedDate}</time
+              >
             </div>
             <div class="meta-item">
               <span class="meta-label">Impact</span>
-              <span class="meta-value highlight">{frontmatter.metrics.join(' · ')}</span>
+              <span class="meta-value highlight"
+                >{frontmatter.metrics.join(" · ")}</span
+              >
             </div>
           </div>
         </header>
 
         <slot />
 
-        <!-- Bottom Navigation -->
+
         <ContentNavigation
           backLabel="All case studies"
           backHref="/case-studies"
@@ -117,7 +126,7 @@ if (currentIndex !== -1) {
 
       <aside class="sidebar">
         <div class="sticky-content">
-          <!-- Top Zone: Tech Stack (20%) -->
+
           <div class="sidebar-top">
             <div class="sidebar-section">
               <h3 class="sidebar-title mono">Tech Stack</h3>
@@ -131,7 +140,7 @@ if (currentIndex !== -1) {
             </div>
           </div>
 
-          <!-- Middle Zone: TOC (60%) -->
+
           <div class="sidebar-middle">
             <div class="sidebar-section">
               <h3 class="sidebar-title mono">On this page</h3>
@@ -154,7 +163,7 @@ if (currentIndex !== -1) {
             </div>
           </div>
 
-          <!-- Bottom Zone: Empty (20%) -->
+
           <div class="sidebar-bottom"></div>
         </div>
       </aside>
@@ -164,7 +173,6 @@ if (currentIndex !== -1) {
 </Layout>
 
 <script>
-  // Simple active state observer for TOC
   const tocLinks = document.querySelectorAll(".toc-link");
   const headings = document.querySelectorAll(
     ".main-content h2, .main-content h3",
@@ -188,7 +196,6 @@ if (currentIndex !== -1) {
       activeLink.classList.remove("text-muted");
       activeLink.classList.add("active");
 
-      // Auto-scroll TOC container - Target only the sidebar scroll
       if (tocContainer && (!isManualScrolling || forceContainerScroll)) {
         const link = activeLink as HTMLElement;
         const container = tocContainer as HTMLElement;
@@ -197,7 +204,6 @@ if (currentIndex !== -1) {
         const containerScrollTop = container.scrollTop;
         const containerHeight = container.offsetHeight;
 
-        // Only scroll if outside the visible zone
         if (
           linkTop < containerScrollTop + 20 ||
           linkTop > containerScrollTop + containerHeight - 40
@@ -211,7 +217,6 @@ if (currentIndex !== -1) {
     }
   };
 
-  // Add click listeners to handle manual scroll start
   tocLinks.forEach((link) => {
     link.addEventListener("click", () => {
       isManualScrolling = true;
@@ -220,7 +225,6 @@ if (currentIndex !== -1) {
       const id = link.getAttribute("href")?.substring(1);
       if (id) setActive(id, true);
 
-      // Lock observer-driven sidebar scrolls for duration of smooth scroll
       manualScrollTimer = window.setTimeout(() => {
         isManualScrolling = false;
       }, 1000);
@@ -242,7 +246,6 @@ if (currentIndex !== -1) {
 
   headings.forEach((heading) => observer.observe(heading));
 
-  // Handle bottom of page case with throttling
   let scrollTimeout: number;
   window.addEventListener("scroll", () => {
     if (scrollTimeout) return;
@@ -268,14 +271,13 @@ if (currentIndex !== -1) {
   }
 
   .container.wide {
-    max-width: 1280px; /* Wider container as requested */
+    max-width: 1280px;
   }
 
   .case-study-header {
     margin-bottom: var(--space-12);
     padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--color-border);
-    max-width: var(--content-width); /* Header stays focused */
+    max-width: var(--content-width);
   }
 
   .back-link {
@@ -293,13 +295,6 @@ if (currentIndex !== -1) {
   .title {
     font-size: var(--text-h1);
     margin-bottom: var(--space-2);
-  }
-
-  .description {
-    font-size: var(--text-h3);
-    line-height: 1.4;
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-8);
   }
 
   .header-meta {
@@ -331,7 +326,6 @@ if (currentIndex !== -1) {
     font-weight: 600;
   }
 
-  /* Grid Layout */
   .case-study-grid {
     display: flex;
     flex-direction: column;
@@ -339,7 +333,7 @@ if (currentIndex !== -1) {
   }
 
   .sidebar {
-    display: none; /* Hidden on mobile */
+    display: none;
   }
 
   @media (min-width: 1280px) {
@@ -347,12 +341,11 @@ if (currentIndex !== -1) {
       display: grid;
       grid-template-columns: 1fr 300px;
       gap: var(--space-32);
-      /* align-items: stretch; is default, which is what we want for sticky sidebar track */
     }
 
     .sidebar {
       display: block;
-      height: 100%; /* track height */
+      height: 100%;
     }
 
     .sticky-content {
@@ -361,12 +354,10 @@ if (currentIndex !== -1) {
       height: 100vh;
       display: flex;
       flex-direction: column;
-      /* Remove padding-block so zones take full height */
       padding-block: 0;
-      overflow: hidden; /* Prevent main sidebar scroll */
+      overflow: hidden;
     }
 
-    /* Top Zone: 20% Height, Aligned Top for better scrolling */
     .sidebar-top {
       height: 20%;
       display: flex;
@@ -376,7 +367,6 @@ if (currentIndex !== -1) {
       padding-bottom: 32px;
       border-bottom: 1px solid var(--color-border);
       overflow-y: auto;
-      /* Hide scrollbar */
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
@@ -385,14 +375,12 @@ if (currentIndex !== -1) {
       display: none;
     }
 
-    /* Middle Zone: 60% Height, Scrollable */
     .sidebar-middle {
       height: 60%;
       overflow-y: auto;
       padding-top: 32px;
       padding-bottom: 20px;
 
-      /* Hide scrollbar */
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
@@ -401,13 +389,11 @@ if (currentIndex !== -1) {
       display: none;
     }
 
-    /* Bottom Zone: 20% Height, Empty */
     .sidebar-bottom {
       height: 20%;
     }
   }
 
-  /* Sidebar Styling */
   .sidebar-title {
     font-size: var(--text-xs);
     color: var(--color-text-muted);
@@ -433,7 +419,7 @@ if (currentIndex !== -1) {
     transition:
       opacity 0.2s ease,
       color 0.2s ease;
-    border-left: 1px solid transparent; /* Placeholder for active indicator option */
+    border-left: 1px solid transparent;
     padding-left: 0;
   }
 
@@ -465,16 +451,15 @@ if (currentIndex !== -1) {
     border-radius: 4px;
   }
 
-  /* Content Styling */
   .main-content {
-    min-width: 0; /* Prevents flex/grid overflow */
+    min-width: 0;
   }
 
   .main-content :global(h2) {
     font-size: var(--text-h2);
     margin-top: var(--space-16);
     margin-bottom: var(--space-4);
-    scroll-margin-top: var(--space-8); /* For direct linking */
+    scroll-margin-top: var(--space-8);
   }
 
   .main-content :global(h3) {
@@ -541,7 +526,6 @@ if (currentIndex !== -1) {
     margin-block: var(--space-6);
   }
 
-  /* Table Styling */
   .main-content :global(table) {
     width: 100%;
     border-collapse: collapse;
@@ -549,7 +533,7 @@ if (currentIndex !== -1) {
     font-size: var(--text-small);
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
-    overflow: hidden; /* For border radius */
+    overflow: hidden;
   }
 
   .main-content :global(th),

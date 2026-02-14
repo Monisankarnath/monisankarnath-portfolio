@@ -6,8 +6,7 @@ import { SITE } from '../../config/site';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 
-// Sort by date, newest first
-const sortedPosts = posts.sort((a, b) => 
+const sortedPosts = posts.sort((a, b) =>
   b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
 );
 ---
@@ -31,20 +30,14 @@ const sortedPosts = posts.sort((a, b) =>
       </div>
     ) : (
       <ul class="posts-list">
-        {sortedPosts.map((post) => {
-          const wordCount = post.body.split(/\s+/).length;
-          const readTime = Math.ceil(wordCount / 200) + ' min read';
-          
-          return (
-            <BlogListItem 
+        {sortedPosts.map((post) => (
+            <BlogListItem
               title={post.data.title}
               slug={post.slug}
               publishedAt={post.data.publishedAt}
               hook={post.data.hook}
-              readTime={readTime}
             />
-          );
-        })}
+        ))}
       </ul>
     )}
   </div>
@@ -53,7 +46,6 @@ const sortedPosts = posts.sort((a, b) =>
 <style>
   .page-header {
     padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--color-border);
   }
   
   .back-link {
@@ -89,7 +81,4 @@ const sortedPosts = posts.sort((a, b) =>
     margin: 0;
   }
   
-  @media (max-width: 640px) {
-    /* Responsive tweaks passed to components via global styles or managed internally */
-  }
 </style>

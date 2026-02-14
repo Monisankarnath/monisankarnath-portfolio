@@ -4,10 +4,9 @@ interface Props {
   slug: string;
   publishedAt: Date;
   hook?: string;
-  readTime?: string;
 }
 
-const { title, slug, publishedAt, hook, readTime } = Astro.props;
+const { title, slug, publishedAt, hook } = Astro.props;
 
 const formatDate = (date: Date) => {
   return date.toLocaleDateString('en-US', {
@@ -39,7 +38,6 @@ const formatDate = (date: Date) => {
 
 <style>
   .post-item {
-    border-bottom: 1px solid var(--color-border);
   }
 
   .post-link {
@@ -96,12 +94,6 @@ const formatDate = (date: Date) => {
     margin: 0;
     line-height: 1.4;
     font-style: italic;
-  }
-
-  .read-time {
-    font-size: var(--text-xs);
-    white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .post-arrow {

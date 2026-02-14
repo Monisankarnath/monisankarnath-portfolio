@@ -1,10 +1,4 @@
 ---
-/**
- * CaseStudyCard Component
- * - Full-width row for case studies listing
- * - Shows title, timeline, metric pills, tech tags
- */
-
 interface Props {
   title: string;
   slug: string;
@@ -52,7 +46,6 @@ const formattedDate = publishedAt.toLocaleDateString('en-US', { month: 'short', 
 
 <style>
   .case-study-item {
-    border-bottom: 1px solid var(--color-border);
   }
 
   .case-study-link {

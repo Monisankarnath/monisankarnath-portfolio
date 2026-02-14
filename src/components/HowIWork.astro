@@ -1,112 +1,107 @@
 ---
-/**
- * How I Work Section
- * - Engineering beliefs/principles
- * - Hover reveals explanation (CSS-only)
- */
-
 interface Belief {
   statement: string;
-  explanation: string;
+  punchline: string;
 }
 
 const beliefs: Belief[] = [
   {
     statement: 'Think first, code second.',
-    explanation: 'I design the system — data flow, architecture, automation — before writing a single line. Good planning makes implementation feel inevitable, not improvised.',
+    punchline: 'Design before implementation.',
   },
   {
     statement: 'Performance is a design decision.',
-    explanation: 'Speed, memory, and efficiency are considered from the first commit, not patched in the last sprint. Fast software is built, not fixed.',
+    punchline: 'Fast software is built, not fixed.',
   },
   {
-    statement: 'One module, one feature, one step.',
-    explanation: 'Small, testable changes that compound into reliable systems. No big-bang releases. Every step is reviewable, reversible, and shippable.',
+    statement: 'Ship small, ship often.',
+    punchline: 'Every step reviewable, reversible, shippable.',
   },
   {
-    statement: 'Structure is a form of respect.',
-    explanation: 'Clean types, modular files, minimal code per file. The next engineer who opens this should understand it in minutes, not hours.',
+    statement: 'Structure is respect.',
+    punchline: 'The next engineer should understand in minutes.',
   },
   {
-    statement: 'Every diff gets reviewed — especially my own.',
-    explanation: 'I test rigorously and read every line before committing. Bugs caught locally are exponentially cheaper than bugs in production.',
+    statement: 'Every diff gets reviewed.',
+    punchline: 'Especially my own.',
   },
   {
-    statement: 'I use AI. I don\'t outsource judgment to it.',
-    explanation: 'I\'ve been writing code since before AI assistants existed. I use them for reviews and iteration, but the logic, the decisions, and the ownership are mine.',
+    statement: 'AI is a tool, not a crutch.',
+    punchline: 'The decisions and ownership are mine.',
   },
 ];
 ---
 
 <section class="how-i-work section">
   <h2 class="section-title">How I Work</h2>
-  
-  <ul class="beliefs">
+
+  <div class="beliefs-grid">
     {beliefs.map((belief) => (
-      <li class="belief">
+      <div class="belief">
         <span class="belief-statement">{belief.statement}</span>
-        <span class="belief-explanation text-muted">{belief.explanation}</span>
-      </li>
+        <span class="belief-punchline">{belief.punchline}</span>
+      </div>
     ))}
-  </ul>
+  </div>
 </section>
 
 <style>
   .how-i-work {
-    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-12);
   }
-  
+
   .section-title {
     font-size: var(--text-h2);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
   }
-  
-  .beliefs {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
+
+  .beliefs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
   }
-  
+
+  @media (min-width: 640px) {
+    .beliefs-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .beliefs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
   .belief {
     padding: var(--space-4);
     border-radius: 0.5rem;
     transition: background-color var(--transition-fast);
-    cursor: default;
   }
-  
+
   .belief:hover {
     background-color: var(--color-bg-surface);
   }
-  
+
   .belief-statement {
     display: block;
     font-size: var(--text-body);
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-text-primary);
+    line-height: 1.3;
   }
-  
-  .belief-explanation {
+
+  .belief-punchline {
     display: block;
     font-size: var(--text-small);
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
     line-height: 1.5;
-    margin-top: var(--space-2);
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height var(--transition-base), opacity var(--transition-base), margin-top var(--transition-base);
   }
-  
-  .belief:hover .belief-explanation {
-    max-height: 100px;
-    opacity: 1;
-    margin-top: var(--space-2);
-  }
-  
+
   @media (prefers-reduced-motion: reduce) {
-    .belief-explanation {
+    .belief {
       transition: none;
     }
   }

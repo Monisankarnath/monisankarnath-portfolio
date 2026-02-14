@@ -6,7 +6,6 @@ import { SITE } from '../../config/site';
 
 const caseStudies = await getCollection('case-studies');
 
-// Sort by date, newest first
 const sortedStudies = caseStudies.sort((a, b) =>
   b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
 );
@@ -48,7 +47,6 @@ const sortedStudies = caseStudies.sort((a, b) =>
 <style>
   .page-header {
     padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--color-border);
   }
   
   .back-link {

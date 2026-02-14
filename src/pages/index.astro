@@ -1,11 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import BentoGrid from "../components/BentoGrid.astro";
-import HowIWork from "../components/HowIWork.astro";
 import Experience from "../components/Experience.astro";
-import Footer from "../components/Footer.astro";
-import { SEO } from "../config/site";
+import HowIWork from "../components/HowIWork.astro";
+import BentoGrid from "../components/BentoGrid.astro";
+import Projects from "../components/Projects.astro";
+import { SEO, SITE, CONTACT, MAILTO } from "../config/site";
+
+const currentYear = new Date().getFullYear();
 ---
 
 <Layout
@@ -14,9 +16,85 @@ import { SEO } from "../config/site";
 >
   <div class="container">
     <Hero />
-    <BentoGrid />
-    <HowIWork />
-    <Experience />
-    <Footer />
+    <div class="section-animate"><Experience /></div>
+    <div class="section-animate"><HowIWork /></div>
+    <div class="section-animate"><BentoGrid /></div>
+    <div class="section-animate"><Projects /></div>
+
+    <div class="section-animate">
+      <footer class="end-note">
+        <p class="end-text text-muted">
+          Thanks for scrolling. Say hi at <a href={MAILTO}>{CONTACT.email}</a>
+        </p>
+        <p class="end-copy text-muted mono">
+          © {currentYear} {SITE.name}
+        </p>
+      </footer>
+    </div>
   </div>
 </Layout>
+
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.section-animate').forEach((el) => {
+      observer.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.section-animate').forEach((el) => {
+      el.classList.add('visible');
+    });
+  }
+</script>
+
+<style>
+  .end-note {
+    padding-block: var(--space-16) var(--space-12);
+    text-align: center;
+  }
+
+  .end-text {
+    font-size: var(--text-body);
+    margin-bottom: var(--space-4);
+  }
+
+  .end-text a {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color var(--transition-fast);
+  }
+
+  .end-text a:hover {
+    color: var(--color-text-primary);
+  }
+
+  .end-copy {
+    font-size: var(--text-xs);
+  }
+</style>
+
+<style is:global>
+  .section-animate {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .section-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

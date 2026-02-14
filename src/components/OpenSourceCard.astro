@@ -1,10 +1,4 @@
 ---
-/**
- * OpenSourceCard Component
- * - Modern "project hero" layout for OSS projects
- * - Name + links, tagline, tech stack pills, metric counters
- */
-
 interface Props {
   name: string;
   tagline: string;
@@ -21,112 +15,100 @@ interface Props {
 const { name, tagline, npmUrl, githubUrl, tech, stats } = Astro.props;
 ---
 
-<div class="oss-project">
-  <div class="project-header">
-    <h2 class="project-name">{name}</h2>
-    <div class="project-links">
+<div class="oss-card">
+  <div class="card-top">
+    <h2 class="card-name">{name}</h2>
+    <div class="card-links">
       {npmUrl && (
-        <a href={npmUrl} class="project-link" target="_blank" rel="noopener noreferrer">
-          npm
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-          </svg>
+        <a href={npmUrl} class="card-link mono" target="_blank" rel="noopener noreferrer">
+          npm ↗
         </a>
       )}
-      <a href={githubUrl} class="project-link" target="_blank" rel="noopener noreferrer">
-        GitHub
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 17L17 7" /><path d="M7 7h10v10" />
-        </svg>
+      <a href={githubUrl} class="card-link mono" target="_blank" rel="noopener noreferrer">
+        GitHub ↗
       </a>
     </div>
   </div>
 
-  <p class="project-tagline text-muted">{tagline}</p>
+  <p class="card-tagline">{tagline}</p>
 
   {tech.length > 0 && (
     <div class="tech-row">
       {tech.map((t) => (
-        <span class="tech-pill">{t}</span>
+        <span class="tech-pill mono">{t}</span>
       ))}
     </div>
   )}
 
   {stats && (
-    <div class="stats-grid">
+    <div class="stats-row">
       {stats.downloads && (
-        <div class="stat-item">
-          <span class="stat-value">{stats.downloads}</span>
-          <span class="stat-label">downloads / month</span>
-        </div>
+        <span class="stat"><strong>{stats.downloads}</strong> downloads</span>
       )}
       {stats.stars && (
-        <div class="stat-item">
-          <span class="stat-value">{stats.stars}</span>
-          <span class="stat-label">stars</span>
-        </div>
+        <span class="stat"><strong>{stats.stars}</strong> stars</span>
       )}
       {stats.lastUpdated && (
-        <div class="stat-item">
-          <span class="stat-value">{stats.lastUpdated}</span>
-          <span class="stat-label">last update</span>
-        </div>
+        <span class="stat">Updated <strong>{stats.lastUpdated}</strong></span>
       )}
     </div>
   )}
 </div>
 
 <style>
-  .oss-project {
+  .oss-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
-    padding: var(--space-8) 0;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    transition: border-color var(--transition-fast);
   }
 
-  .project-header {
+  .oss-card:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .card-top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-6);
+    gap: var(--space-4);
     flex-wrap: wrap;
   }
 
-  .project-name {
-    font-size: var(--text-h1);
+  .card-name {
+    font-size: var(--text-h2);
     font-weight: 700;
     margin: 0;
     color: var(--color-text-primary);
     letter-spacing: -0.02em;
   }
 
-  .project-links {
+  .card-links {
     display: flex;
-    gap: var(--space-4);
+    gap: var(--space-3);
     flex-shrink: 0;
   }
 
-  .project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
+  .card-link {
     font-size: var(--text-small);
-    font-family: var(--font-mono);
     color: var(--color-accent);
     text-decoration: none;
-    padding: var(--space-1) var(--space-3);
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    border-radius: 9999px;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+    transition: color var(--transition-fast);
   }
 
-  .project-link:hover {
-    background-color: rgba(96, 165, 250, 0.08);
-    border-color: rgba(96, 165, 250, 0.4);
+  .card-link:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
-  .project-tagline {
+  .card-tagline {
     font-size: var(--text-body);
+    color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.5;
   }
@@ -139,68 +121,35 @@ const { name, tagline, npmUrl, githubUrl, tech, stats } = Astro.props;
 
   .tech-pill {
     font-size: var(--text-xs);
-    font-family: var(--font-mono);
-    padding: var(--space-1) var(--space-3);
-    background-color: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
+    padding: 2px var(--space-2);
+    background-color: rgba(96, 165, 250, 0.08);
+    border: 1px solid rgba(96, 165, 250, 0.15);
     border-radius: 9999px;
-    color: var(--color-text-secondary);
+    color: var(--color-accent);
     white-space: nowrap;
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-4);
-    margin-top: var(--space-2);
-  }
-
-  .stat-item {
+  .stats-row {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    padding: var(--space-6);
-    background-color: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    text-align: center;
-  }
-
-  .stat-value {
-    font-size: var(--text-h2);
-    font-weight: 700;
-    font-family: var(--font-mono);
-    color: var(--color-text-primary);
-    letter-spacing: -0.02em;
-  }
-
-  .stat-label {
-    font-size: var(--text-xs);
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-6);
+    font-size: var(--text-small);
     color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  }
+
+  .stats-row strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
   }
 
   @media (max-width: 640px) {
-    .project-header {
+    .card-top {
       flex-direction: column;
-      gap: var(--space-3);
+      gap: var(--space-2);
     }
 
-    .project-name {
-      font-size: var(--text-h2);
-    }
-
-    .stats-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .stat-item {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      padding: var(--space-4) var(--space-6);
+    .card-name {
+      font-size: var(--text-h3);
     }
   }
 </style>

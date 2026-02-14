@@ -1,0 +1,156 @@
+---
+import { PERSONAL_PROJECTS } from "../config/site";
+---
+
+<section class="projects section">
+  <h2 class="section-title">Notable Work</h2>
+
+  <div class="project-list">
+    {PERSONAL_PROJECTS.map((project) => (
+      <div class="project-item">
+        <div class="project-header">
+          <h3 class="project-name">{project.name}</h3>
+          <div class="project-tags">
+            {project.tech.map((t) => (
+              <span class="tag mono">{t}</span>
+            ))}
+          </div>
+        </div>
+
+        <p class="project-desc text-secondary">{project.description}</p>
+
+        <p class="project-role text-muted">{project.role}</p>
+
+        {project.brands.length > 0 && (
+          <div class="project-brands">
+            {project.brands.map((brand, i) => (
+              <>
+                <a href={brand.url} class="brand-link" target="_blank" rel="noopener noreferrer">{brand.name}</a>{i < project.brands.length - 1 && <span class="brand-sep"> · </span>}
+              </>
+            ))}
+          </div>
+        )}
+
+        {'links' in project && project.links && (
+          <div class="project-links">
+            {'github' in project.links && (
+              <a href={project.links.github} class="project-link mono" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            )}
+            {'spi' in project.links && (
+              <a href={project.links.spi} class="project-link mono" target="_blank" rel="noopener noreferrer">Swift Package Index ↗</a>
+            )}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .projects {
+    padding-block: var(--space-12);
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    margin-bottom: var(--space-8);
+  }
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .project-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .project-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .project-name {
+    font-size: var(--text-h3);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    font-size: var(--text-xs);
+    padding: 2px var(--space-2);
+    background-color: rgba(96, 165, 250, 0.08);
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    border-radius: 9999px;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .project-desc {
+    font-size: var(--text-body);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  .project-role {
+    font-size: var(--text-small);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .project-brands {
+    font-size: var(--text-small);
+    line-height: 1.8;
+  }
+
+  .brand-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .brand-link:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .brand-sep {
+    color: var(--color-text-muted);
+    opacity: 0.3;
+  }
+
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .project-link {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .project-link:hover {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+</style>

@@ -1,34 +1,37 @@
 ---
-/**
- * Bento Grid Navigation
- * - 3 cards: Case Studies (larger), Open Source, Writing
- * - Subtle hover effects
- * - Links to respective sections
- */
-
 interface GridItem {
   title: string;
-  description: string;
+  subtitle: string;
+  count: string;
   href: string;
-  featured?: boolean;
+  accentColor: string;
+  accentBg: string;
 }
 
 const items: GridItem[] = [
   {
     title: 'Case Studies',
-    description: 'Deep dives into systems I\'ve built — problems, decisions, and outcomes.',
+    subtitle: 'Deep dives into real systems — architecture decisions, tradeoffs, and results.',
+    count: '2 studies',
     href: '/case-studies',
-    featured: true,
+    accentColor: '#60A5FA',
+    accentBg: 'rgba(96, 165, 250, 0.08)',
   },
   {
     title: 'Open Source',
-    description: 'Libraries and tools I maintain for the community.',
+    subtitle: 'Libraries and tools I build, maintain, and ship to production.',
+    count: '1 project',
     href: '/open-source',
+    accentColor: '#34D399',
+    accentBg: 'rgba(52, 211, 153, 0.08)',
   },
   {
     title: 'Writing',
-    description: 'Technical blogs on engineering, performance, and architecture.',
+    subtitle: 'Technical blogs on performance, architecture, and engineering craft.',
+    count: '2 posts',
     href: '/blog',
+    accentColor: '#A78BFA',
+    accentBg: 'rgba(167, 139, 250, 0.08)',
   },
 ];
 ---
@@ -36,15 +39,18 @@ const items: GridItem[] = [
 <section class="bento section">
   <div class="bento-grid">
     {items.map((item) => (
-      <a 
-        href={item.href} 
-        class:list={['bento-card', 'card', { featured: item.featured }]}
-        target={item.href.startsWith('http') ? '_blank' : undefined}
-        rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+      <a
+        href={item.href}
+        class="bento-card"
+        style={`--accent: ${item.accentColor}; --accent-bg: ${item.accentBg}`}
       >
+        <div class="card-accent-bar"></div>
         <h3 class="card-title">{item.title}</h3>
-        <p class="card-desc text-secondary">{item.description}</p>
-        <span class="card-arrow">→</span>
+        <p class="card-subtitle">{item.subtitle}</p>
+        <div class="card-footer">
+          <span class="card-count mono">{item.count}</span>
+          <span class="card-arrow">→</span>
+        </div>
       </a>
     ))}
   </div>
@@ -54,67 +60,99 @@ const items: GridItem[] = [
   .bento {
     padding-block: var(--space-12);
   }
-  
+
   .bento-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
-  
+
   @media (min-width: 640px) {
     .bento-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .bento-card.featured {
-      grid-column: span 2;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
-  
-  @media (min-width: 768px) {
-    .bento-grid {
-      grid-template-columns: 2fr 1fr 1fr;
-    }
-    
-    .bento-card.featured {
-      grid-column: span 1;
-    }
-  }
-  
+
   .bento-card {
     display: flex;
     flex-direction: column;
     padding: var(--space-6);
     text-decoration: none;
-    min-height: 140px;
+    border-radius: 0.75rem;
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
     position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
   }
-  
+
+  .card-accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: height var(--transition-fast);
+  }
+
+  .bento-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .bento-card:hover .card-accent-bar {
+    height: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card {
+      transition: none;
+    }
+    .bento-card:hover {
+      transform: none;
+    }
+  }
+
   .card-title {
     font-size: var(--text-h3);
     font-weight: 600;
     margin-bottom: var(--space-2);
     color: var(--color-text-primary);
   }
-  
-  .card-desc {
+
+  .card-subtitle {
     font-size: var(--text-small);
-    line-height: 1.5;
+    color: var(--color-text-secondary);
     margin: 0;
+    line-height: 1.5;
     flex-grow: 1;
   }
-  
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-4);
+  }
+
+  .card-count {
+    font-size: var(--text-xs);
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 4px;
+  }
+
   .card-arrow {
-    position: absolute;
-    bottom: var(--space-6);
-    right: var(--space-6);
     font-size: var(--text-body);
     color: var(--color-text-muted);
     transition: transform var(--transition-fast), color var(--transition-fast);
   }
-  
+
   .bento-card:hover .card-arrow {
     transform: translateX(4px);
-    color: var(--color-accent);
+    color: var(--accent);
   }
 </style>

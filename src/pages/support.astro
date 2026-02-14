@@ -1,84 +1,110 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { SITE, CONTACT, SUPPORT, PROJECTS } from "../config/site";
+import { SITE, SUPPORT, CONTACT, PROJECTS } from "../config/site";
 ---
 
 <Layout
-  title={`Support | ${SITE.name} – ${SITE.title}`}
-  description={`Support ${SITE.name}, ${SITE.title}, in creating open source software and technical content for the development community.`}
+  title={`Support | ${SITE.name}`}
+  description={`Support ${SITE.name}'s open source work.`}
 >
   <div class="container">
-    <article class="support section">
-      <a href="/" class="back-link">← Home</a>
+    <div class="support-page">
+      <a href="/" class="back-link mono">← Home</a>
 
-      <h1>Support</h1>
+      <h1>Support my work</h1>
+      <p class="subtitle text-secondary">
+        Building tools in the open takes time. Here are a few ways to help keep
+        it going.
+      </p>
 
-      <div class="content">
-        <p class="intro text-secondary">
-          If my open source work or writing has been helpful to you, you can
-          support continued development through a voluntary contribution.
-        </p>
+      <div class="support-grid">
 
-        <h2>What Your Support Enables</h2>
-        <ul>
-          <li>
-            Maintenance and improvements to <strong>{PROJECTS.expoVideoCache.name}</strong> and
-            other libraries
-          </li>
-          <li>In-depth technical articles and case studies</li>
-          <li>Documentation and example projects</li>
-          <li>Responding to issues and feature requests</li>
-        </ul>
-
-        <h2>Contribute via UPI</h2>
-        <div class="upi-section">
-          <div class="upi-info card">
-            <p class="upi-id mono">{SUPPORT.upiId}</p>
-            <p class="upi-note text-muted">
-              Scan the QR code or use the UPI ID above
+        <a
+          href={PROJECTS.expoVideoCache.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="support-card card card--yellow"
+        >
+          <div class="card-accent"></div>
+          <div class="card-top">
+            <span class="card-icon">☆</span>
+            <h2>Star on GitHub</h2>
+            <p class="text-muted">
+              Star <strong>{PROJECTS.expoVideoCache.name}</strong> — it helps others
+              discover the project.
             </p>
           </div>
+          <div class="card-bottom">
+            <img
+              src="/images/github.png"
+              alt="GitHub repo preview"
+              class="preview-img"
+            />
+            <p class="card-stat mono">3 stars</p>
+          </div>
+        </a>
 
-          <div class="qr-placeholder card">
-            <p class="text-muted">QR code will be added here</p>
+
+        <a
+          href={CONTACT.youtube.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="support-card card card--red"
+        >
+          <div class="card-accent"></div>
+          <div class="card-top">
+            <span class="card-icon">▷</span>
+            <h2>Subscribe on YouTube</h2>
+            <p class="text-muted">
+              Follow along as I build things and share what you learn.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <img
+              src="/images/youtube.png"
+              alt="YouTube channel preview"
+              class="preview-img"
+            />
+            <p class="card-stat mono">363 subscribers</p>
+          </div>
+        </a>
+
+
+        <div class="support-card card card--green">
+          <div class="card-accent"></div>
+          <div class="card-top">
+            <span class="card-icon">♡</span>
+            <h2>Contribute via UPI</h2>
+            <p class="text-muted">
+              A small contribution helps fund development time and
+              infrastructure.
+            </p>
+          </div>
+          <div class="card-bottom card-bottom--center">
+            <img src="/images/qrcode.jpg" alt="UPI QR Code" class="qr-image" />
+            <p class="upi-id mono">{SUPPORT.upiId}</p>
           </div>
         </div>
-
-        <div class="disclaimer">
-          <p class="text-muted">
-            <strong>Note:</strong> Contributions are voluntary support for open source
-            development and writing. They are not payments for services, and do not
-            create any obligation or expectation of specific work.
-          </p>
-        </div>
-
-        <h2>Other Ways to Support</h2>
-        <ul>
-          <li>
-            Star repositories on <a
-              href={CONTACT.github.url}
-              target="_blank"
-              rel="noopener">GitHub</a>
-          </li>
-          <li>Share articles that you find useful</li>
-          <li>Report bugs and contribute fixes</li>
-          <li>Provide feedback on documentation</li>
-        </ul>
       </div>
-    </article>
+
+      <p class="disclaimer text-muted">
+        Contributions are voluntary support for open source — not payments for
+        services.
+      </p>
+    </div>
   </div>
 </Layout>
 
 <style>
-  .support {
-    padding-block: var(--space-12);
+  .support-page {
+    padding-block: var(--space-8) var(--space-12);
   }
 
   .back-link {
     display: inline-block;
     font-size: var(--text-small);
     color: var(--color-text-muted);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-12);
     transition: color var(--transition-fast);
   }
 
@@ -88,80 +114,150 @@ import { SITE, CONTACT, SUPPORT, PROJECTS } from "../config/site";
 
   h1 {
     font-size: var(--text-h1);
-    margin-bottom: var(--space-8);
+    margin: 0 0 var(--space-3);
   }
 
-  .content {
-    max-width: var(--content-width);
-  }
-
-  .intro {
+  .subtitle {
     font-size: var(--text-body);
+    max-width: 50ch;
+    margin: 0 0 var(--space-8);
+    line-height: 1.6;
+  }
+
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
     margin-bottom: var(--space-8);
   }
 
-  .content h2 {
-    font-size: var(--text-h2);
-    margin-top: var(--space-12);
-    margin-bottom: var(--space-4);
+  @media (max-width: 767px) {
+    .support-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
-  .content ul {
-    padding-left: var(--space-6);
-    margin-bottom: var(--space-4);
-  }
-
-  .content li {
-    margin-bottom: var(--space-2);
-    line-height: 1.65;
-  }
-
-  .upi-section {
+  .support-card {
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-4);
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  .upi-info {
+  a.support-card:hover {
+    text-decoration: none;
+  }
+
+  .card-accent {
+    height: 3px;
+    width: 100%;
+    transition: height var(--transition-fast);
+  }
+
+  .support-card:hover .card-accent {
+    height: 5px;
+  }
+
+  .card--yellow .card-accent {
+    background: #fbbf24;
+  }
+  .card--red .card-accent {
+    background: #f87171;
+  }
+  .card--green .card-accent {
+    background: #34d399;
+  }
+
+  .card-top {
     padding: var(--space-6);
-    flex: 1;
-    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .card-bottom {
+    padding: 0 var(--space-6) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    overflow: hidden;
+  }
+
+  .card-bottom--center {
+    align-items: center;
+  }
+
+  .preview-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    object-position: left top;
+    border-radius: 0.375rem;
+  }
+
+  .card-stat {
+    font-size: var(--text-xs);
+    margin: 0;
+  }
+
+  .card--yellow .card-stat {
+    color: #fbbf24;
+  }
+  .card--red .card-stat {
+    color: #f87171;
+  }
+
+  .qr-image {
+    width: 140px;
+    height: 140px;
+    border-radius: 0.5rem;
+    object-fit: contain;
   }
 
   .upi-id {
-    font-size: var(--text-body);
-    color: var(--color-accent);
-    margin: 0 0 var(--space-2);
+    font-size: var(--text-small);
+    color: #34d399;
+    margin: 0;
+    user-select: all;
   }
 
-  .upi-note {
-    font-size: var(--text-small);
+  .card-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .card--yellow .card-icon {
+    color: #fbbf24;
+  }
+  .card--red .card-icon {
+    color: #f87171;
+  }
+  .card--green .card-icon {
+    color: #34d399;
+  }
+
+  .card-top h2 {
+    font-size: var(--text-h3);
     margin: 0;
   }
 
-  .qr-placeholder {
-    width: 160px;
-    height: 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: var(--space-4);
+  .card-top p {
     font-size: var(--text-small);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .card-top strong {
+    color: var(--color-text-primary);
   }
 
   .disclaimer {
-    margin-top: var(--space-8);
-    padding: var(--space-4);
-    background-color: var(--color-bg-surface);
-    border-left: 3px solid var(--color-text-muted);
-    border-radius: 0 0.5rem 0.5rem 0;
-  }
-
-  .disclaimer p {
-    font-size: var(--text-small);
-    line-height: 1.6;
+    font-size: var(--text-xs);
     margin: 0;
+    max-width: 50ch;
+    line-height: 1.5;
   }
 </style>
