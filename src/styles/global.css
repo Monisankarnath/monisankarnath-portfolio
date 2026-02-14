@@ -34,7 +34,7 @@
   /* Text Colors - Soft, not pure white */
   --color-text-primary: #E5E7EB;
   --color-text-secondary: #9CA3AF;
-  --color-text-muted: #6B7280;
+  --color-text-muted: #848d97;
   
   /* Accent - Cool blue, restrained */
   --color-accent: #60A5FA;
@@ -261,6 +261,19 @@ code, .mono {
 
 .text-secondary {
   color: var(--color-text-secondary);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* Focus states for accessibility */
