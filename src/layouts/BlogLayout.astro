@@ -1,7 +1,6 @@
 ---
 import Layout from "./Layout.astro";
 import ContentNavigation from "../components/ContentNavigation.astro";
-import MermaidInit from "../components/MermaidInit.astro";
 import { getCollection } from "astro:content";
 import { SITE } from "../config/site";
 
@@ -118,7 +117,6 @@ if (currentIndex !== -1) {
       nextItem={nextItem}
     />
   </article>
-  <MermaidInit />
 </Layout>
 
 <style>
