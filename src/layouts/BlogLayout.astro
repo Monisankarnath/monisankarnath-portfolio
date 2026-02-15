@@ -28,7 +28,7 @@ const formatDate = (date: Date) => {
   });
 };
 
-const currentSlug = Astro.url.pathname.split("/").pop();
+const currentSlug = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
 
 const allBlogs = await getCollection("blog");
 const allCaseStudies = await getCollection("case-studies");

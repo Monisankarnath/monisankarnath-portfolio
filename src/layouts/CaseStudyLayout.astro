@@ -24,7 +24,7 @@ const formattedDate = frontmatter.publishedAt.toLocaleDateString("en-US", {
 });
 const tocHeadings = headings.filter((h) => h.depth <= 3);
 
-const currentSlug = Astro.url.pathname.split("/").pop();
+const currentSlug = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
 
 const allCaseStudies = await getCollection("case-studies");
 const allBlogs = await getCollection("blog");
