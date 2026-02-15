@@ -2,9 +2,15 @@
 ---
 
 <script>
-  const mermaidBlocks = document.querySelectorAll('pre.mermaid');
+  document.addEventListener('astro:page-load', () => {
+    const mermaidBlocks = document.querySelectorAll('pre.mermaid');
+    if (mermaidBlocks.length === 0) return;
 
-  if (mermaidBlocks.length > 0) {
+    if ((window as any).__mermaidLoaded) {
+      (window as any).__mermaidRerun();
+      return;
+    }
+
     const script = document.createElement('script');
     script.type = 'module';
     script.textContent = `
@@ -61,7 +67,9 @@
       });
 
       await mermaid.run();
+      window.__mermaidLoaded = true;
+      window.__mermaidRerun = async () => { await mermaid.run(); };
     `;
     document.head.appendChild(script);
-  }
+  });
 </script>

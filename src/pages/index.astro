@@ -24,7 +24,7 @@ const currentYear = new Date().getFullYear();
     <div class="section-animate">
       <footer class="end-note">
         <p class="end-text text-muted">
-          Thanks for scrolling. Say hi at <a href={MAILTO}>{CONTACT.email}</a>
+          You scrolled past my entire life story. Least you can do is <a href={MAILTO}>say hi</a>.
         </p>
         <p class="end-copy text-muted mono">
           © {currentYear} {SITE.name}
@@ -35,27 +35,70 @@ const currentYear = new Date().getFullYear();
 </Layout>
 
 <script>
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const observer = new IntersectionObserver(
+  let isTraversal = false;
+  document.addEventListener('astro:before-swap', ((e: any) => {
+    isTraversal = e.navigationType === 'traverse';
+  }) as EventListener);
+
+  document.addEventListener('astro:page-load', () => {
+    const sections = document.querySelectorAll('.section-animate');
+    if (!sections.length) return;
+
+    if (isTraversal) {
+      isTraversal = false;
+      sections.forEach((el) => el.classList.add('visible'));
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const target = document.getElementById(hash);
+        if (target) {
+          requestAnimationFrame(() => target.scrollIntoView());
+        }
+      }
+    } else {
+      sections.forEach((el) => el.classList.remove('visible'));
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        sections.forEach((el) => observer.observe(el));
+      } else {
+        sections.forEach((el) => el.classList.add('visible'));
+      }
+    }
+
+    const hashSections = document.querySelectorAll('section[id]');
+    if (!hashSections.length) return;
+
+    const hashObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+            const id = entry.target.getAttribute('id');
+            if (id === 'top') {
+              history.replaceState(history.state, '', '/');
+              sessionStorage.removeItem('home-section');
+            } else if (id) {
+              history.replaceState(history.state, '', `/#${id}`);
+              sessionStorage.setItem('home-section', id);
+            }
           }
         });
       },
-      { threshold: 0.1 }
+      { rootMargin: '-20% 0px -70% 0px' }
     );
 
-    document.querySelectorAll('.section-animate').forEach((el) => {
-      observer.observe(el);
-    });
-  } else {
-    document.querySelectorAll('.section-animate').forEach((el) => {
-      el.classList.add('visible');
-    });
-  }
+    hashSections.forEach((section) => hashObserver.observe(section));
+  });
 </script>
 
 <style>

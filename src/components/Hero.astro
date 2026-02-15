@@ -2,7 +2,7 @@
 import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
 ---
 
-<section class="hero">
+<section id="top" class="hero">
   <div class="hero-top">
     <p class="name">{SITE.name}</p>
     <button class="cmd-trigger" id="open-search" aria-label="Search">
@@ -54,17 +54,19 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
 </section>
 
 <script>
-  const btn = document.getElementById('open-search');
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const dialog = document.getElementById('command-palette') as HTMLDialogElement;
-      const input = document.getElementById('command-input') as HTMLInputElement;
-      if (dialog) {
-        dialog.showModal();
-        if (input) { input.focus(); input.value = ''; }
-      }
-    });
-  }
+  document.addEventListener('astro:page-load', () => {
+    const btn = document.getElementById('open-search');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const dialog = document.getElementById('command-palette') as HTMLDialogElement;
+        const input = document.getElementById('command-input') as HTMLInputElement;
+        if (dialog) {
+          dialog.showModal();
+          if (input) { input.focus(); input.value = ''; }
+        }
+      });
+    }
+  });
 </script>
 
 <style>
