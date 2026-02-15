@@ -54,7 +54,7 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
 </section>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
+  function initSearchButton() {
     const btn = document.getElementById('open-search');
     if (btn) {
       btn.addEventListener('click', () => {
@@ -66,7 +66,10 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
         }
       });
     }
-  });
+  }
+
+  document.addEventListener('astro:page-load', initSearchButton);
+  initSearchButton();
 </script>
 
 <style>

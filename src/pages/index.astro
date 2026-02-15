@@ -40,7 +40,7 @@ const currentYear = new Date().getFullYear();
     isTraversal = e.navigationType === 'traverse';
   }) as EventListener);
 
-  document.addEventListener('astro:page-load', () => {
+  function initHomepage() {
     const sections = document.querySelectorAll('.section-animate');
     if (!sections.length) return;
 
@@ -98,7 +98,10 @@ const currentYear = new Date().getFullYear();
     );
 
     hashSections.forEach((section) => hashObserver.observe(section));
-  });
+  }
+
+  document.addEventListener('astro:page-load', initHomepage);
+  initHomepage();
 </script>
 
 <style>

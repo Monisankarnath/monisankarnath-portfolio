@@ -2,7 +2,7 @@
 ---
 
 <script>
-  document.addEventListener('astro:page-load', () => {
+  function initMermaid() {
     const mermaidBlocks = document.querySelectorAll('pre.mermaid');
     if (mermaidBlocks.length === 0) return;
 
@@ -71,5 +71,8 @@
       window.__mermaidRerun = async () => { await mermaid.run(); };
     `;
     document.head.appendChild(script);
-  });
+  }
+
+  document.addEventListener('astro:page-load', initMermaid);
+  initMermaid();
 </script>

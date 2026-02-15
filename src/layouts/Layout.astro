@@ -68,14 +68,17 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
     </main>
     <CommandPalette />
     <script>
-      document.addEventListener('astro:page-load', () => {
+      function initBackLinks() {
         const savedHash = sessionStorage.getItem('home-section');
         if (savedHash) {
           document.querySelectorAll('.back-link[href="/"]').forEach((link) => {
             link.setAttribute('href', `/#${savedHash}`);
           });
         }
-      });
+      }
+
+      document.addEventListener('astro:page-load', initBackLinks);
+      initBackLinks();
     </script>
   </body>
 </html>

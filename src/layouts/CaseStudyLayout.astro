@@ -175,7 +175,7 @@ if (currentIndex !== -1) {
 <script>
   let tocAbortController: AbortController | null = null;
 
-  document.addEventListener('astro:page-load', () => {
+  function initToc() {
     if (tocAbortController) tocAbortController.abort();
     tocAbortController = new AbortController();
     const { signal } = tocAbortController;
@@ -272,7 +272,10 @@ if (currentIndex !== -1) {
         scrollTimeout = 0;
       }, 100);
     }, { signal });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initToc);
+  initToc();
 </script>
 
 <style>

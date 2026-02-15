@@ -91,7 +91,7 @@ const allItems: SearchItem[] = [
 <script>
   let cmdAbortController: AbortController | null = null;
 
-  document.addEventListener('astro:page-load', () => {
+  function initCommandPalette() {
     if (cmdAbortController) cmdAbortController.abort();
     cmdAbortController = new AbortController();
     const { signal } = cmdAbortController;
@@ -230,7 +230,10 @@ const allItems: SearchItem[] = [
 
       dialog.close();
     }, { signal });
-  });
+  }
+
+  document.addEventListener('astro:page-load', initCommandPalette);
+  initCommandPalette();
 </script>
 
 <style>
