@@ -53,24 +53,6 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
   </a>
 </section>
 
-<script>
-  function initSearchButton() {
-    const btn = document.getElementById('open-search');
-    if (btn) {
-      btn.addEventListener('click', () => {
-        const dialog = document.getElementById('command-palette') as HTMLDialogElement;
-        const input = document.getElementById('command-input') as HTMLInputElement;
-        if (dialog) {
-          dialog.showModal();
-          if (input) { input.focus(); input.value = ''; }
-        }
-      });
-    }
-  }
-
-  document.addEventListener('astro:page-load', initSearchButton);
-  initSearchButton();
-</script>
 
 <style>
   .hero {

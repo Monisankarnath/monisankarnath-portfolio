@@ -83,6 +83,28 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
       initBackLinks();
     </script>
     <script>
+      let heroAbort: AbortController | null = null;
+
+      function initSearchButton() {
+        if (heroAbort) heroAbort.abort();
+        const btn = document.getElementById('open-search');
+        if (!btn) return;
+
+        heroAbort = new AbortController();
+        btn.addEventListener('click', () => {
+          const dialog = document.getElementById('command-palette') as HTMLDialogElement;
+          const input = document.getElementById('command-input') as HTMLInputElement;
+          if (dialog) {
+            dialog.showModal();
+            if (input) { input.focus(); input.value = ''; }
+          }
+        }, { signal: heroAbort.signal });
+      }
+
+      document.addEventListener('astro:page-load', initSearchButton);
+      initSearchButton();
+    </script>
+    <script>
       let tocAbortController: AbortController | null = null;
       let tocObserver: IntersectionObserver | null = null;
 
@@ -189,6 +211,81 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
 
       document.addEventListener('astro:page-load', initToc);
       initToc();
+    </script>
+    <script>
+      let isTraversal = false;
+      let homeObserver: IntersectionObserver | null = null;
+      let hashObserver: IntersectionObserver | null = null;
+
+      document.addEventListener('astro:before-swap', ((e: any) => {
+        isTraversal = e.navigationType === 'traverse';
+      }) as EventListener);
+
+      function initHomepage() {
+        if (homeObserver) { homeObserver.disconnect(); homeObserver = null; }
+        if (hashObserver) { hashObserver.disconnect(); hashObserver = null; }
+
+        const sections = document.querySelectorAll('.section-animate');
+        if (!sections.length) return;
+
+        if (isTraversal) {
+          isTraversal = false;
+          sections.forEach((el) => el.classList.add('visible'));
+          const hash = window.location.hash.substring(1);
+          if (hash) {
+            const target = document.getElementById(hash);
+            if (target) {
+              requestAnimationFrame(() => target.scrollIntoView());
+            }
+          }
+        } else {
+          sections.forEach((el) => el.classList.remove('visible'));
+
+          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            homeObserver = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    homeObserver?.unobserve(entry.target);
+                  }
+                });
+              },
+              { threshold: 0.1 }
+            );
+
+            sections.forEach((el) => homeObserver!.observe(el));
+          } else {
+            sections.forEach((el) => el.classList.add('visible'));
+          }
+        }
+
+        const hashSections = document.querySelectorAll('section[id]');
+        if (!hashSections.length) return;
+
+        hashObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                if (id === 'top') {
+                  history.replaceState(history.state, '', '/');
+                  sessionStorage.removeItem('home-section');
+                } else if (id) {
+                  history.replaceState(history.state, '', `/#${id}`);
+                  sessionStorage.setItem('home-section', id);
+                }
+              }
+            });
+          },
+          { rootMargin: '-20% 0px -70% 0px' }
+        );
+
+        hashSections.forEach((section) => hashObserver!.observe(section));
+      }
+
+      document.addEventListener('astro:page-load', initHomepage);
+      initHomepage();
     </script>
   </body>
 </html>
