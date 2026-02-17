@@ -3,7 +3,7 @@ import { PERSONAL_PROJECTS } from "../config/site";
 ---
 
 <section id="work" class="projects section">
-  <h2 class="section-title">Notable Work</h2>
+  <h2 class="section-title">Projects</h2>
 
   <div class="project-list">
     {PERSONAL_PROJECTS.map((project) => (
@@ -48,7 +48,7 @@ import { PERSONAL_PROJECTS } from "../config/site";
 
 <style>
   .projects {
-    padding-block: var(--space-12);
+    padding-block: var(--space-16) var(--space-12);
   }
 
   .section-title {
@@ -59,7 +59,7 @@ import { PERSONAL_PROJECTS } from "../config/site";
   .project-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: var(--space-8);
   }
 
   .project-item {
