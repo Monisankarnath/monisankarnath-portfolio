@@ -3,7 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import CommandPalette from "../components/CommandPalette.astro";
 import MermaidInit from "../components/MermaidInit.astro";
-import { SEO } from "../config/site";
+import { SEO, SITE, CONTACT } from "../config/site";
 
 interface Props {
   title?: string;
@@ -35,6 +35,7 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -46,6 +47,19 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": SITE.name,
+      "url": SITE.url,
+      "jobTitle": SITE.title,
+      "sameAs": [
+        CONTACT.github.url,
+        CONTACT.linkedin.url,
+        CONTACT.youtube.url,
+      ],
+    })} />
 
     <link
       rel="preload"
