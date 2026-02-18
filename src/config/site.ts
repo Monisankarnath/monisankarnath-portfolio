@@ -74,12 +74,16 @@ export const PROJECTS = {
 
 export const PERSONAL_PROJECTS = [
   {
-    name: "US Restaurant Chain",
+    name: "Restaurant Chain",
+    image: "/images/darden.png",
     description:
       "Multi-brand platform powering 10 restaurant brands in a single Nx monorepo — web, mobile, and native apps.",
     brands: [
       { name: "Olive Garden", url: "https://www.olivegarden.com" },
-      { name: "LongHorn Steakhouse", url: "https://www.longhornsteakhouse.com" },
+      {
+        name: "LongHorn Steakhouse",
+        url: "https://www.longhornsteakhouse.com",
+      },
       { name: "Cheddar's", url: "https://www.cheddars.com" },
       { name: "Ruth's Chris", url: "https://www.ruthschris.com" },
       { name: "The Capital Grille", url: "https://www.thecapitalgrille.com" },
@@ -90,15 +94,16 @@ export const PERSONAL_PROJECTS = [
       { name: "Bahama Breeze", url: "https://www.bahamabreeze.com" },
     ],
     tech: ["Next.js", "React Native", "React", "Nx", "TypeScript"],
-    role: "Led modules, cross-platform features, production stability, and UX across all devices.",
+    role: "",
   },
   {
-    name: "iOS IAP Store",
+    name: "Apple In-App Purchase",
+    image: "/images/iosiapstore.png",
     description:
       "Swift package for in-app purchases using StoreKit2 — supports buy, upgrade, downgrade, cancel, and refund flows.",
     brands: [] as { name: string; url: string }[],
     tech: ["Swift", "StoreKit2", "iOS"],
-    role: "Built and published to Swift Package Index.",
+    role: "",
     links: {
       github: "https://github.com/nathMonisankar/IOS-IAP-store",
       spi: "https://swiftpackageindex.com/nathMonisankar/IOS-IAP-store",

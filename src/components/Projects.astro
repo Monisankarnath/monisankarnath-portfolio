@@ -2,45 +2,59 @@
 import { PERSONAL_PROJECTS } from "../config/site";
 ---
 
-<section id="work" class="projects section">
+<section id="projects" class="projects section">
   <h2 class="section-title">Projects</h2>
 
   <div class="project-list">
-    {PERSONAL_PROJECTS.map((project) => (
-      <div class="project-item">
-        <div class="project-header">
+    {PERSONAL_PROJECTS.map((project, index) => (
+      <div class={`project-card ${index % 2 === 1 ? 'reverse' : ''}`}>
+        <div class="project-image-wrap">
+          <img
+            src={project.image}
+            alt={project.name}
+            class="project-image"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="project-content">
           <h3 class="project-name">{project.name}</h3>
+
+          <div class="project-desc-card">
+            <p class="project-desc">{project.description}</p>
+          </div>
+
           <div class="project-tags">
             {project.tech.map((t) => (
               <span class="tag mono">{t}</span>
             ))}
           </div>
+
+          {project.brands.length > 0 && (
+            <div class="project-brands">
+              {project.brands.map((brand, i) => (
+                <>
+                  <a href={brand.url} class="brand-link" target="_blank" rel="noopener noreferrer">{brand.name}</a>{i < project.brands.length - 1 && <span class="brand-sep"> · </span>}
+                </>
+              ))}
+            </div>
+          )}
+
+          {'links' in project && project.links && (
+            <div class="project-links">
+              {'github' in project.links && (
+                <a href={project.links.github} class="project-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+              )}
+              {'spi' in project.links && (
+                <a href={project.links.spi} class="project-link" target="_blank" rel="noopener noreferrer" aria-label="Swift Package Index">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              )}
+            </div>
+          )}
         </div>
-
-        <p class="project-desc text-secondary">{project.description}</p>
-
-        <p class="project-role text-muted">{project.role}</p>
-
-        {project.brands.length > 0 && (
-          <div class="project-brands">
-            {project.brands.map((brand, i) => (
-              <>
-                <a href={brand.url} class="brand-link" target="_blank" rel="noopener noreferrer">{brand.name}</a>{i < project.brands.length - 1 && <span class="brand-sep"> · </span>}
-              </>
-            ))}
-          </div>
-        )}
-
-        {'links' in project && project.links && (
-          <div class="project-links">
-            {'github' in project.links && (
-              <a href={project.links.github} class="project-link mono" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-            )}
-            {'spi' in project.links && (
-              <a href={project.links.spi} class="project-link mono" target="_blank" rel="noopener noreferrer">Swift Package Index ↗</a>
-            )}
-          </div>
-        )}
       </div>
     ))}
   </div>
@@ -53,62 +67,81 @@ import { PERSONAL_PROJECTS } from "../config/site";
 
   .section-title {
     font-size: var(--text-h2);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-6);
   }
 
   .project-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-12);
   }
 
-  .project-item {
+  .project-card {
+    position: relative;
+    border-radius: 0.625rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .project-image-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+
+  .project-image-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(14, 17, 22, 0.88), rgba(14, 17, 22, 0.95));
+  }
+
+  .project-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    opacity: 0.4;
+  }
+
+  .project-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-  }
-
-  .project-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-3);
+    padding: var(--space-8) var(--space-6);
   }
 
   .project-name {
-    font-size: var(--text-h3);
+    font-size: var(--text-h2);
     font-weight: 600;
     margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  .project-desc-card {
+    margin: var(--space-1) 0;
+  }
+
+  .project-desc {
+    font-size: var(--text-body);
+    line-height: 1.6;
+    margin: 0;
+    color: var(--color-text-secondary);
   }
 
   .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: var(--space-2) var(--space-3);
   }
 
   .tag {
     font-size: var(--text-xs);
-    padding: 2px var(--space-2);
-    background-color: rgba(96, 165, 250, 0.08);
-    border: 1px solid rgba(96, 165, 250, 0.15);
-    border-radius: 9999px;
     color: var(--color-accent);
     white-space: nowrap;
-  }
-
-  .project-desc {
-    font-size: var(--text-body);
-    line-height: 1.5;
-    margin: 0;
-    max-width: 60ch;
-  }
-
-  .project-role {
-    font-size: var(--text-small);
-    line-height: 1.5;
-    margin: 0;
   }
 
   .project-brands {
@@ -141,16 +174,95 @@ import { PERSONAL_PROJECTS } from "../config/site";
   }
 
   .project-link {
-    font-size: var(--text-small);
-    color: var(--color-text-muted);
-    text-decoration: none;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
     transition: color var(--transition-fast);
   }
 
   .project-link:hover {
-    color: var(--color-text-primary);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1px;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 1000px) {
+    .project-list {
+      gap: var(--space-16);
+    }
+
+    .project-card {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      align-items: center;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .project-card.reverse {
+      grid-template-columns: 2fr 3fr;
+    }
+
+    .project-card.reverse .project-image-wrap {
+      order: 2;
+    }
+
+    .project-card.reverse .project-content {
+      order: 1;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .project-card.reverse .project-tags,
+    .project-card.reverse .project-links,
+    .project-card.reverse .project-brands {
+      justify-content: flex-start;
+    }
+
+    .project-card.reverse .project-desc-card {
+      margin-left: 0;
+      margin-right: calc(-1 * var(--space-12));
+    }
+
+    .project-image-wrap {
+      position: relative;
+      inset: auto;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .project-image-wrap::after {
+      display: none;
+    }
+
+    .project-image {
+      aspect-ratio: 16 / 10;
+      opacity: 1;
+      filter: grayscale(1) brightness(0.4);
+      transition: filter 0.5s ease;
+    }
+
+    .project-card:hover .project-image {
+      filter: grayscale(0) brightness(1);
+    }
+
+    .project-content {
+      padding: 0;
+      gap: var(--space-3);
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .project-desc-card {
+      background: var(--color-bg-elevated);
+      padding: var(--space-6);
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+      margin-left: calc(-1 * var(--space-12));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-image {
+      transition: none;
+    }
   }
 </style>

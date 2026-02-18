@@ -35,7 +35,7 @@
         fontFamily: 'Geist Mono, monospace',
         fontSize: 16,
         flowchart: {
-          htmlLabels: true,
+          htmlLabels: false,
           useMaxWidth: true,
         },
         themeVariables: {
@@ -82,6 +82,7 @@
     }
 
     await mermaid.run({ nodes: blocks });
+    document.dispatchEvent(new CustomEvent('mermaid:rendered'));
   }
 
   document.addEventListener('astro:page-load', initMermaid);

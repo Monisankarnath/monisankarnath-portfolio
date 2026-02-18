@@ -69,6 +69,10 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
     </main>
     <CommandPalette />
     <MermaidInit />
+    <div id="mermaid-modal" class="mermaid-modal" aria-hidden="true">
+      <div class="mermaid-modal-backdrop"></div>
+      <div class="mermaid-modal-content"></div>
+    </div>
     <script>
       function initBackLinks() {
         const savedHash = sessionStorage.getItem('home-section');
@@ -286,6 +290,64 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
 
       document.addEventListener('astro:page-load', initHomepage);
       initHomepage();
+    </script>
+    <script>
+      let mermaidModalAbort: AbortController | null = null;
+
+      function initMermaidModal() {
+        if (mermaidModalAbort) mermaidModalAbort.abort();
+
+        const modal = document.getElementById('mermaid-modal');
+        const modalContent = modal?.querySelector('.mermaid-modal-content');
+        const backdrop = modal?.querySelector('.mermaid-modal-backdrop');
+        const diagrams = document.querySelectorAll('pre.mermaid');
+        if (!modal || !modalContent || !backdrop || !diagrams.length) return;
+
+        mermaidModalAbort = new AbortController();
+        const { signal } = mermaidModalAbort;
+
+        function openModal(svg: SVGElement) {
+          const clone = svg.cloneNode(true) as SVGElement;
+          clone.removeAttribute('style');
+          clone.setAttribute('width', '100%');
+          clone.setAttribute('height', '100%');
+          clone.style.maxWidth = '100%';
+          clone.style.maxHeight = '100%';
+          modalContent!.innerHTML = '';
+          modalContent!.appendChild(clone);
+          modal!.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+          modal!.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          setTimeout(() => {
+            modalContent!.innerHTML = '';
+          }, 300);
+        }
+
+        diagrams.forEach((diagram) => {
+          diagram.addEventListener('click', () => {
+            const svg = diagram.querySelector('svg');
+            if (svg) openModal(svg);
+          }, { signal });
+        });
+
+        backdrop.addEventListener('click', closeModal, { signal });
+
+        modalContent.addEventListener('click', (e) => {
+          if (e.target === modalContent) closeModal();
+        }, { signal });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+            closeModal();
+          }
+        }, { signal });
+      }
+
+      document.addEventListener('mermaid:rendered', initMermaidModal);
     </script>
   </body>
 </html>
