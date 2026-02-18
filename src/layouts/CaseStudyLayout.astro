@@ -429,6 +429,13 @@ if (currentIndex !== -1) {
     max-width: 100%;
     border-radius: 0.5rem;
     margin-block: var(--space-6);
+    filter: brightness(0.7) saturate(0.8);
+    transition: filter 0.4s ease;
+  }
+
+  .main-content :global(img:hover),
+  .main-content :global(img:active) {
+    filter: brightness(1) saturate(1);
   }
 
   .main-content :global(table) {
@@ -438,7 +445,9 @@ if (currentIndex !== -1) {
     font-size: var(--text-small);
     border: 1px solid var(--color-border);
     border-radius: 0.5rem;
-    overflow: hidden;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .main-content :global(th),

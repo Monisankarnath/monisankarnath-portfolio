@@ -32,22 +32,26 @@ const externalLinks: SearchItem[] = [
 ];
 
 const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
-const blogItems: SearchItem[] = blogPosts.map((post) => ({
-  title: post.data.title,
-  description: "Blog",
-  href: `/blog/${post.slug}`,
-  type: "blog" as const,
-  tags: post.data.tags,
-}));
+const blogItems: SearchItem[] = blogPosts
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .map((post) => ({
+    title: post.data.title,
+    description: "Blog",
+    href: `/blog/${post.slug}`,
+    type: "blog" as const,
+    tags: post.data.tags,
+  }));
 
 const caseStudies = await getCollection("case-studies");
-const caseStudyItems: SearchItem[] = caseStudies.map((study) => ({
-  title: study.data.title,
-  description: "Case Study",
-  href: `/case-studies/${study.slug}`,
-  type: "case-study" as const,
-  tags: study.data.tags,
-}));
+const caseStudyItems: SearchItem[] = caseStudies
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .map((study) => ({
+    title: study.data.title,
+    description: "Case Study",
+    href: `/case-studies/${study.slug}`,
+    type: "case-study" as const,
+    tags: study.data.tags,
+  }));
 
 const allItems: SearchItem[] = [
   ...defaultPages,
