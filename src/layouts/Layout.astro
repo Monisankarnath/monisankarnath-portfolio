@@ -29,6 +29,9 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#0E1116" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
 
     <title>{title}</title>
     <meta name="title" content={title} />
@@ -362,6 +365,11 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
       }
 
       document.addEventListener('mermaid:rendered', initMermaidModal);
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
     </script>
   </body>
 </html>
