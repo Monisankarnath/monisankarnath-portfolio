@@ -50,6 +50,7 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
 
     <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
