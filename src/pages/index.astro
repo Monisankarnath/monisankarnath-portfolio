@@ -4,7 +4,7 @@ import Hero from "../components/Hero.astro";
 import Experience from "../components/Experience.astro";
 import BentoGrid from "../components/BentoGrid.astro";
 import Projects from "../components/Projects.astro";
-import { SEO, SITE, CONTACT, MAILTO } from "../config/site";
+import { SEO, SITE, MAILTO } from "../config/site";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -15,7 +15,7 @@ const currentYear = new Date().getFullYear();
 >
   <div class="container">
     <Hero />
-    <div class="section-animate"><Experience /></div>
+    <Experience />
     <div class="section-animate"><BentoGrid /></div>
     <div class="section-animate"><Projects /></div>
 
@@ -64,7 +64,7 @@ const currentYear = new Date().getFullYear();
   .section-animate {
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
   }
 
   .section-animate.visible {
