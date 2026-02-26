@@ -40,8 +40,8 @@ export const CONTACT = {
 // ============================================
 
 export const RESUME = {
-  path: "/resume/Monisankar-Nath_resume.pdf",
-  filename: "Monisankar-Nath_resume.pdf",
+  path: "/resume/Monisankar_Nath_Resume.pdf",
+  filename: "Monisankar_Nath_Resume.pdf",
 } as const;
 
 // ============================================
