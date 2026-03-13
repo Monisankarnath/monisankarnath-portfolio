@@ -230,11 +230,13 @@ if (currentIndex !== -1) {
 
   .content :global(blockquote) {
     border-left: 3px solid var(--color-accent);
-    padding-left: var(--space-4);
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
     margin-left: 0;
     margin-bottom: var(--space-4);
     color: var(--color-text-secondary);
     font-style: italic;
+    background: rgba(96, 165, 250, 0.04);
+    border-radius: 0 8px 8px 0;
   }
 
   .content :global(blockquote cite) {

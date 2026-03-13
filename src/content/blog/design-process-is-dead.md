@@ -14,98 +14,62 @@ tags:
   ]
 ---
 
-<div style="background: linear-gradient(135deg, #1a183a 0%, #0d2b20 50%, #1e1208 100%); border-radius: 16px; height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 48px; position: relative; overflow: hidden;">
-  <span style="font-family: var(--font-sans); font-size: 13px; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; text-transform: uppercase;">Design × Engineering × AI</span>
+<div style="background: linear-gradient(135deg, #1e1640 0%, #0f2e22 40%, #2a1a0a 100%); border-radius: 16px; height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 48px; position: relative; overflow: hidden;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(127,119,221,0.15), transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(29,158,117,0.12), transparent 60%);"></div>
+  <span style="font-family: var(--font-sans); font-size: 14px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 1;">Design × Engineering × AI</span>
 </div>
 
-Seven agents. Running in parallel. Constantly. That's the reality inside a modern engineering team right now — and it's not just at Anthropic or OpenAI. It's happening at product companies everywhere. Engineers aren't asking for permission to ship anymore. They're just shipping.
+Imagine this. It's the start of a quarter. You know exactly what to do. You go do some user research. You make this perfect persona — it's got demographic data, a fake name, a generated photo. You create a beautiful user journey map showing every step, every emotion, every pain point. You lead a brainstorm. Sticky notes everywhere. You write the perfect problem statement. *How might we...* You brainstorm solutions. More sticky notes. You pick one, wireframe it in low-fi, then higher fidelity, then pixel-perfect. You run a usability study. You hand it off.
 
-So what does that mean for design?
+Hooray. You just followed the design process. You solved all the company's problems. You made millions of dollars. You created a product people love.
 
-**It means the old process — research, personas, journey maps, problem statements, wireframes, high-fidelity mocks, handoff — is over.** Not because it was wrong. It was genuinely useful for a decade. But the environment has changed so drastically that clinging to it now is like insisting on waterfall development when your entire team has gone agile.
+Right? *Right?*
+
+**That process is dead.** Not because it was wrong — it was genuinely useful for a decade. But the environment has changed so drastically that clinging to it now is like insisting on waterfall when your entire team has gone agile.
 
 > "This design process that designers have been taught — we sort of treat it as gospel. That's basically dead."
 > <cite>— Jenny Wen, Design Lead at Anthropic, former Director of Design at Figma</cite>
 
-The shift isn't optional. It's not a trend. It's the direct consequence of one thing: **building software has gotten astronomically faster**, and design hasn't kept pace. The question isn't whether to change. It's how to change in a way that makes you more valuable, not less.
+The shift is everywhere — not just at Anthropic or OpenAI. Engineers aren't asking for permission to ship anymore. They're just shipping. The question isn't whether to change. It's how to change in a way that makes you more valuable, not less.
 
 ---
 
 ## How fast is "fast" now?
 
-Let's make this concrete. A few years ago, a product manager or engineer pitching a feature would wait for a designer to create mockups before they could visualize whether the idea was worth pursuing. That back-and-forth could take days. Sometimes weeks.
+A few years ago, a PM pitching a feature would wait for a designer to create mockups before anyone could visualize whether the idea was worth pursuing. That back-and-forth could take days. Sometimes weeks.
 
-Today, a PM can vibe-code a working prototype in a few hours. An engineer can spin up seven Claude agents running in parallel, each tackling a different part of a feature — simultaneously. By the time a designer has opened Figma, there's already a real, clickable, testable thing in the world.
+Today, a PM can vibe-code a working prototype in a few hours. An engineer can spin up seven Claude agents in parallel, each tackling a different piece of a feature — simultaneously. By the time you've opened Figma, there's already a real, clickable, testable thing in the world.
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 40px 0;">
-  <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px 20px; text-align: center;">
-    <div style="font-size: 36px; font-weight: 700; color: #7f77dd; font-family: var(--font-sans); line-height: 1;">60–70%</div>
+  <div style="background: linear-gradient(145deg, rgba(127,119,221,0.1), rgba(127,119,221,0.03)); border: 1px solid rgba(127,119,221,0.2); border-radius: 12px; padding: 24px 20px; text-align: center;">
+    <div style="font-size: 36px; font-weight: 700; color: #9b8fe8; font-family: var(--font-sans); line-height: 1;">60–70%</div>
     <div style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin-top: 8px;">of design time was mocking & prototyping a few years ago</div>
   </div>
-  <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px 20px; text-align: center;">
-    <div style="font-size: 36px; font-weight: 700; color: #7f77dd; font-family: var(--font-sans); line-height: 1;">30–40%</div>
+  <div style="background: linear-gradient(145deg, rgba(29,158,117,0.1), rgba(29,158,117,0.03)); border: 1px solid rgba(29,158,117,0.2); border-radius: 12px; padding: 24px 20px; text-align: center;">
+    <div style="font-size: 36px; font-weight: 700; color: #3dbf8e; font-family: var(--font-sans); line-height: 1;">30–40%</div>
     <div style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin-top: 8px;">of design time is mocking today — the rest is execution & pairing</div>
   </div>
-  <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px 20px; text-align: center;">
-    <div style="font-size: 36px; font-weight: 700; color: #7f77dd; font-family: var(--font-sans); line-height: 1;">3–6 mo</div>
+  <div style="background: linear-gradient(145deg, rgba(239,159,39,0.1), rgba(239,159,39,0.03)); border: 1px solid rgba(239,159,39,0.2); border-radius: 12px; padding: 24px 20px; text-align: center;">
+    <div style="font-size: 36px; font-weight: 700; color: #f0a83a; font-family: var(--font-sans); line-height: 1;">3–6 mo</div>
     <div style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin-top: 8px;">is now the realistic vision horizon — not 2 or 5 years</div>
   </div>
 </div>
 
-This isn't hypothetical. Jenny Wen, who led design for Claude at Anthropic (and before that, built Fig Jam at Figma), described her pie chart shifting dramatically. The mocking and prototyping slice has nearly halved. In its place: pairing directly with engineers, implementing polish in code, and doing rapid directional vision work.
+Jenny Wen described her own pie chart shifting dramatically. The mocking slice has nearly halved. In its place: pairing directly with engineers, implementing polish in code, and doing rapid directional vision work. The tools changed. The time allocation had to follow.
 
 ---
 
-## The two modes of modern design work
+## Start from the solution, not the problem
 
-Design work is bifurcating. There are now two distinct modes, and knowing which one you're in — and switching between them fluidly — is a core skill for 2025.
+Here's something the old process made feel illegal: **starting with a solution before you've defined the problem.**
 
-<div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 16px; padding: 32px 24px; margin: 48px 0;">
-  <div style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px; text-align: center; letter-spacing: 0.04em;">THE TWO MODES OF MODERN DESIGN WORK</div>
-  <svg width="100%" viewBox="0 0 640 280">
-    <defs>
-      <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </marker>
-    </defs>
-    <rect x="30" y="40" width="260" height="200" rx="14" fill="rgba(127,119,221,0.08)" stroke="#534AB7" stroke-width="0.8"/>
-    <text x="160" y="72" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" font-weight="600" fill="#afa9ec" letter-spacing="0.06em">MODE 1</text>
-    <text x="160" y="96" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="16" font-weight="700" fill="#f0ece4">Execution &amp; Support</text>
-    <line x1="60" y1="110" x2="260" y2="110" stroke="rgba(127,119,221,0.2)" stroke-width="0.5"/>
-    <text x="160" y="136" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">Pair with engineers</text>
-    <text x="160" y="158" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">Polish &amp; implement in code</text>
-    <text x="160" y="180" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">Review &amp; guide live builds</text>
-    <text x="160" y="202" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">Design system guardrails</text>
-    <text x="160" y="224" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="12" fill="#534AB7">Fast-moving, always on</text>
-    <rect x="350" y="40" width="260" height="200" rx="14" fill="rgba(29,158,117,0.07)" stroke="#0F6E56" stroke-width="0.8"/>
-    <text x="480" y="72" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" font-weight="600" fill="#5dcaa5" letter-spacing="0.06em">MODE 2</text>
-    <text x="480" y="96" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="16" font-weight="700" fill="#f0ece4">Vision &amp; Direction</text>
-    <line x1="380" y1="110" x2="580" y2="110" stroke="rgba(29,158,117,0.2)" stroke-width="0.5"/>
-    <text x="480" y="136" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">3–6 month prototypes</text>
-    <text x="480" y="158" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">North star narratives</text>
-    <text x="480" y="180" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">Point team toward something</text>
-    <text x="480" y="202" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="13" fill="#888780">Spot illegible ideas early</text>
-    <text x="480" y="224" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="12" fill="#0F6E56">Rare, focused time blocks</text>
-    <circle cx="320" cy="140" r="18" fill="var(--color-bg-elevated)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-    <text x="320" y="145" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="12" font-weight="600" fill="#888780">VS</text>
-  </svg>
-</div>
+Claude Artifacts — the interactive right-panel that spawned a pattern now copied across every AI product — didn't come from a problem statement. A researcher built a janky prototype. One of the designers on the team saw it and thought *I love this*. He iterated on it, built his own version, and the reactions across the team were immediate. Nobody had written a "how might we." They didn't know it was a problem worth solving until they saw the solution.
 
-**Mode 1 is the default state.** It's reactive. It's collaborative. It means being in Slack, in the codebase, in a Loom review. Not blocking. Not saying "wait for my mocks." Instead: running alongside engineers and helping what they're building land well.
+The old process treated this as heresy. But in an era where AI capabilities ship faster than you can research them, **you often have to work backwards** — see what the technology makes possible, then figure out which problems it solves. That's fundamentally different from the last decade, where the tech was relatively static and you went hunting for problems.
 
-**Mode 2 is protected time.** It's where you ask: where is this product going in 90 days? Not a 47-slide deck. A prototype. A prototype that points people north. It's rarer, harder to carve out, and increasingly valuable precisely because everyone else is in execution mode.
-
----
-
-## What actually makes great products in this era
-
-Here's something worth saying plainly: **the design process never guaranteed great work.** The best products you've ever loved weren't made by following a double diamond. They were made by teams that cared deeply, moved fast, and made judgment calls.
-
-The research process that led to Claude Artifacts — the interactive right-panel that spawned a pattern now copied across every AI product — didn't come from a problem statement. It came from a researcher building a prototype, a designer seeing something in it, and a team reacting. *The solution came first. The problem revealed itself after.*
-
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0;">
-  <div style="background: var(--color-bg-elevated); border: 1px solid rgba(226, 75, 74, 0.2); border-radius: 12px; padding: 20px;">
-    <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; color: #e24b4a;">✕ Losing leverage</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin: 32px 0;">
+  <div style="background: linear-gradient(160deg, rgba(226,75,74,0.08), rgba(226,75,74,0.02)); border: 1px solid rgba(226,75,74,0.2); border-radius: 12px; padding: 20px;">
+    <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; color: #e24b4a;">&#10005; Losing leverage</div>
     <ul style="font-family: var(--font-sans); font-size: 14px; color: var(--color-text-muted); padding-left: 18px; line-height: 1.8;">
       <li>Writing perfect problem statements</li>
       <li>8-week research sprints</li>
@@ -114,184 +78,143 @@ The research process that led to Claude Artifacts — the interactive right-pane
       <li>Gatekeeping the design phase</li>
     </ul>
   </div>
-  <div style="background: var(--color-bg-elevated); border: 1px solid rgba(29, 158, 117, 0.25); border-radius: 12px; padding: 20px;">
-    <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; color: #1d9e75;">✓ Gaining leverage</div>
+  <div style="background: linear-gradient(160deg, rgba(29,158,117,0.1), rgba(29,158,117,0.02)); border: 1px solid rgba(29,158,117,0.25); border-radius: 12px; padding: 20px;">
+    <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; color: #3dbf8e;">&#10003; Gaining leverage</div>
     <ul style="font-family: var(--font-sans); font-size: 14px; color: var(--color-text-muted); padding-left: 18px; line-height: 1.8;">
       <li>Prototyping in actual code</li>
       <li>Operating on strong intuition</li>
       <li>Pairing with engineers daily</li>
       <li>Shipping, learning, iterating fast</li>
-      <li>Spotting illegible ideas early</li>
+      <li>Betting on ideas others can't yet see</li>
     </ul>
   </div>
 </div>
 
-Fig Jam at Figma is another example. After launch, the team didn't just add features. They spent years iterating on snapping, selection borders, toolbar interactions, font size controls. Ruthless attention to the micro. There's no step in the design process for "care about the details long after launch" — but that's what built the loyalty.
+Jenny put it well: the design process is like a set of IKEA instructions. Same steps every time, and you're supposed to get a Billy bookshelf at the end. But when you're designing something new, you don't *know* what the end result is. It could be a bookshelf. It could be a chair. It could be a hot dog. **If you don't know what you're building, how can you use the same steps every time?**
+
+And here's the uncomfortable truth: the user doesn't care about your process artifacts. They don't care about your journey map or your perfectly formatted problem statement. They care about the thing they're looking at and how it feels to use. You see this in portfolios constantly — 80% process artifacts, beautifully presented, and then one screen at the very end that's just... fine.
 
 ---
 
-## The new design workflow, visualized
+## The new workflow, visualized
 
-The old process was linear. Research → define → ideate → prototype → test → launch. Clean arrows. A predictable sequence. The new process is messier, faster, and more parallel.
+The old process was linear. Research → define → ideate → prototype → test → launch. Clean arrows. The new process is messier, faster, and more parallel — design bifurcates into two modes: **execution** (pairing with engineers, polishing in code, reviewing live builds) and **vision** (where is this going in 90 days?). Both run alongside engineering, not before it.
 
-<div style="background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 16px; padding: 32px 24px; margin: 48px 0;">
-  <div style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px; text-align: center; letter-spacing: 0.04em;">OLD LINEAR VS. NEW PARALLEL DESIGN FLOW</div>
-  <svg width="100%" viewBox="0 0 640 340">
-    <defs>
-      <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </marker>
-    </defs>
-    <text x="30" y="38" font-family="var(--font-sans), sans-serif" font-size="11" font-weight="600" fill="#e24b4a" letter-spacing="0.08em">OLD — SEQUENTIAL</text>
-    <rect x="28" y="50" width="72" height="32" rx="6" fill="rgba(226,75,74,0.08)" stroke="rgba(226,75,74,0.3)" stroke-width="0.5"/>
-    <text x="64" y="70" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Research</text>
-    <line x1="102" y1="66" x2="118" y2="66" stroke="#e24b4a" stroke-width="0.8" opacity="0.4" marker-end="url(#arr2)"/>
-    <rect x="120" y="50" width="72" height="32" rx="6" fill="rgba(226,75,74,0.08)" stroke="rgba(226,75,74,0.3)" stroke-width="0.5"/>
-    <text x="156" y="70" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Define</text>
-    <line x1="194" y1="66" x2="210" y2="66" stroke="#e24b4a" stroke-width="0.8" opacity="0.4" marker-end="url(#arr2)"/>
-    <rect x="212" y="50" width="72" height="32" rx="6" fill="rgba(226,75,74,0.08)" stroke="rgba(226,75,74,0.3)" stroke-width="0.5"/>
-    <text x="248" y="70" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Ideate</text>
-    <line x1="286" y1="66" x2="302" y2="66" stroke="#e24b4a" stroke-width="0.8" opacity="0.4" marker-end="url(#arr2)"/>
-    <rect x="304" y="50" width="72" height="32" rx="6" fill="rgba(226,75,74,0.08)" stroke="rgba(226,75,74,0.3)" stroke-width="0.5"/>
-    <text x="340" y="70" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Prototype</text>
-    <line x1="378" y1="66" x2="394" y2="66" stroke="#e24b4a" stroke-width="0.8" opacity="0.4" marker-end="url(#arr2)"/>
-    <rect x="396" y="50" width="60" height="32" rx="6" fill="rgba(226,75,74,0.08)" stroke="rgba(226,75,74,0.3)" stroke-width="0.5"/>
-    <text x="426" y="70" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Test</text>
-    <line x1="458" y1="66" x2="474" y2="66" stroke="#e24b4a" stroke-width="0.8" opacity="0.4" marker-end="url(#arr2)"/>
-    <rect x="476" y="50" width="60" height="32" rx="6" fill="rgba(226,75,74,0.08)" stroke="rgba(226,75,74,0.3)" stroke-width="0.5"/>
-    <text x="506" y="70" text-anchor="middle" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Launch</text>
-    <text x="30" y="106" font-family="var(--font-sans), sans-serif" font-size="11" fill="#e24b4a" opacity="0.5">Weeks → Months</text>
-    <line x1="28" y1="128" x2="612" y2="128" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-    <text x="30" y="156" font-family="var(--font-sans), sans-serif" font-size="11" font-weight="600" fill="#5dcaa5" letter-spacing="0.08em">NEW — PARALLEL</text>
-    <rect x="28" y="170" width="480" height="38" rx="8" fill="rgba(29,158,117,0.07)" stroke="rgba(29,158,117,0.25)" stroke-width="0.5"/>
-    <text x="40" y="187" font-family="var(--font-sans), sans-serif" font-size="11" font-weight="600" fill="#5dcaa5">Engineering + AI agents</text>
-    <text x="40" y="202" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Ship → iterate → ship → iterate (continuous, fast)</text>
-    <rect x="28" y="220" width="230" height="38" rx="8" fill="rgba(127,119,221,0.08)" stroke="rgba(127,119,221,0.3)" stroke-width="0.5"/>
-    <text x="40" y="237" font-family="var(--font-sans), sans-serif" font-size="11" font-weight="600" fill="#afa9ec">Design — execution mode</text>
-    <text x="40" y="252" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">Pair, polish, review, guide</text>
-    <rect x="278" y="220" width="230" height="38" rx="8" fill="rgba(239,159,39,0.07)" stroke="rgba(239,159,39,0.25)" stroke-width="0.5"/>
-    <text x="290" y="237" font-family="var(--font-sans), sans-serif" font-size="11" font-weight="600" fill="#ef9f27">Design — vision mode</text>
-    <text x="290" y="252" font-family="var(--font-sans), sans-serif" font-size="11" fill="#888780">3–6mo direction, prototype</text>
-    <line x1="200" y1="208" x2="140" y2="218" stroke="#5dcaa5" stroke-width="0.7" opacity="0.4" marker-end="url(#arr2)"/>
-    <line x1="350" y1="208" x2="380" y2="218" stroke="#5dcaa5" stroke-width="0.7" opacity="0.4" marker-end="url(#arr2)"/>
-    <rect x="28" y="272" width="480" height="38" rx="8" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-    <text x="40" y="289" font-family="var(--font-sans), sans-serif" font-size="11" font-weight="600" fill="#888780">Real users + real data</text>
-    <text x="40" y="304" font-family="var(--font-sans), sans-serif" font-size="11" fill="#666461">Feedback loops back into both tracks immediately</text>
-    <path d="M510 291 Q580 291 580 189 Q580 86 510 86" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" marker-end="url(#arr2)"/>
-    <text x="584" y="192" font-family="var(--font-sans), sans-serif" font-size="10" fill="#666461">loop</text>
-    <text x="30" y="328" font-family="var(--font-sans), sans-serif" font-size="11" fill="#5dcaa5" opacity="0.5">Days → Weeks</text>
-  </svg>
-</div>
-
-Notice what changed: design and engineering are no longer sequential. They're parallel. Design isn't a gate before engineering starts. It's a thread running alongside it — sometimes ahead (vision), sometimes behind (cleanup), sometimes simultaneous (pairing).
-
----
-
-## The three designer archetypes that matter now
-
-Not all designers will thrive in this new world by doing the same thing. Jenny Wen, who thinks deeply about hiring, has identified three archetypes that are genuinely valuable right now.
-
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 32px 0;">
-  <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 20px;">
-    <div style="font-size: 24px; margin-bottom: 10px;">■</div>
-    <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 6px;">The block-shaped generalist</h4>
-    <p style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">Strong at many things — 80th percentile across design, product thinking, and implementation. Rare. Extremely flexible as roles blur.</p>
+<div style="background: linear-gradient(180deg, var(--color-bg-surface), rgba(14,17,22,0.6)); border: 1px solid var(--color-border); border-radius: 16px; padding: 32px 24px; margin: 48px 0;">
+  <div style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin-bottom: 24px; text-align: center; letter-spacing: 0.04em;">OLD LINEAR VS. NEW PARALLEL DESIGN FLOW</div>
+  <!-- OLD: Sequential -->
+  <div style="margin-bottom: 28px; opacity: 0.7;">
+    <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #c45a59; letter-spacing: 0.08em; margin-bottom: 12px;">OLD — SEQUENTIAL</div>
+    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Research</span>
+      <span style="color: rgba(226,75,74,0.35); font-size: 13px;">→</span>
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Define</span>
+      <span style="color: rgba(226,75,74,0.35); font-size: 13px;">→</span>
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Ideate</span>
+      <span style="color: rgba(226,75,74,0.35); font-size: 13px;">→</span>
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Prototype</span>
+      <span style="color: rgba(226,75,74,0.35); font-size: 13px;">→</span>
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Test</span>
+      <span style="color: rgba(226,75,74,0.35); font-size: 13px;">→</span>
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Handoff</span>
+      <span style="color: rgba(226,75,74,0.35); font-size: 13px;">→</span>
+      <span style="font-family: var(--font-sans); font-size: 11px; color: #706b65; background: rgba(226,75,74,0.05); border: 1px solid rgba(226,75,74,0.15); border-radius: 6px; padding: 5px 12px;">Launch</span>
+    </div>
+    <div style="font-family: var(--font-sans); font-size: 10px; color: #c45a59; opacity: 0.5; margin-top: 10px;">Weeks → Months</div>
   </div>
-  <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 20px;">
-    <div style="font-size: 24px; margin-bottom: 10px;">⟟</div>
-    <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 6px;">The deep specialist</h4>
-    <p style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">World-class at one specific skill — visual craft, motion, engineering integration. The deep T. In an age of AI mediocrity, exceptional depth stands out.</p>
-  </div>
-  <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 20px;">
-    <div style="font-size: 24px; margin-bottom: 10px;">✨</div>
-    <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 6px;">The craft new grad</h4>
-    <p style="font-family: var(--font-sans); font-size: 13px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">Early-career, blank-slate, fast learner with taste beyond their years. Unburdened by old processes. These are being overlooked and shouldn't be.</p>
+  <!-- Divider -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.06); margin-bottom: 28px;"></div>
+  <!-- NEW: Parallel -->
+  <div>
+    <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #5dcaa5; letter-spacing: 0.08em; margin-bottom: 4px;">NEW — PARALLEL</div>
+    <div style="font-family: var(--font-sans); font-size: 10px; color: #888780; margin-bottom: 14px;">Designers and engineers work in the same codebase, simultaneously.</div>
+    <!-- Shared codebase container -->
+    <div style="border: 1px dashed rgba(93,202,165,0.2); border-radius: 12px; padding: 16px; margin-bottom: 12px; background: rgba(29,158,117,0.02);">
+      <div style="font-family: var(--font-sans); font-size: 10px; font-weight: 600; color: #5dcaa5; letter-spacing: 0.06em; margin-bottom: 12px; opacity: 0.7;">SAME CODEBASE / SAME REPO</div>
+      <!-- Engineering track -->
+      <div style="background: linear-gradient(135deg, rgba(29,158,117,0.12), rgba(29,158,117,0.04)); border: 1px solid rgba(29,158,117,0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px;">
+        <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #5dcaa5;">Engineering + AI agents</div>
+        <div style="font-family: var(--font-sans); font-size: 10px; color: #888780;">Ship → iterate → ship → iterate (continuous)</div>
+      </div>
+      <!-- Design in code track -->
+      <div style="background: linear-gradient(135deg, rgba(127,119,221,0.12), rgba(127,119,221,0.04)); border: 1px solid rgba(127,119,221,0.25); border-radius: 8px; padding: 10px 14px;">
+        <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #afa9ec;">Design in code</div>
+        <div style="font-family: var(--font-sans); font-size: 10px; color: #888780;">Pair with eng, polish UI, review PRs, tweak CSS, run local builds</div>
+      </div>
+    </div>
+    <!-- Bottom row: Vision + Feedback -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+      <div style="background: linear-gradient(135deg, rgba(239,159,39,0.1), rgba(239,159,39,0.03)); border: 1px solid rgba(239,159,39,0.25); border-radius: 8px; padding: 10px 14px;">
+        <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #f0a83a;">Design — vision mode</div>
+        <div style="font-family: var(--font-sans); font-size: 10px; color: #888780;">3–6mo direction, prototypes</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 14px;">
+        <div style="font-family: var(--font-sans); font-size: 11px; font-weight: 600; color: #888780;">User feedback → next iteration</div>
+        <div style="font-family: var(--font-sans); font-size: 10px; color: #666461;">Real data feeds back into the codebase</div>
+      </div>
+    </div>
+    <div style="font-family: var(--font-sans); font-size: 10px; color: #5dcaa5; opacity: 0.6;">Days → Weeks</div>
   </div>
 </div>
 
-The common thread: all three are **building things**, not following a process. They all have strong opinions. They're all comfortable in ambiguity. And they all treat AI tools as a multiplier, not a threat.
+Design and engineering are no longer sequential — they're parallel. Design isn't a gate before engineering starts. It's a thread running alongside, sometimes ahead (vision), sometimes behind (polish), sometimes simultaneous (pairing).
 
 ---
 
-## Intuition isn't a dirty word anymore
+## Intuition is your superpower, not a dirty word
 
-For a decade, the design industry trained us to distrust our gut. Every decision needed research to back it. Every recommendation needed a user quote. Intuition was considered sloppy — the opposite of user-centered design.
+For a decade, the design industry trained us to distrust our gut. Every decision needed research. Every recommendation needed a user quote. Intuition was considered sloppy — the opposite of user-centered design.
 
-That's changing fast. **Intuition is a compressed form of experience.** It's not guessing. It's the ability to make well-reasoned judgments quickly, because you've spent years building an internal model of how users behave, what works, and what doesn't.
+Jenny calls this out directly: designers treat intuition like it's just vibes or whoever has the best argument. But that's not what it is.
 
 > "Intuition is not guessing. It's the ability to make reasoned judgments quickly. It's a shortcut to thinking really long and hard because you know the subject so deeply."
 > <cite>— Jenny Wen</cite>
 
-The designers who are thriving right now are the ones who've built strong intuition through deliberate practice — reading user feedback obsessively, going to research sessions (even ones outside their product area), watching usage dashboards, drawing on cognitive biases and design principles to predict behavior. **They don't need a research sprint for every decision. They already know.**
+The designers who are thriving right now have built sharp intuition deliberately. They read user feedback obsessively — Twitter, Reddit, internal boards, sales team notes. They go to research sessions outside their product area. They watch usage dashboards to feel the trends. They draw on cognitive biases and design principles to predict behavior before testing it.
+
+They're building an internal model of the world so aggressively that they can make good calls fast — without an 8-week research sprint for every decision. **That intuition is what makes you a great designer.** You wield it for decisions of all sizes: picking the right pattern, defending a direction, making a snap choice on a Tuesday afternoon. AI can't generate that. It's yours.
 
 ---
 
-## The "illegibility" advantage
+## Design where the product actually lives
 
-There's a framework worth stealing from the VC world: the legibility matrix. Ideas and founders can be either *legible* (obvious, understood, already being built by ten teams) or *illegible* (confusing on the surface, but energetically compelling to a small group of people who see something others don't).
+Here's the practical shift nobody talks about enough: **designers need to be in the same repo as the engineers.** Not in a parallel Figma universe. In the actual codebase, running the actual app, seeing the actual pixels on screen.
 
-The best design opportunities right now are illegible. A scrappy internal prototype that nobody quite understands but everyone keeps coming back to. A use case that doesn't fit the product brief but users keep inventing anyway. Co-work — Claude's agentic desktop product — came from exactly this kind of thing. There was an internal prototype with a dense, confusing interface that nobody could quite describe. But the energy around it was real. A designer's job was to spot that energy, lean in, and extract what was actually valuable.
+> "It's no longer 'should designers code' — designers *can* code. We don't have to just make static pictures anymore. We can prototype really easily and we can implement to fit and finish all by ourselves."
+> <cite>— Jenny Wen</cite>
 
-<div style="background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: 12px; padding: 24px 28px; margin: 40px 0;">
-  <div style="font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #ef9f27; font-weight: 600; margin-bottom: 10px;">💡 Design as venture thinking</div>
-  <p style="font-family: var(--font-sans); font-size: 15px; color: var(--color-text-muted); margin: 0; line-height: 1.6;">The best designers at frontier companies are operating like internal VCs — scanning prototypes, sensing energy, picking up on illegible signals, and placing bets on directions others can't yet see. That's a new skill. It's learnable.</p>
-</div>
+Think about what this means concretely. When the FigJam team built stamps, emotes, and cursor chat — features that became some of the most beloved in the product — the process wasn't: design in Figma, hand off specs, wait for engineers. It was: prototype in real code, try it out in internal builds, show up to people's meetings uninvited and watch them use it. Even with usability issues everywhere, they could see people smiling and laughing. They knew they had something. That signal doesn't show up in a static mock.
 
----
+A Figma mock is a picture of your idea. A locally running app *is* your idea. There's an enormous difference between looking at a screen in a design tool and feeling a component render on an actual phone — the scroll physics, the tap targets, the way a transition lands at 60fps. That's where design judgment actually matters.
 
-## How to pivot your career from here
+What this looks like in practice: you clone the repo. You run `npm run dev` or build to a simulator. You see the feature as users will see it — on web, on iOS, on Android. And then you design *there*. You tweak the padding. You adjust the color. You feel whether that hover state lands or if the loading skeleton feels too abrupt. You open a pull request with your changes, not a Figma link with redlines.
 
-If you're a designer reading this and feeling the ground shift under you, here's what matters most right now.
+This isn't about replacing Figma. Figma is still valuable for exploration and vision work. But the final mile — the craft, the polish, the thing that makes a user say *this feels good* — that happens in code now. Claude Code, Cursor, v0 — these make it possible for a designer with taste but limited engineering experience to ship real changes in a production codebase. **Start small. Ship one thing per week that you built, not just mocked.**
 
-<div style="margin: 32px 0;">
-  <div style="display: grid; grid-template-columns: 80px 1fr; gap: 20px; margin-bottom: 28px; align-items: start;">
-    <div style="font-family: var(--font-sans); font-size: 13px; color: #7f77dd; font-weight: 600; padding-top: 3px;">Now</div>
-    <div>
-      <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 4px;">Learn to ship in code</h4>
-      <p style="font-family: var(--font-sans); font-size: 14px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">You don't need to become a full-stack engineer. But implementing last-mile polish, tweaking CSS, reading diffs — this is now part of the design vocabulary. Use Claude Code, Cursor, or v0. Start small. Ship one thing per week that you built, not just mocked.</p>
-    </div>
-  </div>
-  <div style="display: grid; grid-template-columns: 80px 1fr; gap: 20px; margin-bottom: 28px; align-items: start;">
-    <div style="font-family: var(--font-sans); font-size: 13px; color: #7f77dd; font-weight: 600; padding-top: 3px;">Next</div>
-    <div>
-      <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 4px;">Build your pairing practice</h4>
-      <p style="font-family: var(--font-sans); font-size: 14px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">Get next to engineers daily. Not to review their work — to build with them. Understand their constraints, their stack, their frustrations. The designers who are indispensable right now are the ones engineers want in their Slack thread, not in a scheduled review.</p>
-    </div>
-  </div>
-  <div style="display: grid; grid-template-columns: 80px 1fr; gap: 20px; margin-bottom: 28px; align-items: start;">
-    <div style="font-family: var(--font-sans); font-size: 13px; color: #7f77dd; font-weight: 600; padding-top: 3px;">Ongoing</div>
-    <div>
-      <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 4px;">Build sharp intuition deliberately</h4>
-      <p style="font-family: var(--font-sans); font-size: 14px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">Read feedback everywhere. Watch session recordings. Attend research sessions outside your area. Build your internal model so aggressively that you can make good calls fast — without waiting for data that will take weeks to collect.</p>
-    </div>
-  </div>
-  <div style="display: grid; grid-template-columns: 80px 1fr; gap: 20px; margin-bottom: 28px; align-items: start;">
-    <div style="font-family: var(--font-sans); font-size: 13px; color: #7f77dd; font-weight: 600; padding-top: 3px;">Future</div>
-    <div>
-      <h4 style="font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: #f0ece4; margin-bottom: 4px;">Protect your vision time</h4>
-      <p style="font-family: var(--font-sans); font-size: 14px; color: var(--color-text-muted); margin: 0; line-height: 1.5;">As execution gets faster, the scarcest thing is someone who can look 90 days out and say: <em>this is where we should go</em>. That's your edge. Block time for it. Don't let it get eaten by execution work.</p>
-    </div>
-  </div>
+<div style="background: linear-gradient(145deg, rgba(239,159,39,0.08), rgba(239,159,39,0.02)); border: 1px solid rgba(239,159,39,0.2); border-radius: 12px; padding: 24px 28px; margin: 40px 0;">
+  <div style="font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #f0a83a; font-weight: 600; margin-bottom: 10px;">The craft is in the code</div>
+  <p style="font-family: var(--font-sans); font-size: 15px; color: var(--color-text-muted); margin: 0; line-height: 1.6;">FigJam's team spent years after launch iterating on snapping, selection borders, toolbar interactions, font size controls. That ruthless micro-attention is what built user loyalty — and none of it happened in a design tool. It happened in the repo, one pull request at a time.</p>
 </div>
 
 ---
 
 ## What doesn't change
 
-Amid all this upheaval, a few things stay constant — and it's worth naming them.
+Amid the upheaval, a few things stay constant.
 
-**Taste is irreplaceable for now.** AI will get better at taste and judgment. It already has. But there's still something in the gap between "technically correct" and "this feels right" that lives in human experience. That gap is shrinking. But it's real, and it's yours.
+**Taste is the anti-slop.** In a world where you can one-shot prompt something that looks passable, the bar just moved. Your work has to be better than what AI generates for free. Think about the apps people actually *choose* to pay for: Linear's speed. Notion Calendar's polish. That gorgeous camera app with tactile knobs and sound effects. These are the anti-AI slop — they feel considered, crafted, human. They weren't made by following a double diamond. They were made by people who cared enough to spend a Tuesday afternoon on a hover state.
 
-**Accountability still requires humans.** Someone has to sign off. Someone has to say: we're building this, not that. AI can advise, analyze, generate options. But the decision — with all its downstream consequences — still needs a person behind it.
+**Accountability still requires humans.** AI can advise, analyze, generate options. But the decision — with all its downstream consequences — still needs a person behind it. Someone has to say: we're building this, not that.
 
-**Great craft is the anti-slop.** In a world where anything can be generated, the things people actually choose to use and pay for are the things that feel *considered*. Linear's speed. Notion Calendar's polish. Fig Jam's delight. Those weren't made by a process. They were made by people who cared enough to spend a Tuesday afternoon on a hover state.
+**Your value is in the judgment, not the process.** If anyone could follow the steps and get great work, then anyone could be a designer. Your power is in knowing *which* tools to reach for, *when* to skip steps, *what* to bet on. That's intuition. That's taste. That's the thing worth building.
 
 > "Our value isn't in repeating a process. If it was, anyone could be a designer. We're rewriting the process right now."
 > <cite>— Jenny Wen</cite>
 
 ---
 
-<div style="background: linear-gradient(135deg, rgba(127,119,221,0.1), rgba(29,158,117,0.08)); border: 1px solid rgba(127,119,221,0.2); border-radius: 16px; padding: 36px 32px; margin: 56px 0; text-align: center;">
-  <h3 style="font-family: var(--font-sans); font-size: 20px; font-weight: 600; color: #f0ece4; margin-bottom: 12px; text-transform: none; letter-spacing: 0;">The designers who thrive will be the ones who trust themselves</h3>
-  <p style="font-family: var(--font-sans); font-size: 15px; color: var(--color-text-muted); margin: 0;">Not a process. Not a framework. Not a certification. The new era of design demands that you build real things, develop sharp judgment, stay close to the work, and point your team toward something worth building. That's hard. It's also more interesting than following a diamond.</p>
+<div style="background: linear-gradient(135deg, rgba(127,119,221,0.12) 0%, rgba(29,158,117,0.1) 50%, rgba(239,159,39,0.08) 100%); border: 1px solid rgba(127,119,221,0.2); border-radius: 16px; padding: 40px 32px; margin: 56px 0; text-align: center; position: relative; overflow: hidden;">
+  <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(127,119,221,0.08), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(29,158,117,0.06), transparent 50%);"></div>
+  <h3 style="font-family: var(--font-sans); font-size: 20px; font-weight: 600; color: #f0ece4; margin-bottom: 12px; text-transform: none; letter-spacing: 0; position: relative;">Trust yourself, not the process</h3>
+  <p style="font-family: var(--font-sans); font-size: 15px; color: var(--color-text-secondary); margin: 0; position: relative;">This is scary because there's no manual. You have to both chart the map and define what you're building — every single time. But honestly? It's also kind of fun. The new era of design demands that you build real things, develop sharp judgment, stay close to the work, and point your team toward something worth building. It's more interesting than following a diamond.</p>
 </div>
