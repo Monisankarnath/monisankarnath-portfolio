@@ -46,11 +46,14 @@ const formatDate = (date: Date) => {
     gap: var(--space-6);
     padding: var(--space-6) var(--space-4);
     text-decoration: none;
-    transition: background-color var(--transition-fast);
+    border-radius: 8px;
+    border-left: 2px solid transparent;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
   }
 
   .post-link:hover {
     background-color: var(--color-bg-surface);
+    border-left-color: var(--color-accent);
   }
 
   .post-content {

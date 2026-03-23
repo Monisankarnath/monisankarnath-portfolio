@@ -248,7 +248,6 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
         if (hashObserver) { hashObserver.disconnect(); hashObserver = null; }
 
         const sections = document.querySelectorAll('.section-animate');
-        if (!sections.length) return;
 
         if (isTraversal) {
           isTraversal = false;
@@ -260,26 +259,21 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
               requestAnimationFrame(() => target.scrollIntoView());
             }
           }
+        } else if (sections.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          homeObserver = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  homeObserver?.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.1 }
+          );
+          sections.forEach((el) => homeObserver!.observe(el));
         } else {
-          sections.forEach((el) => el.classList.remove('visible'));
-
-          if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            homeObserver = new IntersectionObserver(
-              (entries) => {
-                entries.forEach((entry) => {
-                  if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    homeObserver?.unobserve(entry.target);
-                  }
-                });
-              },
-              { threshold: 0.1 }
-            );
-
-            sections.forEach((el) => homeObserver!.observe(el));
-          } else {
-            sections.forEach((el) => el.classList.add('visible'));
-          }
+          sections.forEach((el) => el.classList.add('visible'));
         }
 
         const hashSections = document.querySelectorAll('section[id]');

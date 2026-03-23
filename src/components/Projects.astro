@@ -80,6 +80,12 @@ import { PERSONAL_PROJECTS } from "../config/site";
     position: relative;
     border-radius: 0.625rem;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    transition: box-shadow 0.4s ease, transform 0.3s ease;
+  }
+
+  .project-card:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(96, 165, 250, 0.12);
+    transform: translateY(-2px);
   }
 
   .project-image-wrap {

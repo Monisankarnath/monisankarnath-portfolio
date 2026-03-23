@@ -21,6 +21,7 @@ const currentYear = new Date().getFullYear();
 
     <div class="section-animate">
       <footer class="end-note">
+        <div class="end-line" aria-hidden="true"></div>
         <p class="end-text text-muted">
           You scrolled past my entire life story. Least you can do is <a href={MAILTO}>say hi</a>.
         </p>
@@ -35,7 +36,17 @@ const currentYear = new Date().getFullYear();
 <style>
   .end-note {
     padding-block: var(--space-16) var(--space-12);
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .end-line {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    margin: 0 auto var(--space-8);
+    opacity: 0.4;
   }
 
   .end-text {
@@ -64,11 +75,28 @@ const currentYear = new Date().getFullYear();
   .section-animate {
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    animation: section-fallback 0.8s 1.5s forwards;
   }
 
   .section-animate.visible {
     opacity: 1;
     transform: translateY(0);
+    animation: none;
+  }
+
+  @keyframes section-fallback {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-animate {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
   }
 </style>

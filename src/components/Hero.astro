@@ -3,6 +3,7 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
 ---
 
 <section id="top" class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-top">
     <p class="name">{SITE.name}</p>
     <button class="cmd-trigger" id="open-search" aria-label="Search">
@@ -60,11 +61,36 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+    position: relative;
   }
 
   @media (min-width: 768px) {
     .hero {
       padding-block: var(--space-32) var(--space-24);
+    }
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -60px;
+    left: -120px;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(96,165,250,0.06) 0%, rgba(127,119,221,0.04) 40%, transparent 70%);
+    pointer-events: none;
+    filter: blur(60px);
+    animation: glow-drift 12s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-drift {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+    50% { transform: translate(30px, 20px) scale(1.1); opacity: 1; }
+    100% { transform: translate(-20px, 10px) scale(0.95); opacity: 0.6; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow {
+      animation: none;
     }
   }
 
@@ -196,12 +222,18 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color var(--transition-fast);
+    transition: color var(--transition-fast), transform var(--transition-fast);
   }
 
   .social-icon:hover {
     color: var(--color-text-primary);
+    transform: translateY(-2px);
   }
+
+  .social-icon[aria-label="LinkedIn"]:hover { color: #0A66C2; }
+  .social-icon[aria-label="GitHub"]:hover { color: #E6EDF3; }
+  .social-icon[aria-label="YouTube"]:hover { color: #FF0000; }
+  .social-icon[aria-label="Email"]:hover { color: #60A5FA; }
 
   .resume-link {
     display: inline-block;
