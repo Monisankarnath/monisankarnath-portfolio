@@ -65,16 +65,30 @@ export const PROJECTS = {
     github: "https://github.com/Monisankarnath/expo-video-cache",
     npm: "https://www.npmjs.com/package/expo-video-cache",
     tech: ["Swift", "React Native", "Expo", "iOS", "TypeScript"],
+    stats: {
+      downloads: "100+ weekly",
+      stars: "3",
+      lastUpdated: "Feb 2026",
+    },
+  },
+  iosIap: {
+    name: "IOS-IAP-store",
+    tagline: "Swift package for Apple in-app purchases using StoreKit 2.",
+    description:
+      "Handles buy, upgrade, downgrade, cancel, and refund flows with 85%+ XCTest coverage and an Xcode Cloud pipeline that auto-publishes to TestFlight.",
+    github: "https://github.com/nathMonisankar/IOS-IAP-store",
+    spi: "https://swiftpackageindex.com/nathMonisankar/IOS-IAP-store",
+    tech: ["Swift", "StoreKit 2", "iOS"],
   },
 } as const;
 
 // ============================================
-// PERSONAL PROJECTS
+// PROFESSIONAL PROJECTS
 // ============================================
 
 export const PERSONAL_PROJECTS = [
   {
-    name: "Restaurant Chain",
+    name: "Darden Restaurants",
     image: "/images/darden.png",
     description:
       "Multi-brand platform powering 10 restaurant brands in a single Nx monorepo — web, mobile, and native apps.",
@@ -95,19 +109,102 @@ export const PERSONAL_PROJECTS = [
     ],
     tech: ["Next.js", "React Native", "React", "Nx", "TypeScript"],
     role: "",
+    liveUrl: "https://www.olivegarden.com/",
   },
   {
-    name: "Apple In-App Purchase",
-    image: "/images/iosiapstore.png",
+    name: "Talenzap",
+    image: "/images/talenzap.png",
     description:
-      "Swift package for in-app purchases using StoreKit2 — supports buy, upgrade, downgrade, cancel, and refund flows.",
+      "Video-first social app for skills-based contests — Instagram-style upload and feed, hardened for production launch and live with 1,000+ users.",
     brands: [] as { name: string; url: string }[],
-    tech: ["Swift", "StoreKit2", "iOS"],
+    tech: ["React Native", "Expo", "TypeScript", "Swift", "Video Streaming"],
     role: "",
-    links: {
-      github: "https://github.com/nathMonisankar/IOS-IAP-store",
-      spi: "https://swiftpackageindex.com/nathMonisankar/IOS-IAP-store",
-    },
+    liveUrl: "https://www.talenzap.com/",
+  },
+  {
+    name: "MyJobDrop",
+    image: "/images/mjd.png",
+    description:
+      "Belgian job portal serving 6,000+ users and 2,000+ companies — full-stack mobile, web, and AWS infrastructure built end-to-end.",
+    brands: [] as { name: string; url: string }[],
+    tech: ["React Native", "Flutter", "Next.js", "FastAPI", "AWS", "Terraform"],
+    role: "",
+    liveUrl: "https://www.myjobdrop.com",
+  },
+  {
+    name: "Trovey",
+    image: "/images/trovey.png",
+    description:
+      "Australian travel and itinerary product — mobile, admin web, and NestJS backend. Tech lead across a 7-engineer team owning architecture for OTA updates, background tasks, localization, and theming.",
+    brands: [] as { name: string; url: string }[],
+    tech: ["React Native", "Expo", "NestJS", "TypeScript"],
+    role: "",
+    liveUrl: "https://www.trovey.com",
+  },
+  {
+    name: "Jio Design System",
+    image: "/images/jio.png",
+    description:
+      "Design system powering 10+ Jio apps (MyJio, JioCloud, JioPay) with 500M+ downloads. Reduced iOS pod size by 50% and UI bug reports by ~40%.",
+    brands: [] as { name: string; url: string }[],
+    tech: ["Swift", "SwiftUI", "Figma"],
+    role: "",
+  },
+] as const;
+
+// ============================================
+// EXPERIENCE
+// ============================================
+
+export const EXPERIENCES = [
+  {
+    company: "GeekyAnts",
+    role: "Senior Software Engineer II",
+    period: "Oct 2021 — Present",
+    impact: [
+      "Deliver production-grade mobile and web applications for a diverse array of clients including Olive Garden, Jio, MyJobDrop, Talenzap, and Alarmas.",
+      "Lead architecture, performance optimization, and native module development for cross-platform React Native systems shipping to millions of users.",
+      "Collaborate with product managers, designers, and cross-functional engineering teams to translate business requirements into shippable, well-engineered production code.",
+      "Provide engineering leadership through code review, technical mentorship of junior engineers, and contributions to shared design systems and open-source tooling.",
+    ],
+    tags: [
+      "TypeScript",
+      "React Native",
+      "Next.js",
+      "Swift",
+      "NestJS",
+      "FastAPI",
+    ],
+  },
+  {
+    company: "Wipro",
+    role: "Software Engineer",
+    period: "2020 — 2021",
+    impact: [
+      "Worked as an HRMS technical Oracle EBS developer, building PL/SQL triggers and reports for enterprise HR systems.",
+    ],
+    tags: ["SQL", "PL/SQL", "Oracle EBS"],
+  },
+] as const;
+
+// ============================================
+// AWARDS & RECOGNITION
+// ============================================
+
+export const AWARDS = [
+  {
+    name: "Tech Innovator Award",
+    issuer: "GeekyAnts",
+    reason:
+      "Geospatial map performance optimization on Alarmas — C++ JSI clustering pipeline rendering 1,000+ live devices at 60 FPS.",
+    href: "/case-studies/react-native-gps-map-scaling-performance",
+  },
+  {
+    name: "Impact Contributor Award",
+    issuer: "GeekyAnts",
+    reason:
+      "Authored expo-video-cache — an open-source HLS caching library for React Native, used in production with 100+ weekly downloads.",
+    href: "/case-studies/expo-video-ios-offline-caching",
   },
 ] as const;
 
@@ -117,7 +214,7 @@ export const PERSONAL_PROJECTS = [
 
 export const BIO = {
   location: "Bangalore, India",
-  html: `Based in <strong>Bangalore, India</strong>. Building high-performance mobile and web systems at <strong>GeekyAnts</strong>.`,
+  html: `I'm a Senior Software Engineer at <strong>GeekyAnts</strong>, based in Bangalore, India, building mobile and web products with a focus on user experience. Currently exploring new frontend opportunities.`,
 } as const;
 
 // ============================================
@@ -126,9 +223,8 @@ export const BIO = {
 // ============================================
 
 export const HERO = {
-  headline: "Software Engineer.",
-  lead: "Building high-performance mobile and web systems.",
-  context: "Currently solving video caching and delivery at scale.",
+  greeting: "Hi, my name is",
+  headline: "I work on React Native at scale.",
   status: `Shipping ${PROJECTS.expoVideoCache.name} v2.0`,
   /** Optional — set a URL to make the status pill a link, or leave empty for plain text. */
   statusUrl: PROJECTS.expoVideoCache.npm,

@@ -2,6 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import OpenSourceCard from "../components/OpenSourceCard.astro";
 import { SITE, PROJECTS } from "../config/site";
+
+const projects = Object.values(PROJECTS);
 ---
 
 <Layout
@@ -19,18 +21,17 @@ import { SITE, PROJECTS } from "../config/site";
       </p>
 
       <div class="projects">
-        <OpenSourceCard
-          name={PROJECTS.expoVideoCache.name}
-          tagline={PROJECTS.expoVideoCache.tagline}
-          npmUrl={PROJECTS.expoVideoCache.npm}
-          githubUrl={PROJECTS.expoVideoCache.github}
-          tech={PROJECTS.expoVideoCache.tech}
-          stats={{
-            downloads: "500+",
-            stars: "3",
-            lastUpdated: "Feb 2026",
-          }}
-        />
+        {projects.map((project) => (
+          <OpenSourceCard
+            name={project.name}
+            tagline={project.tagline}
+            npmUrl={"npm" in project ? project.npm : undefined}
+            spiUrl={"spi" in project ? project.spi : undefined}
+            githubUrl={project.github}
+            tech={project.tech}
+            stats={"stats" in project ? project.stats : undefined}
+          />
+        ))}
       </div>
 
       <p class="support-cta text-muted">

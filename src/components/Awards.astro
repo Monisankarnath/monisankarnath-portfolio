@@ -1,0 +1,93 @@
+---
+import { AWARDS } from "../config/site";
+---
+
+<section id="recognition" class="recognition section">
+  <header class="section-header">
+    <h2 class="section-title">Recognition</h2>
+    <span class="section-line" aria-hidden="true"></span>
+  </header>
+
+  <div class="awards-list">
+    {AWARDS.map((award) => (
+      <a
+        href={award.href}
+        class="award-item"
+        aria-label={`Read case study about ${award.name}`}
+      >
+        <h3 class="award-name">
+          {award.name} <span class="at">@</span> <span class="issuer">{award.issuer}</span>
+        </h3>
+        <p class="award-reason">{award.reason}</p>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .recognition {
+    padding-block: var(--space-16) var(--space-16);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  .awards-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .award-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: 65ch;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .award-name {
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .at {
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .issuer {
+    color: var(--color-accent);
+  }
+
+  .award-reason {
+    font-size: var(--text-small);
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+</style>

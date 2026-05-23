@@ -3,6 +3,7 @@ interface Props {
   name: string;
   tagline: string;
   npmUrl?: string;
+  spiUrl?: string;
   githubUrl: string;
   tech: readonly string[];
   stats?: {
@@ -12,7 +13,7 @@ interface Props {
   };
 }
 
-const { name, tagline, npmUrl, githubUrl, tech, stats } = Astro.props;
+const { name, tagline, npmUrl, spiUrl, githubUrl, tech, stats } = Astro.props;
 ---
 
 <div class="oss-card">
@@ -22,6 +23,11 @@ const { name, tagline, npmUrl, githubUrl, tech, stats } = Astro.props;
       {npmUrl && (
         <a href={npmUrl} class="card-link mono" target="_blank" rel="noopener noreferrer">
           npm ↗
+        </a>
+      )}
+      {spiUrl && (
+        <a href={spiUrl} class="card-link mono" target="_blank" rel="noopener noreferrer">
+          SPI ↗
         </a>
       )}
       <a href={githubUrl} class="card-link mono" target="_blank" rel="noopener noreferrer">
