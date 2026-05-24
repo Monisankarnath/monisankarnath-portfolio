@@ -6,16 +6,16 @@
 
 /* Geist Fonts - Variable fonts */
 @font-face {
-  font-family: 'Geist Sans';
-  src: url('/fonts/GeistVF.woff2') format('woff2');
+  font-family: "Geist Sans";
+  src: url("/fonts/GeistVF.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/GeistMonoVF.woff2') format('woff2');
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMonoVF.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -27,27 +27,27 @@
 
 :root {
   /* Colors - Dark Theme (Eye-Safe) */
-  --color-bg-primary: #0E1116;
-  --color-bg-surface: #161B22;
-  --color-bg-elevated: #1C2128;
-  
+  --color-bg-primary: #0e1116;
+  --color-bg-surface: #161b22;
+  --color-bg-elevated: #1c2128;
+
   /* Text Colors - Soft, not pure white */
-  --color-text-primary: #E5E7EB;
-  --color-text-secondary: #9CA3AF;
+  --color-text-primary: #e5e7eb;
+  --color-text-secondary: #9ca3af;
   --color-text-muted: #848d97;
-  
+
   /* Accent - Cool blue, restrained */
-  --color-accent: #60A5FA;
-  --color-accent-hover: #93C5FD;
-  
+  --color-accent: #60a5fa;
+  --color-accent-hover: #93c5fd;
+
   /* Borders */
   --color-border: rgba(255, 255, 255, 0.1);
   --color-border-hover: rgba(255, 255, 255, 0.2);
-  
+
   /* Typography - Fluid Scale */
-  --font-sans: 'Geist Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
-  
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
   /* Type Scale using clamp() for fluid sizing */
   --text-hero: clamp(2.5rem, 5vw + 1rem, 3.5rem);
   --text-h1: clamp(2rem, 4vw + 0.5rem, 3rem);
@@ -56,23 +56,23 @@
   --text-body: clamp(1rem, 0.5vw + 0.875rem, 1.125rem);
   --text-small: clamp(0.8125rem, 0.25vw + 0.75rem, 0.875rem);
   --text-xs: 0.75rem;
-  
+
   /* Spacing - 8-point rhythm */
-  --space-1: 0.25rem;   /* 4px */
-  --space-2: 0.5rem;    /* 8px */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-8: 2rem;      /* 32px */
-  --space-12: 3rem;     /* 48px */
-  --space-16: 4rem;     /* 64px */
-  --space-24: 6rem;     /* 96px */
-  --space-32: 8rem;     /* 128px */
-  
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-24: 6rem; /* 96px */
+  --space-32: 8rem; /* 128px */
+
   /* Layout */
   --content-width: 68ch;
   --page-padding: clamp(1rem, 5vw, 3rem);
-  
+
   /* Animation */
   --transition-fast: 150ms ease-out;
   --transition-base: 200ms ease-out;
@@ -83,7 +83,9 @@
    BASE STYLES
    ============================================ */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -108,7 +110,7 @@ body {
 
 /* Noise Texture Overlay - Premium OLED depth */
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -118,7 +120,8 @@ body::before {
 }
 
 /* Disable noise for reduced motion/transparency preferences */
-@media (prefers-reduced-motion: reduce), (prefers-reduced-transparency: reduce) {
+@media (prefers-reduced-motion: reduce),
+  (prefers-reduced-transparency: reduce) {
   body::before {
     display: none;
   }
@@ -128,7 +131,12 @@ body::before {
    TYPOGRAPHY
    ============================================ */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   font-weight: 600;
   line-height: 1.25;
@@ -136,9 +144,15 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-primary);
 }
 
-h1 { font-size: var(--text-h1); }
-h2 { font-size: var(--text-h2); }
-h3 { font-size: var(--text-h3); }
+h1 {
+  font-size: var(--text-h1);
+}
+h2 {
+  font-size: var(--text-h2);
+}
+h3 {
+  font-size: var(--text-h3);
+}
 
 p {
   margin: 0 0 var(--space-6);
@@ -156,7 +170,8 @@ a:hover {
 }
 
 /* Code / Mono text */
-code, .mono {
+code,
+.mono {
   font-family: var(--font-mono);
   font-size: 0.9em;
 }
@@ -194,7 +209,9 @@ code, .mono {
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -210,13 +227,15 @@ code, .mono {
   background-color: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: 0.75rem;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
 }
 
 .card:hover {
   border-color: var(--color-border-hover);
   background-color: var(--color-bg-elevated);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5); 
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
 }
 
 /* Button base */
@@ -291,7 +310,7 @@ pre.mermaid {
 }
 
 pre.mermaid::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: 0.5rem;
@@ -344,7 +363,9 @@ pre.mermaid:hover::after {
   padding: var(--space-6);
   transform: scale(0.6);
   opacity: 0;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.3s ease;
 }
 
 .mermaid-modal[aria-hidden="false"] .mermaid-modal-content {

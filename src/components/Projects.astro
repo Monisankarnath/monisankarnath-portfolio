@@ -1,18 +1,7 @@
 ---
 import { PERSONAL_PROJECTS } from "../config/site";
 
-type Brand = { name: string; url: string };
-type Project = {
-  name: string;
-  image: string;
-  description: string;
-  brands: readonly Brand[];
-  tech: readonly string[];
-  role: string;
-  liveUrl?: string;
-};
-
-const projects = PERSONAL_PROJECTS as readonly Project[];
+const projects = PERSONAL_PROJECTS;
 ---
 
 <section id="projects" class="projects section">
@@ -210,25 +199,6 @@ const projects = PERSONAL_PROJECTS as readonly Project[];
     opacity: 0.3;
   }
 
-  .project-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .project-link {
-    position: relative;
-    z-index: 3;
-    color: var(--color-text-secondary);
-    display: flex;
-    align-items: center;
-    transition: color var(--transition-fast);
-  }
-
-  .project-link:hover {
-    color: var(--color-accent);
-  }
-
   @media (min-width: 1000px) {
     .project-list {
       gap: var(--space-16);
@@ -261,13 +231,11 @@ const projects = PERSONAL_PROJECTS as readonly Project[];
       transform: none;
     }
 
-    .project-tags,
-    .project-links {
+    .project-tags {
       justify-content: flex-end;
     }
 
     .project-card.reverse .project-tags,
-    .project-card.reverse .project-links,
     .project-card.reverse .project-brands {
       justify-content: flex-start;
     }

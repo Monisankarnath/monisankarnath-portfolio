@@ -14,5 +14,9 @@
     "astro": "5.17.1",
     "rehype-mermaid": "3.0.0",
     "tailwindcss": "4.1.18"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
   }
 }

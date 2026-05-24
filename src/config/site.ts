@@ -56,6 +56,21 @@ export const SUPPORT = {
 // OPEN SOURCE PROJECTS
 // ============================================
 
+export type OpenSourceProject = {
+  name: string;
+  tagline: string;
+  description: string;
+  github: string;
+  npm?: string;
+  spi?: string;
+  tech: readonly string[];
+  stats?: {
+    downloads?: string;
+    stars?: string;
+    lastUpdated?: string;
+  };
+};
+
 export const PROJECTS = {
   expoVideoCache: {
     name: "expo-video-cache",
@@ -80,13 +95,25 @@ export const PROJECTS = {
     spi: "https://swiftpackageindex.com/nathMonisankar/IOS-IAP-store",
     tech: ["Swift", "StoreKit 2", "iOS"],
   },
-} as const;
+} as const satisfies Record<string, OpenSourceProject>;
 
 // ============================================
 // PROFESSIONAL PROJECTS
 // ============================================
 
-export const PERSONAL_PROJECTS = [
+export type Brand = { name: string; url: string };
+
+export type ProfessionalProject = {
+  name: string;
+  image: string;
+  description: string;
+  brands: readonly Brand[];
+  tech: readonly string[];
+  role: string;
+  liveUrl?: string;
+};
+
+export const PERSONAL_PROJECTS: readonly ProfessionalProject[] = [
   {
     name: "Darden Restaurants",
     image: "/images/darden.png",
@@ -116,7 +143,7 @@ export const PERSONAL_PROJECTS = [
     image: "/images/talenzap.png",
     description:
       "Video-first social app for skills-based contests — Instagram-style upload and feed, hardened for production launch and live with 1,000+ users.",
-    brands: [] as { name: string; url: string }[],
+    brands: [],
     tech: ["React Native", "Expo", "TypeScript", "Swift", "Video Streaming"],
     role: "",
     liveUrl: "https://www.talenzap.com/",
@@ -126,7 +153,7 @@ export const PERSONAL_PROJECTS = [
     image: "/images/mjd.png",
     description:
       "Belgian job portal serving 6,000+ users and 2,000+ companies — full-stack mobile, web, and AWS infrastructure built end-to-end.",
-    brands: [] as { name: string; url: string }[],
+    brands: [],
     tech: ["React Native", "Flutter", "Next.js", "FastAPI", "AWS", "Terraform"],
     role: "",
     liveUrl: "https://www.myjobdrop.com",
@@ -136,7 +163,7 @@ export const PERSONAL_PROJECTS = [
     image: "/images/trovey.png",
     description:
       "Australian travel and itinerary product — mobile, admin web, and NestJS backend. Tech lead across a 7-engineer team owning architecture for OTA updates, background tasks, localization, and theming.",
-    brands: [] as { name: string; url: string }[],
+    brands: [],
     tech: ["React Native", "Expo", "NestJS", "TypeScript"],
     role: "",
     liveUrl: "https://www.trovey.com",
@@ -146,17 +173,25 @@ export const PERSONAL_PROJECTS = [
     image: "/images/jio.png",
     description:
       "Design system powering 10+ Jio apps (MyJio, JioCloud, JioPay) with 500M+ downloads. Reduced iOS pod size by 50% and UI bug reports by ~40%.",
-    brands: [] as { name: string; url: string }[],
+    brands: [],
     tech: ["Swift", "SwiftUI", "Figma"],
     role: "",
   },
-] as const;
+];
 
 // ============================================
 // EXPERIENCE
 // ============================================
 
-export const EXPERIENCES = [
+export type Experience = {
+  company: string;
+  role: string;
+  period: string;
+  impact: readonly string[];
+  tags: readonly string[];
+};
+
+export const EXPERIENCES: readonly Experience[] = [
   {
     company: "GeekyAnts",
     role: "Senior Software Engineer II",
@@ -185,13 +220,20 @@ export const EXPERIENCES = [
     ],
     tags: ["SQL", "PL/SQL", "Oracle EBS"],
   },
-] as const;
+];
 
 // ============================================
 // AWARDS & RECOGNITION
 // ============================================
 
-export const AWARDS = [
+export type Award = {
+  name: string;
+  issuer: string;
+  reason: string;
+  href: string;
+};
+
+export const AWARDS: readonly Award[] = [
   {
     name: "Tech Innovator Award",
     issuer: "GeekyAnts",
@@ -206,7 +248,7 @@ export const AWARDS = [
       "Authored expo-video-cache — an open-source HLS caching library for React Native, used in production with 100+ weekly downloads.",
     href: "/case-studies/expo-video-ios-offline-caching",
   },
-] as const;
+];
 
 // ============================================
 // BIO — Hero paragraph
