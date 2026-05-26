@@ -190,15 +190,21 @@ const allItems: SearchItem[] = [
       selected.click();
     }
 
+    function openPalette() {
+      dialog.showModal();
+      input.focus();
+      input.value = "";
+      renderResults(defaultPages);
+    }
+
     document.addEventListener("keydown", (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        dialog.showModal();
-        input.focus();
-        input.value = "";
-        renderResults(defaultPages);
+        openPalette();
       }
     }, { signal });
+
+    document.addEventListener("open-command-palette", openPalette, { signal });
 
     dialog.addEventListener("click", (e) => {
       if (e.target === dialog) dialog.close();

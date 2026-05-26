@@ -114,12 +114,7 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
 
         heroAbort = new AbortController();
         btn.addEventListener('click', () => {
-          const dialog = document.getElementById('command-palette') as HTMLDialogElement;
-          const input = document.getElementById('command-input') as HTMLInputElement;
-          if (dialog) {
-            dialog.showModal();
-            if (input) { input.focus(); input.value = ''; }
-          }
+          document.dispatchEvent(new CustomEvent('open-command-palette'));
         }, { signal: heroAbort.signal });
       }
 
