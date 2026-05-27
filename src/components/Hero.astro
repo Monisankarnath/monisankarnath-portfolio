@@ -1,5 +1,11 @@
 ---
 import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
+
+const headlineKeyword = "React Native";
+const headlineParts = HERO.headline.split(headlineKeyword);
+const headlineHasKeyword = headlineParts.length > 1;
+const headlineBefore = headlineParts[0];
+const headlineAfter = headlineParts.slice(1).join(headlineKeyword);
 ---
 
 <section id="top" class="hero">
@@ -12,7 +18,15 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
 
   <h1 class="name">{SITE.name}.</h1>
 
-  <h2 class="headline">{HERO.headline}</h2>
+  <h2 class="headline">
+    {headlineHasKeyword ? (
+      <>
+        {headlineBefore}<span class="rn-highlight">{headlineKeyword}</span>{headlineAfter}
+      </>
+    ) : (
+      HERO.headline
+    )}
+  </h2>
 
   {HERO.statusUrl ? (
     <a href={HERO.statusUrl} target="_blank" rel="noopener noreferrer" class="status-pill">
@@ -135,6 +149,13 @@ import { SITE, HERO, BIO, CONTACT, MAILTO, RESUME } from "../config/site";
     color: var(--color-text-secondary);
     margin: var(--space-3) 0 0;
     max-width: 28ch;
+  }
+
+  .rn-highlight {
+    color: #C4CCD4;
+    font-family: 'Fivo Sans Modern', 'Geist Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.02em;
   }
 
   .status-pill {
