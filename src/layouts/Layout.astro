@@ -79,10 +79,12 @@ const socialImageURL = new URL("/og-image.png", Astro.url);
       type="font/woff2"
       crossorigin
     />
-    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.cdnfonts.com/css/fivo-sans-modern"
+      rel="preload"
+      href="/fonts/FivoSansModernHeavy.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
     />
     <ClientRouter />
   </head>
