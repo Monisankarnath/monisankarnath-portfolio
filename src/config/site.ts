@@ -115,10 +115,20 @@ export type ProfessionalProject = {
 
 export const PERSONAL_PROJECTS: readonly ProfessionalProject[] = [
   {
-    name: "Darden Restaurants",
+    name: "Ajio — India's 2nd Largest Fashion E-commerce",
+    image: "/images/ajio.png",
+    description:
+      "Crash rate 98.79% → 99.91% (~1,600 weekly crashes eliminated). Cold start ↓20%, screen load ↓25%, 60 FPS at 10K+ items.",
+    brands: [],
+    tech: ["React Native", "Swift", "SwiftUI", "UIKit", "TypeScript"],
+    role: "React Native and iOS developer",
+    liveUrl: "https://www.ajio.com/",
+  },
+  {
+    name: "Darden — $13.2B Restaurant Chain Platform",
     image: "/images/darden.png",
     description:
-      "Multi-brand platform powering 10 restaurant brands in a single Nx monorepo — web, mobile, and native apps.",
+      "Auth defects ↓40% across 11 brands, 2,200+ locations. Owned reservation, menu, order tracking, curbside, waitlist end-to-end.",
     brands: [
       { name: "Olive Garden", url: "https://www.olivegarden.com" },
       {
@@ -139,40 +149,40 @@ export const PERSONAL_PROJECTS: readonly ProfessionalProject[] = [
     liveUrl: "https://www.olivegarden.com/",
   },
   {
-    name: "Talenzap",
+    name: "Talenzap — Skills Contest Video Platform",
     image: "/images/talenzap.png",
     description:
-      "Video-first social app for skills-based contests — Instagram-style upload and feed, hardened for production launch and live with 1,000+ users.",
+      "Launched to 1,000+ users by clearing P0 blockers. Offline-first caching cut cold-start ~35%. Open-source expo-video-cache: 300+ weekly downloads.",
     brands: [],
     tech: ["React Native", "Expo", "TypeScript", "Swift", "Video Streaming"],
     role: "",
     liveUrl: "https://www.talenzap.com/",
   },
   {
-    name: "MyJobDrop",
+    name: "MyJobDrop — Belgian Job Portal",
     image: "/images/mjd.png",
     description:
-      "Belgian job portal serving 6,000+ users and 2,000+ companies — full-stack mobile, web, and AWS infrastructure built end-to-end.",
+      "Full-stack platform serving 100+ companies and 1,000+ professionals. End-to-end delivery in a 3-person team.",
     brands: [],
     tech: ["React Native", "Flutter", "Next.js", "FastAPI", "AWS", "Terraform"],
     role: "",
     liveUrl: "https://www.myjobdrop.com",
   },
   {
-    name: "Trovey",
+    name: "Trovey — Australian Travel & Itinerary App",
     image: "/images/trovey.png",
     description:
-      "Australian travel and itinerary product — mobile, admin web, and NestJS backend. Tech lead across a 7-engineer team owning architecture for OTA updates, background tasks, localization, and theming.",
+      "Custom renderer replacing Konva RN Web. Native-smooth 60 FPS on complex itinerary views across iOS/Android.",
     brands: [],
     tech: ["React Native", "Expo", "NestJS", "TypeScript"],
     role: "",
     liveUrl: "https://www.trovey.com",
   },
   {
-    name: "Jio Design System",
+    name: "Jio Design System — 500M+ Downloads Ecosystem",
     image: "/images/jio.png",
     description:
-      "Design system powering 10+ Jio apps (MyJio, JioCloud, JioPay) with 500M+ downloads. Reduced iOS pod size by 50% and UI bug reports by ~40%.",
+      "iOS pod size ↓50%, UI bugs ↓40%. Powers 10+ apps across 500M+ download ecosystem.",
     brands: [],
     tech: ["Swift", "SwiftUI", "Figma"],
     role: "",
@@ -194,13 +204,13 @@ export type Experience = {
 export const EXPERIENCES: readonly Experience[] = [
   {
     company: "GeekyAnts",
-    role: "Senior Software Engineer II",
+    role: "Senior Software Engineer III",
     period: "Oct 2021 — Present",
     impact: [
-      "Deliver production-grade mobile and web applications for a diverse array of clients including Olive Garden, Jio, MyJobDrop, Talenzap, and Alarmas.",
-      "Lead architecture, performance optimization, and native module development for cross-platform React Native systems shipping to millions of users.",
-      "Collaborate with product managers, designers, and cross-functional engineering teams to translate business requirements into shippable, well-engineered production code.",
-      "Provide engineering leadership through code review, technical mentorship of junior engineers, and contributions to shared design systems and open-source tooling.",
+      "Lead performance optimization and brownfield migration for India's 2nd largest fashion e-commerce app, eliminating ~1,600 weekly crashes and cutting cold start by ~20% during high-traffic sale events.",
+      "Architect high-performance native modules and design systems, building a C++ JSI map clustering engine for 50K+ users and contributing to a SwiftUI design system powering 10+ apps with 500M+ downloads.",
+      "Build offline-first video architecture with expo-video-cache (300+ weekly downloads), cutting first contentful paint by ~40% and enabling instant HLS playback for 1,000+ users across 500+ studios.",
+      "Drive end-to-end delivery across web and mobile platforms for global clients, reducing auth defects by ~40% across 11 restaurant brands and building full-stack solutions for international markets.",
     ],
     tags: [
       "TypeScript",
