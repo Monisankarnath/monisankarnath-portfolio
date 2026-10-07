@@ -203,9 +203,19 @@ export type Experience = {
 
 export const EXPERIENCES: readonly Experience[] = [
   {
+    company: "Devxconsultancy",
+    role: "Senior Mobile Engineer",
+    period: "Sep 2026 — Present",
+    impact: [
+      "Led LANDERS.ph mobile app, driving UX, performance & analytics with 99.5% crash-free sessions and 99.0% crash-free users.",
+      "Driving app scalability & reliability through performance optimization, analytics accuracy, and efficient caching.",
+    ],
+    tags: ["TypeScript", "React Native"],
+  },
+  {
     company: "GeekyAnts",
     role: "Senior Software Engineer III",
-    period: "Oct 2021 — Present",
+    period: "Oct 2021 — Sep 2026",
     impact: [
       "Lead performance optimization and brownfield migration for India's 2nd largest fashion e-commerce app, eliminating ~1,600 weekly crashes and cutting cold start by ~20% during high-traffic sale events.",
       "Architect high-performance native modules and design systems, building a C++ JSI map clustering engine for 50K+ users and contributing to a SwiftUI design system powering 10+ apps with 500M+ downloads.",
