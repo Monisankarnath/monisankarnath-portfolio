@@ -81,7 +81,7 @@ export const PROJECTS = {
     npm: "https://www.npmjs.com/package/expo-video-cache",
     tech: ["Swift", "React Native", "Expo", "iOS", "TypeScript"],
     stats: {
-      downloads: "100+ weekly",
+      downloads: "500+ weekly",
       stars: "3",
       lastUpdated: "Feb 2026",
     },
@@ -152,7 +152,7 @@ export const PERSONAL_PROJECTS: readonly ProfessionalProject[] = [
     name: "Talenzap — Skills Contest Video Platform",
     image: "/images/talenzap.png",
     description:
-      "Launched to 1,000+ users by clearing P0 blockers. Offline-first caching cut cold-start ~35%. Open-source expo-video-cache: 300+ weekly downloads.",
+      "Launched to 1,000+ users by clearing P0 blockers. Offline-first caching cut cold-start ~35%. Open-source expo-video-cache: 500+ weekly downloads.",
     brands: [],
     tech: ["React Native", "Expo", "TypeScript", "Swift", "Video Streaming"],
     role: "",
@@ -219,7 +219,7 @@ export const EXPERIENCES: readonly Experience[] = [
     impact: [
       "Lead performance optimization and brownfield migration for India's 2nd largest fashion e-commerce app, eliminating ~1,600 weekly crashes and cutting cold start by ~20% during high-traffic sale events.",
       "Architect high-performance native modules and design systems, building a C++ JSI map clustering engine for 50K+ users and contributing to a SwiftUI design system powering 10+ apps with 500M+ downloads.",
-      "Build offline-first video architecture with expo-video-cache (300+ weekly downloads), cutting first contentful paint by ~40% and enabling instant HLS playback for 1,000+ users across 500+ studios.",
+      "Build offline-first video architecture with expo-video-cache (500+ weekly downloads), cutting first contentful paint by ~40% and enabling instant HLS playback for 1,000+ users across 500+ studios.",
       "Drive end-to-end delivery across web and mobile platforms for global clients, reducing auth defects by ~40% across 11 restaurant brands and building full-stack solutions for international markets.",
     ],
     tags: [
@@ -265,7 +265,7 @@ export const AWARDS: readonly Award[] = [
     name: "Impact Contributor Award",
     issuer: "GeekyAnts",
     reason:
-      "Authored expo-video-cache — an open-source HLS caching library for React Native, used in production with 100+ weekly downloads.",
+      "Authored expo-video-cache — an open-source HLS caching library for React Native, used in production with 500+ weekly downloads.",
     href: "/case-studies/expo-video-ios-offline-caching",
   },
 ];
@@ -276,7 +276,7 @@ export const AWARDS: readonly Award[] = [
 
 export const BIO = {
   location: "Bangalore, India",
-  html: `I'm a Senior Software Engineer at <strong>GeekyAnts</strong>, based in Bangalore, India, building mobile and web products with a focus on user experience. Currently exploring new frontend opportunities.`,
+  html: `I'm a Senior Mobile Engineer at <strong>Devxconsultancy</strong>, based in Bangalore, India, building mobile and web products with a focus on user experience.`,
 } as const;
 
 // ============================================

@@ -4,7 +4,7 @@ description: "A deep technical case study on building expo-video-cache -- an ope
 role: "Senior Software Engineer"
 timeline: "2026"
 metrics:
-  - "100+ npm downloads/week"
+  - "500+ npm downloads/week"
   - "Shipped to production"
   - "Zero dependencies"
 tags:

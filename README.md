@@ -25,23 +25,22 @@ src/
 │   └── case-studies/  # Case studies (Markdown)
 ├── layouts/           # Page layouts (Base, Blog, Case Study)
 ├── pages/             # File-based routing
-├── scripts/           # Client-side utilities
 └── styles/            # Global CSS + design tokens
 ```
 
 ## Pages
 
-| Route              | Purpose                          |
-|-------------------|----------------------------------|
-| `/`               | Homepage                          |
-| `/case-studies`   | Case study index                  |
-| `/case-studies/*` | Individual case study             |
-| `/blog`           | Blog index                        |
-| `/blog/*`         | Individual blog post              |
-| `/open-source`    | Open source contributions         |
-| `/about`          | Background and approach           |
-| `/contact`        | Contact information               |
-| `/support`        | Voluntary support (UPI)           |
+| Route             | Purpose                   |
+| ----------------- | ------------------------- |
+| `/`               | Homepage                  |
+| `/case-studies`   | Case study index          |
+| `/case-studies/*` | Individual case study     |
+| `/blog`           | Blog index                |
+| `/blog/*`         | Individual blog post      |
+| `/open-source`    | Open source contributions |
+| `/about`          | Background and approach   |
+| `/contact`        | Contact information       |
+| `/support`        | Voluntary support (UPI)   |
 
 ## Configuration
 
@@ -90,7 +89,9 @@ title: "Project Title"
 description: "One-line description of the problem and outcome."
 role: "Your role"
 timeline: "Duration"
-metrics: "Key measurable impact"
+metrics:
+  - "Key measurable impact"
+  - "Another metric"
 tags: ["React Native", "Node.js"]
 publishedAt: 2026-02-01
 layout: ../../layouts/CaseStudyLayout.astro
