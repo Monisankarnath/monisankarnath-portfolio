@@ -21,8 +21,8 @@ const items: GridItem[] = [
     subtitle: 'Deep dives into real systems — architecture decisions, tradeoffs, and results.',
     count: `${allCaseStudies.length} ${allCaseStudies.length === 1 ? 'study' : 'studies'}`,
     href: '/case-studies',
-    accentColor: '#60A5FA',
-    accentBg: 'rgba(96, 165, 250, 0.08)',
+    accentColor: 'var(--color-accent)',
+    accentBg: 'color-mix(in srgb, var(--color-accent) 8%, transparent)',
   },
   {
     title: 'Open Source',
@@ -51,12 +51,10 @@ const items: GridItem[] = [
         class="bento-card"
         style={`--accent: ${item.accentColor}; --accent-bg: ${item.accentBg}`}
       >
-        <div class="card-accent-bar"></div>
         <h3 class="card-title">{item.title}</h3>
         <p class="card-subtitle">{item.subtitle}</p>
         <div class="card-footer">
           <span class="card-count mono">{item.count}</span>
-          <span class="card-arrow">→</span>
         </div>
       </a>
     ))}
@@ -87,30 +85,12 @@ const items: GridItem[] = [
     text-decoration: none;
     border-radius: 0.75rem;
     background-color: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    position: relative;
-    overflow: hidden;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-  }
-
-  .card-accent-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--accent);
-    transition: height var(--transition-fast);
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
   }
 
   .bento-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 20px var(--accent-bg);
-    border-color: var(--accent);
-  }
-
-  .bento-card:hover .card-accent-bar {
-    height: 4px;
+    transform: translateY(-3px);
+    background-color: var(--color-bg-elevated);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -140,7 +120,6 @@ const items: GridItem[] = [
   .card-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-top: var(--space-4);
   }
 
@@ -150,16 +129,5 @@ const items: GridItem[] = [
     background: var(--accent-bg);
     padding: var(--space-1) var(--space-2);
     border-radius: 4px;
-  }
-
-  .card-arrow {
-    font-size: var(--text-body);
-    color: var(--color-text-muted);
-    transition: transform var(--transition-fast), color var(--transition-fast);
-  }
-
-  .bento-card:hover .card-arrow {
-    transform: translateX(4px);
-    color: var(--accent);
   }
 </style>

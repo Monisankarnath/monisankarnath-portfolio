@@ -163,7 +163,10 @@ const headlineAfter = headlineParts.slice(1).join(headlineKeyword);
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
-    background-color: var(--color-bg-surface);
+    background-color: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--glass-highlight);
     border: 1px solid var(--color-accent);
     border-radius: 9999px;
     font-size: var(--text-small);
@@ -175,7 +178,7 @@ const headlineAfter = headlineParts.slice(1).join(headlineKeyword);
   }
 
   a.status-pill:hover {
-    border-color: #93C5FD;
+    border-color: var(--color-accent-hover);
     color: var(--color-text-primary);
   }
 
@@ -221,21 +224,6 @@ const headlineAfter = headlineParts.slice(1).join(headlineKeyword);
     width: fit-content;
   }
 
-  .social-row::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 240px;
-    height: 160px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse, rgba(96,165,250,0.16) 0%, rgba(127,119,221,0.07) 45%, transparent 75%);
-    filter: blur(40px);
-    pointer-events: none;
-    z-index: -1;
-    border-radius: 50%;
-  }
-
   .social-icon {
     color: var(--color-text-muted);
     display: flex;
@@ -252,7 +240,7 @@ const headlineAfter = headlineParts.slice(1).join(headlineKeyword);
   .social-icon[aria-label="LinkedIn"]:hover { color: #0A66C2; }
   .social-icon[aria-label="GitHub"]:hover { color: #E6EDF3; }
   .social-icon[aria-label="YouTube"]:hover { color: #FF0000; }
-  .social-icon[aria-label="Email"]:hover { color: #60A5FA; }
+  .social-icon[aria-label="Email"]:hover { color: var(--color-accent); }
 
   .resume-link {
     display: inline-flex;

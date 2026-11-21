@@ -38,44 +38,35 @@
           htmlLabels: false,
           useMaxWidth: true,
         },
-        themeVariables: {
-          background: '#0E1116',
-
-          primaryColor: '#1c2533',
-          primaryTextColor: '#e6edf3',
-          primaryBorderColor: '#4a5568',
-
-          secondaryColor: '#1e2a3a',
-          secondaryTextColor: '#e6edf3',
-          secondaryBorderColor: '#4a5568',
-
-          tertiaryColor: '#1e2a3a',
-          tertiaryTextColor: '#9ca3af',
-          tertiaryBorderColor: '#4a5568',
-
-          lineColor: '#6b7280',
-          textColor: '#e6edf3',
-
-          noteBkgColor: '#1e2a3a',
-          noteTextColor: '#e6edf3',
-          noteBorderColor: '#4a5568',
-
-          clusterBkg: '#1c2533',
-          clusterBorder: '#4a5568',
-
-          edgeLabelBackground: '#0E1116',
-
-          actorBkg: '#1c2533',
-          actorBorder: '#4a5568',
-          actorTextColor: '#e6edf3',
-          activationBorderColor: '#6b7280',
-          activationBkgColor: '#1e2a3a',
-          signalColor: '#e6edf3',
-          labelBoxBkgColor: '#1c2533',
-          labelBoxBorderColor: '#4a5568',
-          labelTextColor: '#e6edf3',
-          loopTextColor: '#9ca3af',
-        },
+        themeVariables: (() => {
+          const css = getComputedStyle(document.documentElement);
+          const tok = (n: string) => css.getPropertyValue(n).trim();
+          const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+          const mix = (a: string, b: string, t: number) =>
+            '#' + hex(a).map((v, i) => Math.round(v * t + hex(b)[i] * (1 - t)).toString(16).padStart(2, '0')).join('');
+          const bg = tok('--color-bg-primary');
+          const surface = tok('--color-bg-surface');
+          const elevated = tok('--color-bg-elevated');
+          const text = tok('--color-text-primary');
+          const soft = tok('--color-text-secondary');
+          const line = mix(text, bg, 0.28);
+          const edge = tok('--color-text-muted');
+          return {
+            background: bg,
+            primaryColor: surface, primaryTextColor: text, primaryBorderColor: line,
+            secondaryColor: elevated, secondaryTextColor: text, secondaryBorderColor: line,
+            tertiaryColor: elevated, tertiaryTextColor: soft, tertiaryBorderColor: line,
+            lineColor: edge, textColor: text,
+            noteBkgColor: elevated, noteTextColor: text, noteBorderColor: line,
+            clusterBkg: surface, clusterBorder: line,
+            edgeLabelBackground: bg,
+            actorBkg: surface, actorBorder: line, actorTextColor: text,
+            activationBorderColor: edge, activationBkgColor: elevated,
+            signalColor: text,
+            labelBoxBkgColor: surface, labelBoxBorderColor: line, labelTextColor: text,
+            loopTextColor: soft,
+          };
+        })(),
       });
 
       mermaidInitialized = true;

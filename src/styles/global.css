@@ -34,7 +34,7 @@
    ============================================ */
 
 :root {
-  /* Colors - Dark Theme (Eye-Safe) */
+  /* Colors - Dark Theme (Eye-Safe). Single source of truth for every page. */
   --color-bg-primary: #0e1116;
   --color-bg-surface: #161b22;
   --color-bg-elevated: #1c2128;
@@ -51,6 +51,13 @@
   /* Borders */
   --color-border: rgba(255, 255, 255, 0.1);
   --color-border-hover: rgba(255, 255, 255, 0.2);
+
+  /* Glass: translucent surface + blur. Only where there is something behind to blur. */
+  --glass-bg: color-mix(in srgb, var(--color-bg-surface) 55%, transparent);
+  --glass-bg-strong: color-mix(in srgb, var(--color-bg-surface) 70%, transparent);
+  --glass-border: color-mix(in srgb, var(--color-text-primary) 14%, transparent);
+  --glass-highlight: inset 0 1px 0 color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  --glass-blur: blur(16px) saturate(140%);
 
   /* Typography - Fluid Scale */
   --font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
@@ -288,6 +295,29 @@ code,
 
 .text-secondary {
   color: var(--color-text-secondary);
+}
+
+/* Glass surface (use sparingly) */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight), 0 10px 30px -12px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: var(--color-bg-surface);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--color-bg-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 /* Screen reader only */

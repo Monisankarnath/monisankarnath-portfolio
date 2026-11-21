@@ -34,7 +34,7 @@ const projects = PERSONAL_PROJECTS;
         <div class="project-content">
           <h3 class="project-name">{project.name}</h3>
 
-          <div class="project-desc-card">
+          <div class="project-desc-card glass">
             <p class="project-desc">{project.description}</p>
           </div>
 
@@ -108,7 +108,7 @@ const projects = PERSONAL_PROJECTS;
   }
 
   .project-card:hover {
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(96, 165, 250, 0.12);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent);
     transform: translateY(-2px);
   }
 
@@ -154,6 +154,16 @@ const projects = PERSONAL_PROJECTS;
     position: relative;
     z-index: 1;
     margin: var(--space-1) 0;
+  }
+
+  @media (max-width: 999px) {
+    .project-desc-card.glass {
+      background: none;
+      border: 0;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 
   .project-desc {
@@ -260,7 +270,7 @@ const projects = PERSONAL_PROJECTS;
     .project-image {
       aspect-ratio: 16 / 10;
       opacity: 1;
-      filter: grayscale(1) brightness(0.4);
+      filter: grayscale(1) brightness(0.55);
       transition: filter 0.5s ease;
     }
 
@@ -280,10 +290,8 @@ const projects = PERSONAL_PROJECTS;
     }
 
     .project-desc-card {
-      background: var(--color-bg-elevated);
       padding: var(--space-6);
       border-radius: 0.5rem;
-      box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
       margin-left: calc(-1 * var(--space-12));
     }
   }
